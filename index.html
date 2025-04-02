@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <!-- Crucial for responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVA Canteen App - Responsive v1 (Toggle View)</title>
+    <title>EVA Canteen App - Responsive v1 (Toggle View + Spring Effect)</title> <!-- Updated Title -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -68,7 +68,7 @@
             max-width: 340px;
             min-height: var(--screen-min-height);
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Keep this to contain screen animations */
             border-radius: var(--screen-border-radius);
             border: var(--border-thickness) solid var(--border-color);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -120,13 +120,20 @@
             left: 0;
             opacity: 0;
             pointer-events: none;
-            transition: opacity var(--transition-speed) ease-in-out;
+            /* --- MODIFICATION: Add Spring Effect START --- */
+            transform: translateY(40px); /* Start slightly below */
+            transition: opacity var(--transition-speed) ease-in-out,
+                        transform calc(var(--transition-speed) * 1.5) cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Opacity fade + Springy transform */
+            /* --- MODIFICATION: Add Spring Effect END --- */
             overflow-y: auto;
             z-index: 1;
         }
         .screen.active {
             opacity: 1;
             pointer-events: auto;
+            /* --- MODIFICATION: Add Spring Effect START --- */
+            transform: translateY(0); /* Move to final position */
+             /* --- MODIFICATION: Add Spring Effect END --- */
             z-index: 2;
         }
         .screen-content {
@@ -557,7 +564,7 @@
                       <div class="menu-item" data-category="lunch" data-id="sandwich"> <img src="https://www.dukeshill.co.uk/cdn/shop/articles/20240725081844-chicken-20bacon-20club-20sandwich-20main-20landscape_1024x1024.jpg?v=1724401314" alt="Club Sandwich"> <p>Club Sandwich</p> <span class="price-button">50 L.E</span> </div>
                       <div class="menu-item" data-category="sweet" data-id="muffin"> <img src="https://www.giallozafferano.com/images/269-26998/Chocolate-Chip-Muffins_1200x800.jpg" alt="Muffin"> <p>Muffin</p> <span class="price-button">22 L.E</span> </div>
                       <div class="menu-item" data-category="snacks" data-id="onionrings"> <img src="https://i0.wp.com/www.angsarap.net/wp-content/uploads/2015/03/Onion-Rings-Wide.jpg" alt="Onion Rings"> <p>Onion Rings</p> <span class="price-button">30 L.E</span> </div>
-                      <div class="menu-item" data-category="lunch" data-id="soup"> <img src="https://i.postimg.cc/dtyNQqX5/Soup.jpg" alt="Soup of the Day"> <p>Soup of the Day</p> <span class="price-button">35 L.E</span> </div>
+                      <div class="menu-item" data-category="lunch" data-id="soup"> <img src="https://www.superzu.com.au/wp-content/uploads/2020/11/Soup.jpg" alt="Soup of the Day"> <p>Soup of the Day</p> <span class="price-button">35 L.E</span> </div>
                  </div>
             </div>
         </div>
@@ -752,6 +759,7 @@
                         image: item.querySelector('img').src,
                         category: item.dataset.category
                     };
+                    // Add descriptions based on ID (as before)
                     switch (baseData.id) {
                         case 'coffee': baseData.description = "A rich and aromatic blend, perfect to kickstart your day or enjoy a relaxing break."; break;
                         case 'pizza': baseData.description = "Classic cheese pizza with a tangy tomato sauce and a crispy crust. Always a favorite!"; break;
@@ -782,16 +790,25 @@
                 const targetScreen = document.getElementById(screenId);
                 if (targetScreen && targetScreen !== currentScreen) {
                     if (currentScreen) currentScreen.classList.remove('active');
-                    targetScreen.classList.add('active');
-                    currentScreen = targetScreen;
-                    if(currentScreen?.id !== 'screen-7') { resetPreviewButton(); }
-                    if (screenId === 'screen-4') updateCartUI();
-                    if (screenId === 'screen-3') applyFilter(targetScreen);
-                    if (screenId === 'screen-5') { renderOrderLog(); clearOrderPreview(); orderSearchInput.value = ''; }
-                    if (screenId === 'screen-6') { adminLoginErrorMsg.style.display = 'none'; }
-                    if (screenId === 'screen-7') { updateCartBadge(); }
-                     if (targetScreen) { targetScreen.scrollTop = 0; }
+                    // Small delay before adding active class to allow initial style (opacity 0, transform) to apply
+                    requestAnimationFrame(() => {
+                        targetScreen.classList.add('active');
+                        currentScreen = targetScreen;
+
+                        // Reset states/UI for specific screens when they become active
+                        if(currentScreen?.id !== 'screen-7') { resetPreviewButton(); }
+                        if (screenId === 'screen-4') updateCartUI();
+                        if (screenId === 'screen-3') applyFilter(targetScreen);
+                        if (screenId === 'screen-5') { renderOrderLog(); clearOrderPreview(); orderSearchInput.value = ''; }
+                        if (screenId === 'screen-6') { adminLoginErrorMsg.style.display = 'none'; }
+                        if (screenId === 'screen-7') { updateCartBadge(); }
+                        if (targetScreen) { targetScreen.scrollTop = 0; } // Scroll to top on screen change
+                    });
+
                 } else if (!targetScreen) { console.error("Target screen not found:", screenId); }
+                 else if (targetScreen === currentScreen) {
+                     targetScreen.scrollTop = 0; // Scroll to top if clicking the current screen's link again
+                 }
             }
 
             // Updated function to handle profile pic display
@@ -881,13 +898,23 @@
                 const activeButton = screenElement.querySelector('.sort-buttons .sort-button.active');
                 if (!activeButton || menuItems.length === 0) { menuItems.forEach(item => item.classList.remove('hidden')); return; }
                 const activeCategory = activeButton.dataset.category;
-                menuItems.forEach(item => {
+                // Apply 'hidden' first without animation for items to be hidden
+                 menuItems.forEach(item => {
                     const shouldBeVisible = item.dataset.category === activeCategory;
-                    const isCurrentlyHidden = item.classList.contains('hidden');
-                    if (shouldBeVisible && isCurrentlyHidden) { item.classList.remove('hidden'); item.style.animation = 'none'; item.offsetHeight; item.style.animation = ''; }
-                    else if (!shouldBeVisible && !isCurrentlyHidden) { item.classList.add('hidden'); item.style.animation = ''; }
-                    if (shouldBeVisible) { item.style.animation = 'fadeInItem 0.5s ease-out backwards'; }
-                });
+                    if (!shouldBeVisible) {
+                        item.classList.add('hidden');
+                        item.style.animation = 'none'; // Prevent animation on hide
+                    }
+                 });
+                 // Then unhide and animate items to be shown
+                 menuItems.forEach((item, index) => {
+                    const shouldBeVisible = item.dataset.category === activeCategory;
+                    if (shouldBeVisible) {
+                        item.classList.remove('hidden');
+                        // Apply animation with a slight delay based on index for staggering effect
+                        item.style.animation = `fadeInItem 0.5s ${index * 0.05}s ease-out backwards`;
+                    }
+                 });
             }
             function showItemPreview(itemId) {
                 const itemData = menuData.find(item => item.id === itemId);
@@ -1063,6 +1090,7 @@
             showScreen('screen-1'); // Start at the login screen
             updateCartUI(); // Initialize cart display and badge
             updateUserInfoUI(); // Initialize user display (will show guest initially)
+            applyFilter(document.getElementById('screen-3')); // Apply initial filter on menu screen
 
         });
     </script>
