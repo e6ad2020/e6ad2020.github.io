@@ -380,7 +380,6 @@
         .cart-icon-container span, .user-icon-container span { font-size: 0.8rem; font-weight: 600; color: var(--text-color-dark); transition: color var(--view-change-speed) ease;}
         .cart-badge { position: absolute; top: -5px; right: -5px; background-color: var(--active-green); color: var(--text-color-light); border-radius: 50%; width: 22px; height: 22px; font-size: 0.8rem; font-weight: 700; display: none; justify-content: center; align-items: center; border: 1px solid var(--border-color); transform-origin: center; animation: pulseBadge 1.5s infinite ease-in-out; transition: background-color var(--view-change-speed) ease, color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; }
         /* Ensure badge text is readable on active color backgrounds */
-        body[data-theme="mono-dark"] .cart-badge,
         body[data-theme="green"] .cart-badge, /* Yellow active green */
         body[data-theme="yellow"] .cart-badge, /* Lime active green */
         body[data-theme="orange"] .cart-badge { /* Light active green */
@@ -394,7 +393,6 @@
         .sort-button { background: none; border: none; border-radius: var(--pill-border-radius); padding: 6px 18px; cursor: pointer; font-size: 1rem; font-weight: 600; color: var(--text-color-dark); transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, transform var(--fast-transition-speed) ease; user-select: none; margin: 2px; font-family: inherit; }
         .sort-button.active { background-color: var(--active-green); color: var(--text-color-dark); } .sort-button:active { transform: scale(0.96); }
         /* Ensure text on active sort button is readable */
-        body[data-theme="mono-dark"] .sort-button.active,
         body[data-theme="green"] .sort-button.active, /* Yellow active green */
         body[data-theme="yellow"] .sort-button.active, /* Lime active green */
         body[data-theme="orange"] .sort-button.active { /* Light active green */
@@ -420,7 +418,6 @@
         .item-price-button { background-color: var(--button-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--pill-border-radius); padding: 6px 12px; font-size: 0.9rem; font-weight: 700; color: var(--text-color-dark); white-space: nowrap; margin-left: auto; flex-shrink: 0; font-family: inherit; order: 2; transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease;}
         .remove-item-button { position: absolute; top: 5px; right: 5px; background: var(--remove-red); color: white; border: 1px solid var(--border-color); border-radius: 50%; width: 20px; height: 20px; font-size: 0.8rem; line-height: 18px; text-align: center; cursor: pointer; font-weight: bold; transition: background-color var(--fast-transition-speed) ease, transform var(--fast-transition-speed) ease, border-color var(--view-change-speed) ease; }
         /* Ensure remove button text is visible */
-        body[data-theme="mono-dark"] .remove-item-button,
         body[data-theme="dark-grey"] .remove-item-button, /* Light Red */
         body[data-theme="orange"] .remove-item-button { /* Light Red */
              color: var(--text-color-dark); /* Use dark text for these */
@@ -439,7 +436,6 @@
         .payment-methods { display: flex; gap: 10px; border: var(--border-thickness) solid var(--border-color); border-radius: var(--pill-border-radius); padding: 5px; background-color: rgba(255, 255, 255, 0.2); flex-wrap: wrap; justify-content: center; transition: border-color var(--view-change-speed) ease;}
         .payment-button { display: flex; align-items: center; gap: 8px; padding: 6px 15px; margin: 2px; font-family: inherit; } /* Inherits .sort-button styles */
         /* Ensure payment button text is readable when active */
-        body[data-theme="mono-dark"] .payment-button.active,
         body[data-theme="green"] .payment-button.active, /* Yellow active green */
         body[data-theme="yellow"] .payment-button.active, /* Lime active green */
         body[data-theme="orange"] .payment-button.active { /* Light active green */
@@ -458,13 +454,11 @@
         .order-log-item { display: flex; justify-content: space-between; align-items: center; background-color: var(--lighter-blue-bg); border: 1px solid var(--border-color); border-radius: 5px; padding: 8px 12px; cursor: pointer; transition: background-color var(--fast-transition-speed), border-color var(--view-change-speed), color var(--view-change-speed); gap: 5px; }
         .order-log-item:hover { background-color: color-mix(in srgb, var(--lighter-blue-bg) 80%, white); } .order-log-item.active { background-color: var(--active-green); border-width: 2px; }
          /* Ensure text on active order log item is readable */
-         body[data-theme="mono-dark"] .order-log-item.active,
          body[data-theme="green"] .order-log-item.active, /* Yellow active green */
          body[data-theme="yellow"] .order-log-item.active, /* Lime active green */
          body[data-theme="orange"] .order-log-item.active { /* Light active green */
               color: var(--text-color-dark); /* Use dark text for these */
          }
-         body[data-theme="mono-dark"] .order-log-item.active span,
          body[data-theme="green"] .order-log-item.active span,
          body[data-theme="yellow"] .order-log-item.active span,
          body[data-theme="orange"] .order-log-item.active span {
@@ -493,7 +487,6 @@
         .order-status-controls { display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap; }
         .status-button { font-family: inherit; } .status-button i { margin-right: 5px; } .status-button.active { background-color: var(--active-green); } .status-button:disabled { background-color: #ccc; cursor: not-allowed; border-color: #999; color: #666; }
          /* Ensure text on active status button is readable */
-         body[data-theme="mono-dark"] .status-button.active,
          body[data-theme="green"] .status-button.active, /* Yellow active green */
          body[data-theme="yellow"] .status-button.active, /* Lime active green */
          body[data-theme="orange"] .status-button.active { /* Light active green */
@@ -509,15 +502,12 @@
         .preview-price { font-size: 1.3rem; font-weight: 700; color: var(--text-color-dark); margin-bottom: 30px; background-color: var(--button-bg-color); padding: 6px 20px; border-radius: var(--pill-border-radius); border: var(--border-thickness) solid var(--border-color); display: inline-block; font-family: inherit; transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease;}
         .add-to-cart-preview-button { width: 80%; max-width: 240px; margin-top: auto; margin-bottom: 15px; padding: 12px 20px; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; gap: 10px; background-color: var(--active-green); border-color: var(--border-color); color: var(--text-color-dark); font-family: inherit; transition: background-color var(--fast-transition-speed) ease, transform var(--fast-transition-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease;}
         /* Ensure text on add-to-cart button is readable */
-        body[data-theme="mono-dark"] .add-to-cart-preview-button,
         body[data-theme="green"] .add-to-cart-preview-button, /* Yellow active green */
         body[data-theme="yellow"] .add-to-cart-preview-button, /* Lime active green */
         body[data-theme="orange"] .add-to-cart-preview-button { /* Light active green */
              color: var(--text-color-dark); /* Use dark text for these */
         }
         /* Ensure text on 'added' state button is readable */
-         body[data-theme="mono-dark"] .add-to-cart-preview-button.added { color: var(--main-bg-color-mono-dark); background-color: var(--pending-orange-mono-dark); } /* Black text on grey bg */
-         body[data-theme="mono-dark"] .add-to-cart-preview-button.added:hover:not(:active) { background-color: color-mix(in srgb, var(--pending-orange-mono-dark) 80%, white); }
          body[data-theme="yellow"] .add-to-cart-preview-button.added { background-color: var(--pending-orange-yellow); color: var(--text-color-dark-yellow); }
          body[data-theme="yellow"] .add-to-cart-preview-button.added:hover:not(:active) { background-color: color-mix(in srgb, var(--pending-orange-yellow) 80%, white); }
          body[data-theme="orange"] .add-to-cart-preview-button.added { background-color: var(--pending-orange-orange); color: var(--text-color-dark-orange); }
@@ -577,7 +567,6 @@
              color: #90A4AE; /* Lighter grey */
         }
 
-
         /* --- Custom Alert Modal Styles --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 100; visibility: hidden; opacity: 0; display: flex; justify-content: center; align-items: center; padding: 20px; transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease; font-family: var(--font-en); }
         html[lang="ar"] .modal-overlay { font-family: var(--font-ar); } .modal-overlay.visible { visibility: visible; opacity: 1; }
@@ -610,6 +599,76 @@
          /* Alert buttons already use theme variables, should adapt automatically */
 
         /* --- End Custom Alert Modal Styles --- */
+
+        /* --- START: Fixes for Monochrome Dark Text Visibility --- */
+
+        /* Cart Badge Text */
+        body[data-theme="mono-dark"] .cart-badge {
+            color: var(--main-bg-color-mono-dark); /* Black text on white badge */
+            border-color: var(--text-color-dark-mono-dark); /* Lighter border for contrast */
+        }
+
+        /* Add to Cart Button (Preview Screen) Text */
+        body[data-theme="mono-dark"] .add-to-cart-preview-button {
+            color: var(--main-bg-color-mono-dark); /* Black text on white button */
+        }
+        body[data-theme="mono-dark"] .add-to-cart-preview-button:hover:not(:active) {
+             background-color: #e0e0e0; /* Slightly off-white hover */
+             color: var(--main-bg-color-mono-dark); /* Keep black text */
+        }
+        /* Ensure text on 'added' state button is readable */
+         body[data-theme="mono-dark"] .add-to-cart-preview-button.added {
+             color: var(--main-bg-color-mono-dark); /* Black text on grey bg */
+             background-color: var(--pending-orange-mono-dark);
+         }
+         body[data-theme="mono-dark"] .add-to-cart-preview-button.added:hover:not(:active) {
+             background-color: color-mix(in srgb, var(--pending-orange-mono-dark) 80%, white);
+             color: var(--main-bg-color-mono-dark); /* Keep black text */
+         }
+
+        /* Active Sort/Payment Buttons Text */
+        body[data-theme="mono-dark"] .sort-button.active,
+        body[data-theme="mono-dark"] .payment-button.active {
+            color: var(--main-bg-color-mono-dark); /* Black text on white active button */
+        }
+
+        /* Active Status Buttons (Management Screen) Text */
+         body[data-theme="mono-dark"] .status-button.active {
+              color: var(--main-bg-color-mono-dark); /* Black text on white active button */
+         }
+
+         /* Active Order Log Item Text (Management Screen) */
+         body[data-theme="mono-dark"] .order-log-item.active {
+              color: var(--main-bg-color-mono-dark); /* Black text on white active item */
+         }
+         body[data-theme="mono-dark"] .order-log-item.active span:not(.order-status) {
+              color: inherit; /* Ensure child spans inherit black text */
+         }
+         /* The .order-status span keeps its specific fixed background/text colors */
+
+
+        /* Management Button (Login Screen) Text on Yellow Background */
+        body[data-theme="mono-dark"] #goto-admin-login-button {
+            color: #000000 !important; /* Force black text on yellow */
+            border-color: #000000; /* Black border */
+        }
+        body[data-theme="mono-dark"] #goto-admin-login-button:hover {
+            color: #000000 !important; /* Keep black text */
+            background-color: #ffda63 !important; /* Slightly lighter yellow */
+        }
+
+        /* Remove Button (Cart) - Ensure contrast */
+        body[data-theme="mono-dark"] .remove-item-button {
+             background-color: var(--remove-red-mono-dark); /* #bdbdbd */
+             color: var(--main-bg-color-mono-dark); /* Black text on grey button */
+             border-color: var(--text-color-dark-mono-dark); /* Lighter border */
+        }
+        body[data-theme="mono-dark"] .remove-item-button:hover {
+             background-color: color-mix(in srgb, var(--remove-red-mono-dark) 80%, black);
+        }
+
+        /* --- END: Fixes for Monochrome Dark Text Visibility --- */
+
 
         /* Management Button Text Color Fix for Yellow/Orange Theme */
         body[data-theme="yellow"] #goto-admin-login-button,
@@ -920,7 +979,7 @@
 
             // --- Order Placement and Management Functions ---
              function generateOrderId() { return `ORD-${Date.now()}-${Math.floor(Math.random()*10)}`; }
-             function placeOrder() { if (cart.length === 0) { alert(getText('cart_is_empty_alert')); return; } const t = cart.reduce((s, i) => s + (i.price * i.quantity), 0); const o = { id: generateOrderId(), items: cart.map(i => ({ id: i.id, name_key: i.name_key, price: i.price, quantity: i.quantity })), totalAmount: t, timestamp: new Date(), status: 'pending', paymentMethod: selectedPaymentMethod }; allOrders.push(o); console.log("Order Placed:", o); cart = []; selectedPaymentMethod = 'cash'; updateCartUI(); if (paymentMethodsContainer) paymentMethodsContainer.querySelectorAll('.payment-button').forEach(b => b.classList.toggle('active', b.dataset.method === 'cash')); const m = getText('checkout_success_alert').replace('{total}', formatPrice(o.totalAmount)).replace('{method}', getText(`payment_${o.paymentMethod}`)).replace('{id}', o.id); showCustomAlert(m); }
+             function placeOrder() { if (cart.length === 0) { showCustomAlert(getText('cart_is_empty_alert')); return; } const t = cart.reduce((s, i) => s + (i.price * i.quantity), 0); const o = { id: generateOrderId(), items: cart.map(i => ({ id: i.id, name_key: i.name_key, price: i.price, quantity: i.quantity })), totalAmount: t, timestamp: new Date(), status: 'pending', paymentMethod: selectedPaymentMethod }; allOrders.push(o); console.log("Order Placed:", o); cart = []; selectedPaymentMethod = 'cash'; updateCartUI(); if (paymentMethodsContainer) paymentMethodsContainer.querySelectorAll('.payment-button').forEach(b => b.classList.toggle('active', b.dataset.method === 'cash')); const m = getText('checkout_success_alert').replace('{total}', formatPrice(o.totalAmount)).replace('{method}', getText(`payment_${o.paymentMethod}`)).replace('{id}', o.id); showCustomAlert(m); }
              function renderOrderLog(f = allOrders) { if(!orderLogContainer) return; orderLogContainer.innerHTML = ''; const s = [...f].sort((a, b) => b.timestamp - a.timestamp), c = getCurrency(); if (s.length === 0) { orderLogContainer.innerHTML = `<p class="no-orders-message">${getText('no_orders_found')}</p>`; return; } s.forEach(o => { const l = document.createElement('div'); l.className = 'order-log-item'; l.dataset.orderId = o.id; const t = getText(`order_status_${o.status}`); l.innerHTML = `<span class="order-id" title="${o.id}">${o.id}</span><span class="order-status ${o.status}">${t}</span><span class="order-total">${o.totalAmount} ${c}</span>`; l.classList.toggle('active', o.id === currentAdminOrderSelection); l.addEventListener('click', () => { currentAdminOrderSelection = o.id; showOrderDetails(o.id); renderOrderLog(f); }); orderLogContainer.appendChild(l); }); }
              function clearOrderPreview() { if(!orderPreviewContent || !orderStatusControls) return; orderPreviewContent.innerHTML = `<p class="order-preview-placeholder">${getText('order_preview_placeholder')}</p>`; orderStatusControls.innerHTML = ''; currentAdminOrderSelection = null; orderLogContainer?.querySelectorAll('.order-log-item.active').forEach(i => i.classList.remove('active')); }
              function showOrderDetails(id) { const o = allOrders.find(o => o.id === id); if (!o || !orderPreviewContent) { clearOrderPreview(); return; } const c = getCurrency(), l = currentLanguage === 'ar' ? 'ar-EG' : 'en-GB', ft = o.timestamp.toLocaleString(l, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }), tst = getText(`order_status_${o.status}`), tp = getText(`payment_${o.paymentMethod}`); let ih = '<ul>'; o.items.forEach(i => { const n = getText(i.name_key); ih += `<li>${getText('quantity_prefix')}${i.quantity} ${n} (${i.price*i.quantity} ${c})</li>`; }); ih += '</ul>'; orderPreviewContent.innerHTML = `<p><strong>${getText('order_id_label')}:</strong> <span>${o.id}</span></p><p><strong>${getText('order_placed_label')}:</strong> <span>${ft}</span></p><p><strong>${getText('order_status_label')}:</strong><span style="text-transform:capitalize;font-weight:bold;"> ${tst}</span></p><p><strong>${getText('order_payment_label')}:</strong><span style="text-transform:capitalize;"> ${tp}</span></p><p><strong>${getText('order_total_label')}:</strong> <span>${o.totalAmount} ${c}</span></p><p><strong>${getText('order_items_label')}:</strong></p>${ih}`; renderStatusButtons(o); }
@@ -931,12 +990,12 @@
             // --- Custom Alert Functions ---
             function updateModalLanguage() { if (customAlertTitle) customAlertTitle.textContent = getText('checkout_success_title'); if (customAlertCloseBtn) customAlertCloseBtn.textContent = getText('ok_button'); }
             function showCustomAlert(m) { if (!customAlertOverlay || !customAlertMessage) return; updateModalLanguage(); customAlertMessage.textContent = m; requestAnimationFrame(() => { customAlertOverlay.classList.add('visible'); }); }
-            function hideCustomAlert() { if (!customAlertOverlay || !customAlertOverlay.classList.contains('visible')) return; customAlertOverlay.classList.remove('visible'); if(currentScreen?.id !== 'screen-3'){ showScreen('screen-3'); } }
+            function hideCustomAlert() { if (!customAlertOverlay || !customAlertOverlay.classList.contains('visible')) return; customAlertOverlay.classList.remove('visible'); if(currentScreen?.id !== 'screen-3' && customAlertMessage?.textContent !== getText('cart_is_empty_alert')){ showScreen('screen-3'); } }
             // --- End Custom Alert Functions ---
 
             // --- Event Listeners ---
             navigationElements.forEach(e => e.addEventListener('click', () => { const t = e.dataset.target; if (t) showScreen(t); }));
-            loginSubmitButton?.addEventListener('click', () => { const e = loginEmailInput.value.trim(), p = loginPasswordInput.value; loginErrorMsg.style.display = 'none'; if (e && p) { currentUser = { email: e, profilePic: DEFAULT_PROFILE_PIC }; loginEmailInput.value = ''; loginPasswordInput.value = ''; updateUserInfoUI(); showScreen('screen-3'); } else { loginErrorMsg.textContent = getText('login_error_fields'); loginErrorMsg.style.display = 'block'; } });
+            loginSubmitButton?.addEventListener('click', () => { const e = loginEmailInput.value.trim(), p = loginPasswordInput.value; if(!loginErrorMsg) return; loginErrorMsg.style.display = 'none'; if (e && p) { currentUser = { email: e, profilePic: DEFAULT_PROFILE_PIC }; loginEmailInput.value = ''; loginPasswordInput.value = ''; updateUserInfoUI(); showScreen('screen-3'); } else { loginErrorMsg.textContent = getText('login_error_fields'); loginErrorMsg.style.display = 'block'; } });
             gotoAdminLoginButton?.addEventListener('click', () => showScreen('screen-6'));
             registerSubmitButton?.addEventListener('click', () => { const e = registerEmailInput.value.trim(), p = registerPasswordInput.value, c = registerPasswordConfirmInput.value, a = registerPhotoPicker?.querySelector('.profile-pic.active'); if(!registerErrorMsg) return; registerErrorMsg.style.display = 'none'; if (!e || !p || !c) { registerErrorMsg.textContent = getText('register_error_fields'); registerErrorMsg.style.display = 'block'; return; } if (p !== c) { registerErrorMsg.textContent = getText('register_error_match'); registerErrorMsg.style.display = 'block'; return; } if (!a) { registerErrorMsg.textContent = getText('register_error_photo'); registerErrorMsg.style.display = 'block'; return; } currentUser = { email: e, profilePic: a.src }; registerEmailInput.value = ''; registerPasswordInput.value = ''; registerPasswordConfirmInput.value = ''; updateUserInfoUI(); showScreen('screen-3'); });
             registerPhotoPicker?.addEventListener('click', e => { if (e.target.classList.contains('profile-pic')) { registerPhotoPicker.querySelectorAll('.profile-pic').forEach(p => p.classList.remove('active')); e.target.classList.add('active'); } });
