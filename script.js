@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const customAlertCloseBtn = document.getElementById('custom-alert-close');
     const customAlertTitle = customAlertBox.querySelector('h3');
 
-    // Passcode Modal Elements (Updated IDs)
+    // Passcode Modal Elements
     const passcodeModalOverlay = document.getElementById('passcode-modal-overlay');
     const passcodeModalBox = document.getElementById('passcode-modal-box');
     const passcodeModalTitle = document.getElementById('passcode-modal-title');
@@ -82,19 +82,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const passcodeModalOk = document.getElementById('passcode-modal-ok');
     const passcodeModalCancel = document.getElementById('passcode-modal-cancel');
 
-    // Product Management Elements
-    const productListContainer = document.getElementById('product-list-container');
-    const addProductForm = document.querySelector('.add-product-form');
+    // Screen 9 Product Management Elements (Refined)
+    const gotoProductMgmtButton = document.getElementById('goto-product-mgmt-button'); // Button on screen 5
+    const productListContainer = document.getElementById('product-list-container'); // Now on Screen 9
+    const addProductForm = document.querySelector('#screen-9 .add-product-form'); // Scoped to Screen 9
     const newProductNameInput = document.getElementById('new-product-name');
     const newProductDescInput = document.getElementById('new-product-desc');
     const newProductPriceInput = document.getElementById('new-product-price');
     const newProductQuantityInput = document.getElementById('new-product-quantity');
     const newProductImageInput = document.getElementById('new-product-image');
     const newProductCategorySelect = document.getElementById('new-product-category');
-    const addNewProductButton = document.getElementById('add-new-product-button');
-    const addProductErrorMsg = document.getElementById('add-product-error');
-    const productPriceLabel = document.querySelector('label[for="new-product-price"]'); // For currency symbol
+    const addNewProductButton = document.getElementById('add-new-product-button'); // In Screen 9
+    const addProductErrorMsg = document.getElementById('add-product-error'); // In Screen 9
+    const productPriceLabel = document.querySelector('label[for="new-product-price"]'); // For currency symbol in add form
 
+    // Edit Product Modal Elements
+    const editProductModalOverlay = document.getElementById('edit-product-modal-overlay');
+    const editProductModalBox = document.getElementById('edit-product-modal-box');
+    const editProductIdInput = document.getElementById('edit-product-id');
+    const editProductNameInput = document.getElementById('edit-product-name');
+    const editProductDescInput = document.getElementById('edit-product-desc');
+    const editProductPriceInput = document.getElementById('edit-product-price');
+    const editProductQuantityInput = document.getElementById('edit-product-quantity');
+    const editProductImageInput = document.getElementById('edit-product-image');
+    const editProductCategorySelect = document.getElementById('edit-product-category');
+    const editProductErrorMsg = document.getElementById('edit-product-error');
+    const editProductSaveButton = document.getElementById('edit-product-save');
+    const editProductCancelButton = document.getElementById('edit-product-cancel');
 
     // --- State Variables ---
     let currentScreen = null,
@@ -117,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Data & Translations ---
-    // MODIFIED: Added quantity to baseMenuData items
-    let baseMenuData = [ // Changed to let for adding new products
+    // MODIFIED: Changed to let for adding/removing/editing products
+    let baseMenuData = [ // Changed to let
         {id: 'coffee', price: 30, image: 'https://media.elwatannews.com/media/img/mediaarc/large/20237496061663046251.jpg', category: 'sweet', quantity: 999, name_key: 'item_name_coffee', description_key: 'item_desc_coffee'},
         {id: 'pizza', price: 70, image: 'https://www.foodandwine.com/thmb/4qg95tjf0mgdHqez5OLLYc0PNT4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/classic-cheese-pizza-FT-RECIPE0422-31a2c938fc2546c9a07b7011658cfd05.jpg', category: 'lunch', quantity: 999, name_key: 'item_name_pizza', description_key: 'item_desc_pizza'},
         {id: 'cookies', price: 20, image: 'https://interpretationfordream.com/wp-content/uploads/2024/09/069873874340983.webp', category: 'sweet', quantity: 999, name_key: 'item_name_cookies', description_key: 'item_desc_cookies'},
@@ -146,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'bundle-sweet-treat', name_key: 'bundle_sweet_treat_name', description_key: 'bundle_sweet_treat_desc', itemIds: ['cake', 'coffee', 'croissant'], discountPercent: 20 }
     ];
 
-    let translations = { // Changed to let for adding new keys
+    let translations = { // Changed to let
         welcome_title: { en: "Welcome to<br>EVA Canteen", ar: "أهلاً بكم في<br>كانتين إيفا" },
         canteen_name: { en: "EVA Canteen", ar: "كانتين إيفا" },
         sign_in_label: { en: "sign in", ar: "تسجيل الدخول" },
@@ -212,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         order_status_pending: { en: "pending", ar: "قيد الانتظار" },
         order_status_preparing: { en: "preparing", ar: "قيد التجهيز" },
         order_status_delivered: { en: "delivered", ar: "تم التوصيل" },
-         subtotal_label: { en: "Subtotal", ar: "المجموع قبل الخصم" }, // ADDED Subtotal translation
+         subtotal_label: { en: "Subtotal", ar: "المجموع قبل الخصم" },
          settings_title: { en: "Settings", ar: "الإعدادات" }, settings_button_label: { en: "Settings", ar: "الإعدادات" }, language_setting_label: { en: "Language", ar: "اللغة" }, theme_setting_label: { en: "App Theme", ar: "سمة التطبيق" },
          theme_blue: { en: "Blue (Default)", ar: "الأزرق (الافتراضي)" }, theme_green: { en: "Green", ar: "الأخضر" }, theme_purple: { en: "Purple", ar: "البنفسجي" },
          theme_light_blue: { en: "Light Blue", ar: "أزرق فاتح" }, theme_mono_light: { en: "Monochrome Light", ar: "أبيض وأسود فاتح" }, theme_dark_grey: { en: "Dark Grey", ar: "رمادي داكن" }, theme_night: { en: "Night Mode", ar: "الوضع الليلي" },
@@ -254,7 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
          discovery_passcode_incorrect_message: { en: "Incorrect passcode entered.", ar: "تم إدخال رمز مرور غير صحيح." },
          cancel_button: { en: "Cancel", ar: "إلغاء" },
          // Product Management Translations
-         manage_products_title: { en: "Manage Products", ar: "إدارة المنتجات" },
+         manage_products_button: { en: "Manage Products", ar: "إدارة المنتجات" }, // Button on Screen 5
+         product_management_title: { en: "Product Management", ar: "إدارة المنتجات" }, // Screen 9 Title
+         back_to_orders_button: { en: "Back to Orders", ar: "العودة للطلبات" }, // Screen 9 Back Button
          add_new_product_title: { en: "Add New Product", ar: "إضافة منتج جديد" },
          product_name_label: { en: "Product Name:", ar: "اسم المنتج:" },
          product_name_placeholder: { en: "e.g., Special Sandwich", ar: "مثال: ساندويتش خاص" },
@@ -262,20 +278,32 @@ document.addEventListener('DOMContentLoaded', () => {
          product_desc_placeholder: { en: "e.g., Chicken, lettuce, tomato...", ar: "مثال: دجاج، خس، طماطم..." },
          product_price_label: { en: "Price ({currency}):", ar: "السعر ({currency}):" },
          product_price_placeholder: { en: "e.g., 55.50", ar: "مثال: 55.50" },
-         product_quantity_label: { en: "Initial Quantity:", ar: "الكمية الأولية:" },
-         product_quantity_placeholder: { en: "e.g., 50 (999 for unlimited)", ar: "مثال: 50 (999 للمتاح دائماً)" },
+         product_quantity_label: { en: "Initial Quantity:", ar: "الكمية الأولية:" }, // Used in Add form
+         product_quantity_placeholder: { en: "e.g., 50 (999 for unlimited)", ar: "مثال: 50 (999 للمتاح دائماً)" }, // Used in Add form
          product_image_label: { en: "Image URL:", ar: "رابط الصورة:" },
          product_image_placeholder: { en: "https://...", ar: "https://..." },
          product_category_label: { en: "Category:", ar: "الفئة:" },
          add_product_button: { en: "Add Product", ar: "إضافة المنتج" },
          save_button: { en: "Save", ar: "حفظ" },
          saved_button: { en: "Saved!", ar: "تم الحفظ!" },
-         product_quantity_header: { en: "Qty", ar: "الكمية" }, // Optional header for list
+         product_quantity_header: { en: "Qty", ar: "الكمية" },
          add_product_error_generic: { en: "Please fill all fields correctly.", ar: "الرجاء ملء جميع الحقول بشكل صحيح." },
          add_product_error_price: { en: "Invalid price.", ar: "السعر غير صالح." },
          add_product_error_quantity: { en: "Invalid quantity.", ar: "الكمية غير صالحة." },
          add_product_error_image: { en: "Invalid image URL.", ar: "رابط الصورة غير صالح." },
-         add_product_success: { en: "Product '{name}' added successfully!", ar: "تمت إضافة المنتج '{name}' بنجاح!" }
+         add_product_success: { en: "Product '{name}' added successfully!", ar: "تمت إضافة المنتج '{name}' بنجاح!" },
+         // NEW Edit/Remove Translations
+         edit_button: { en: "Edit", ar: "تعديل" },
+         remove_button: { en: "Remove", ar: "إزالة" },
+         confirm_remove_product: { en: "Are you sure you want to remove '{name}'? This cannot be undone.", ar: "هل أنت متأكد من رغبتك في إزالة '{name}'؟ لا يمكن التراجع عن هذا الإجراء." },
+         remove_product_success: { en: "Product '{name}' removed successfully.", ar: "تمت إزالة المنتج '{name}' بنجاح." },
+         edit_product_title: { en: "Edit Product", ar: "تعديل المنتج" },
+         save_changes_button: { en: "Save Changes", ar: "حفظ التغييرات" },
+         edit_product_error_generic: { en: "Please fill all fields correctly.", ar: "الرجاء ملء جميع الحقول بشكل صحيح." },
+         edit_product_error_price: { en: "Invalid price.", ar: "السعر غير صالح." },
+         edit_product_error_quantity: { en: "Invalid quantity.", ar: "الكمية غير صالحة." },
+         edit_product_error_image: { en: "Invalid image URL.", ar: "رابط الصورة غير صالح." },
+         edit_product_success: { en: "Product '{name}' updated successfully!", ar: "تم تحديث المنتج '{name}' بنجاح!" }
     };
 
 
@@ -293,20 +321,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeAllSettingsDropdowns() { if(languageGroup) languageGroup.classList.remove('open', 'open-upward'); if(themeGroup) themeGroup.classList.remove('open', 'open-upward'); if(currentLanguageDisplay) currentLanguageDisplay.setAttribute('aria-expanded', 'false'); if(currentThemeDisplay) currentThemeDisplay.setAttribute('aria-expanded', 'false'); }
     function updateLanguageDisplay() { const s = languageOptions?.querySelector(`.option-item[data-lang="${currentLanguage}"]`); if (s && currentLanguageText) { currentLanguageText.textContent = s.querySelector('span').textContent; languageOptions?.querySelectorAll('.option-item').forEach(i => { const a = i.dataset.lang === currentLanguage; i.classList.toggle('active', a); i.setAttribute('aria-selected', a); }); } }
     function updateThemeDisplay() { const s = themeOptions?.querySelector(`.option-item[data-theme="${currentTheme}"]`); if (s && currentThemeText && currentThemeSwatch) { const tK = s.querySelector('span:not(.theme-swatch)')?.dataset.langKey; if (tK) { currentThemeText.textContent = getText(tK); } else { currentThemeText.textContent = s.querySelector('span:not(.theme-swatch)')?.textContent || currentTheme; } const w = s.querySelector('.theme-swatch'); if (w) { currentThemeSwatch.style.background = w.style.background; currentThemeSwatch.className = 'theme-swatch'; const c = Array.from(w.classList).find(cls => cls !== 'theme-swatch'); if (c) { currentThemeSwatch.classList.add(c); } } themeOptions?.querySelectorAll('.option-item').forEach(i => { const a = i.dataset.theme === currentTheme; i.classList.toggle('active', a); i.setAttribute('aria-selected', a); }); } }
-    // Update Discovery Mode Toggle Visuals
-    function updateDiscoveryToggleVisualState() {
-        if (discoveryModeToggle) {
-            discoveryModeToggle.setAttribute('aria-checked', isDiscoveryModeActivated);
-        }
-    }
+    function updateDiscoveryToggleVisualState() { if (discoveryModeToggle) { discoveryModeToggle.setAttribute('aria-checked', isDiscoveryModeActivated); } }
     function updateSettingsDisplays() { updateLanguageDisplay(); updateThemeDisplay(); updateDiscoveryToggleVisualState(); }
-
-    // Function to update visibility of Discover button on Screen 3
-    function updateDiscoverButtonVisibility() {
-        if (discoverButton) {
-            discoverButton.style.display = isDiscoveryModeActivated ? 'inline-flex' : 'none'; // Use inline-flex
-        }
-    }
+    function updateDiscoverButtonVisibility() { if (discoverButton) { discoverButton.style.display = isDiscoveryModeActivated ? 'inline-flex' : 'none'; } }
     // --- End Settings Panel Logic ---
 
     // --- Language and UI Update Functions ---
@@ -315,8 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
          document.querySelectorAll('[data-lang-key]').forEach(el => {
              const key = el.dataset.langKey;
              let translation = getText(key);
-             // Special handling for price label to include currency
-             if (key === 'product_price_label' && productPriceLabel) { // Check if element exists
+             // Special handling for price labels to include currency
+             if (key === 'product_price_label' && (el === productPriceLabel || el.closest('#edit-product-modal-box'))) { // Check for add or edit form
                  translation = translation.replace('{currency}', getCurrency());
              }
 
@@ -335,34 +352,41 @@ document.addEventListener('DOMContentLoaded', () => {
                  el.placeholder = getText(key);
              }
          });
-         updateSettingsDisplays(); // Includes updates for settings and discover button
+         updateSettingsDisplays();
          populateMenuGrid();
-         updateCartUI(); // Always redraw on language change for item names etc.
+         updateCartUI();
+
+         // Modified Screen 5 update
          if (currentScreen && currentScreen.id === 'screen-5') {
-             // Existing order management updates...
              const logTitle = currentScreen.querySelector('.order-log-section h4');
              const previewTitle = currentScreen.querySelector('.order-preview-section h4');
              if(logTitle) logTitle.textContent = getText('order_log_title');
              if(previewTitle) previewTitle.textContent = getText('order_preview_title');
              renderOrderLog();
              if (currentAdminOrderSelection) showOrderDetails(currentAdminOrderSelection); else clearOrderPreview();
-             // Update product management section titles etc.
-             populateProductManagementList(); // Repopulate product list on lang change
-             const pmTitle = currentScreen.querySelector('.product-management-section h4');
-             const apTitle = currentScreen.querySelector('.add-product-form h5');
-             if (pmTitle) pmTitle.textContent = getText('manage_products_title');
-             if (apTitle) apTitle.textContent = getText('add_new_product_title');
+             // PRODUCT MGMT update removed from here
          }
+         // ADDED: Update Screen 9 if active
+         if (currentScreen && currentScreen.id === 'screen-9') {
+             populateProductManagementList(); // Repopulate product list on lang change
+             const pmTitle = currentScreen.querySelector('.screen-title'); // Screen title
+             const apTitle = currentScreen.querySelector('.add-product-form h5');
+             if (pmTitle) pmTitle.textContent = getText('product_management_title');
+             if (apTitle) apTitle.textContent = getText('add_new_product_title');
+             // Update Add Product Form labels/placeholders (already covered by general selectors)
+         }
+
          if (currentScreen && currentScreen.id === 'screen-7') { const currentItemId = addToCartPreviewButton?.dataset.itemId; if (currentItemId) { showItemPreview(currentItemId, false); const isAdded = addToCartPreviewButton.classList.contains('added'); setPreviewButtonState(isAdded); } }
          if (currentScreen && currentScreen.id === 'screen-8') { populateDiscoveryMode(); }
-         updateModalLanguage();
+         updateModalLanguage(); // Handles general alert modal
+         updatePasscodeModalLanguage();
+         updateEditModalLanguage(); // ADDED: Update Edit Modal language
          if (addToCartPreviewButton && addToCartPreviewButton.dataset.itemId) { const isAdded = addToCartPreviewButton.classList.contains('added'); setPreviewButtonState(isAdded); }
         if (currentScreen && currentScreen.id === 'screen-8') {
             if(discoveryBundlesScroller) { discoveryBundlesScroller.querySelectorAll('.add-bundle-button.added span').forEach(span => { if(span) span.textContent = getText('bundle_added_button'); }); }
             if(discoverySuggestionsGrid) { discoverySuggestionsGrid.querySelectorAll('.add-suggestion-button.added span').forEach(span => { if(span) span.textContent = getText('suggestion_added_button'); }); }
          }
-         updatePasscodeModalLanguage(); // Update passcode modal text
-         updateDiscoverButtonVisibility(); // Update button visibility on lang change
+         updateDiscoverButtonVisibility();
      }
 
 
@@ -382,28 +406,32 @@ document.addEventListener('DOMContentLoaded', () => {
                  targetScreen.classList.add('active');
                  currentScreen = targetScreen;
 
-                 // Store previous screen ID ONLY when navigating TO screen 7 from menu or discovery
                  if (id === 'screen-7' && fromScreenId && ['screen-3', 'screen-8'].includes(fromScreenId)) {
                      previousScreenId = fromScreenId;
                      console.log("Navigating to Screen 7 from:", previousScreenId);
                  } else if (id !== 'screen-7' && fromScreenId !== 'screen-7') {
-                    // Reset only if navigating between non-preview related screens
                      previousScreenId = null;
                      console.log("Resetting previousScreenId (not navigating to/from preview)");
                  }
 
                  if (id === 'screen-4') updateCartUI();
+
+                 // Modified Screen 5 logic
                  if (id === 'screen-5') {
                     renderOrderLog();
                     clearOrderPreview();
                     if(orderSearchInput) orderSearchInput.value = '';
-                    populateProductManagementList(); // <<< ADDED: Populate products when screen 5 shown
-                    if(addProductErrorMsg) addProductErrorMsg.style.display = 'none'; // Hide error on screen load
-                    // Don't reset the add product form itself on screen load, only on successful add
-                    // if(addProductForm) addProductForm.reset();
+                    // PRODUCT MGMT LIST IS NO LONGER POPULATED HERE
                  }
+                 // ADDED: Screen 9 logic
+                 if (id === 'screen-9') {
+                     populateProductManagementList(); // Populate when screen 9 is shown
+                     const addFormError = targetScreen.querySelector('#add-product-error'); // Find error within target screen
+                     if(addFormError) addFormError.style.display = 'none';
+                 }
+
                  if (id === 'screen-6') { if(adminLoginErrorMsg) adminLoginErrorMsg.style.display = 'none'; }
-                 if (id === 'screen-3' || id === 'screen-7' || id === 'screen-8') updateCartBadge();
+                 if (id === 'screen-3' || id === 'screen-7' || id === 'screen-8' || id === 'screen-9') updateCartBadge(); // Update badge on mgmt too
                  if (id === 'screen-8') { populateDiscoveryMode(); }
                  if (id === 'screen-3') { updateDiscoverButtonVisibility(); }
                  if (targetScreen && !skip) targetScreen.scrollTop = 0;
@@ -445,14 +473,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     totalCalculationDetails.innerHTML += `<p style="color: var(--active-green); font-weight: bold;">${discountName}: -${formatPrice(Math.abs(item.price))}</p>`;
                     const cartItemEl = document.createElement('div');
                     cartItemEl.className = 'cart-item discount-item';
-                    cartItemEl.dataset.id = item.id; // Use the unique discount ID here
+                    cartItemEl.dataset.id = item.id;
                     cartItemEl.innerHTML = `
                         <img src="${item.image || 'https://img.icons8.com/ios-filled/50/discount--v1.png'}" alt="Discount" style="opacity:0.5; filter: grayscale(80%); width: 40px; height: 40px; object-fit: contain;">
                         <div class="item-details">
                             <div class="item-info"><p>${discountName}</p></div>
                             <span class="item-price-button" style="color: var(--active-green); font-weight: bold; background: transparent; border: none; padding: 6px 0;">-${formatPrice(Math.abs(item.price))}</span>
                         </div>
-                        <button class="remove-item-button" title="Remove discount">&times;</button>`;
+                        <button class="remove-item-button" title="Remove discount">×</button>`;
                     cartItemsContainer.appendChild(cartItemEl);
                 } else {
                     totalPriceBeforeDiscounts += itemSubtotal;
@@ -460,14 +488,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     totalCalculationDetails.innerHTML += `<p>${quantityPrefix}${item.quantity} ${itemName} = ${formatPrice(itemSubtotal)}</p>`;
                     const cartItemEl = document.createElement('div');
                     cartItemEl.className = 'cart-item';
-                    cartItemEl.dataset.id = item.id; // Use the product ID
+                    cartItemEl.dataset.id = item.id;
                     cartItemEl.innerHTML = `
                         <img src="${item.image}" alt="${itemName}">
                         <div class="item-details">
                             <div class="item-info"><p title="${itemName}">${itemName}</p><span class="item-quantity">${quantityPrefix}${item.quantity}</span></div>
                             <span class="item-price-button">${formatPrice(itemSubtotal)}</span>
                         </div>
-                        <button class="remove-item-button" title="Remove item">&times;</button>`;
+                        <button class="remove-item-button" title="Remove item">×</button>`;
                     cartItemsContainer.appendChild(cartItemEl);
                 }
             });
@@ -486,33 +514,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const productData = baseMenuData[productIndex];
-
-        // --- Quantity Check ---
         const cartItem = cart.find(i => i.id === id && !i.isDiscount);
         const currentCartQuantity = cartItem ? cartItem.quantity : 0;
 
-        if (productData.quantity <= currentCartQuantity) {
-            showCustomAlert(`Sorry, '${getText(productData.name_key)}' is out of stock!`, 'checkout_success_title'); // Reuse title or add new key
+        if (productData.quantity !== 999 && productData.quantity <= currentCartQuantity) { // Check non-unlimited items
+            showCustomAlert(`Sorry, '${getText(productData.name_key)}' is out of stock!`, 'checkout_success_title');
             console.log(`Item ${id} out of stock. Available: ${productData.quantity}, In cart: ${currentCartQuantity}`);
-            // Optionally disable the button visually or provide other feedback
-            return; // Stop adding
+            return;
         }
-        // --- End Quantity Check ---
-
 
         const existingCartItemIndex = cart.findIndex(i => i.id === id && !i.isDiscount);
         if (existingCartItemIndex > -1) {
             cart[existingCartItemIndex].quantity++;
         } else {
-            // Create a *copy* of the relevant product data for the cart
             const cartProductData = {
-                id: productData.id,
-                price: productData.price,
-                image: productData.image,
-                category: productData.category,
-                name_key: productData.name_key,
-                description_key: productData.description_key,
-                quantity: 1 // This is cart quantity, not stock quantity
+                id: productData.id, price: productData.price, image: productData.image, category: productData.category,
+                name_key: productData.name_key, description_key: productData.description_key, quantity: 1
             };
              cart.push(cartProductData);
         }
@@ -522,11 +539,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeFromCart(id) {
         const itemIndex = cart.findIndex(i => i.id === id);
         if (itemIndex === -1) return;
-        // If it's a discount or quantity is 1, remove completely
         if (cart[itemIndex].isDiscount || cart[itemIndex].quantity <= 1) {
             cart.splice(itemIndex, 1);
         } else {
-            // Otherwise, just decrease quantity
             cart[itemIndex].quantity--;
         }
         updateCartUI();
@@ -546,71 +561,56 @@ document.addEventListener('DOMContentLoaded', () => {
              return;
          }
 
-        // --- Deduct Stock ---
         let stockSufficient = true;
-        const stockUpdates = []; // To apply only if all items are in stock
+        const stockUpdates = [];
 
         actualItems.forEach(cartItem => {
             const productIndex = baseMenuData.findIndex(p => p.id === cartItem.id);
             if (productIndex > -1) {
-                if (baseMenuData[productIndex].quantity < cartItem.quantity) {
+                 // Check quantity only if it's not 999 (unlimited)
+                if (baseMenuData[productIndex].quantity !== 999 && baseMenuData[productIndex].quantity < cartItem.quantity) {
                     stockSufficient = false;
                     showCustomAlert(`Sorry, only ${baseMenuData[productIndex].quantity} of '${getText(baseMenuData[productIndex].name_key)}' available!`, 'checkout_success_title');
-                } else {
+                } else if (baseMenuData[productIndex].quantity !== 999) { // Only add to updates if not unlimited
                     stockUpdates.push({ index: productIndex, quantityToDeduct: cartItem.quantity });
                 }
             } else {
-                // Should ideally not happen if cart validation is correct
                 console.error(`Product ${cartItem.id} in cart not found in baseMenuData during checkout.`);
-                stockSufficient = false;
+                stockSufficient = false; // Treat missing product as insufficient stock
             }
         });
 
         if (!stockSufficient) {
-            return; // Stop order placement
+            return;
         }
 
-        // Apply stock deductions *after* checking all items
         stockUpdates.forEach(update => {
             baseMenuData[update.index].quantity -= update.quantityToDeduct;
             console.log(`Stock for ${baseMenuData[update.index].id} reduced by ${update.quantityToDeduct}. New stock: ${baseMenuData[update.index].quantity}`);
         });
-        // --- End Stock Deduction ---
-
 
          const finalTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
          const o = {
              id: generateOrderId(),
-             items: cart.map(i => ({ // Deep copy items for the order record
-                id: i.id,
-                name_key: i.name_key,
-                price: i.price,
-                quantity: i.quantity,
-                isDiscount: i.isDiscount || false
-             })),
-             totalAmount: finalTotal,
-             timestamp: new Date(),
-             status: 'pending',
-             paymentMethod: selectedPaymentMethod
+             items: cart.map(i => ({ id: i.id, name_key: i.name_key, price: i.price, quantity: i.quantity, isDiscount: i.isDiscount || false })),
+             totalAmount: finalTotal, timestamp: new Date(), status: 'pending', paymentMethod: selectedPaymentMethod
          };
          allOrders.push(o);
          console.log("Order Placed:", o);
 
-         // Clear cart and reset UI
          cart = [];
          selectedPaymentMethod = 'cash';
          updateCartUI();
          if (paymentMethodsContainer) paymentMethodsContainer.querySelectorAll('.payment-button').forEach(b => b.classList.toggle('active', b.dataset.method === 'cash'));
 
-         // Show confirmation
          const m = getText('checkout_success_alert')
                      .replace('{method}', getText(`payment_${o.paymentMethod}`))
                      .replace('{id}', o.id)
                      .replace('{total}', formatPrice(o.totalAmount));
          showCustomAlert(m);
 
-         // Refresh product management list if on screen 5
-         if (currentScreen && currentScreen.id === 'screen-5') {
+         // Refresh product management list if on screen 9 (since stock changed)
+         if (currentScreen && currentScreen.id === 'screen-9') {
              populateProductManagementList();
          }
      }
@@ -619,51 +619,31 @@ document.addEventListener('DOMContentLoaded', () => {
      function showOrderDetails(id) {
         const o = allOrders.find(ord => ord.id === id);
         if (!o || !orderPreviewContent) { clearOrderPreview(); return; }
-        const c = getCurrency(),
-              l = currentLanguage === 'ar' ? 'ar-EG' : 'en-GB',
-              ft = o.timestamp.toLocaleString(l, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }), // Use 24hr format maybe
-              tst = getText(`order_status_${o.status}`),
-              tp = getText(`payment_${o.paymentMethod}`);
-
-        let ih = '<ul>';
-        let originalSubTotal = 0;
-        let hasDiscount = false;
+        const c = getCurrency(), l = currentLanguage === 'ar' ? 'ar-EG' : 'en-GB', ft = o.timestamp.toLocaleString(l, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }), tst = getText(`order_status_${o.status}`), tp = getText(`payment_${o.paymentMethod}`);
+        let ih = '<ul>'; let originalSubTotal = 0; let hasDiscount = false;
         o.items.forEach(i => {
-            const n = getText(i.name_key); // Use name_key from order item
-            if (i.isDiscount) {
-                ih += `<li style="color: var(--active-green);"><em>${n}: -${formatPrice(Math.abs(i.price))}</em></li>`;
-                hasDiscount = true;
-            } else {
-                ih += `<li>${getText('quantity_prefix')}${i.quantity} ${n} (${formatPrice(i.price * i.quantity)})</li>`;
-                originalSubTotal += i.price * i.quantity;
-            }
+            const n = getText(i.name_key);
+            if (i.isDiscount) { ih += `<li style="color: var(--active-green);"><em>${n}: -${formatPrice(Math.abs(i.price))}</em></li>`; hasDiscount = true; }
+            else { ih += `<li>${getText('quantity_prefix')}${i.quantity} ${n} (${formatPrice(i.price * i.quantity)})</li>`; originalSubTotal += i.price * i.quantity; }
         });
         ih += '</ul>';
-
-        let subtotalHtml = '';
-         if (hasDiscount && originalSubTotal > 0) { // Display subtotal only if there was a discount
-             // Use translation key here
-             subtotalHtml = `<p><strong>${getText('subtotal_label')}:</strong> <span style="text-decoration: line-through;">${formatPrice(originalSubTotal)}</span></p>`;
-         }
-
-        orderPreviewContent.innerHTML = `
-            <p><strong>${getText('order_id_label')}:</strong> <span>${o.id}</span></p>
-            <p><strong>${getText('order_placed_label')}:</strong> <span>${ft}</span></p>
-            <p><strong>${getText('order_status_label')}:</strong><span style="text-transform:capitalize;font-weight:bold;"> ${tst}</span></p>
-            <p><strong>${getText('order_payment_label')}:</strong><span style="text-transform:capitalize;"> ${tp}</span></p>
-            ${subtotalHtml}
-            <p><strong>${getText('order_total_label')}:</strong> <span>${formatPrice(o.totalAmount)}</span></p>
-            <p><strong>${getText('order_items_label')}:</strong></p>${ih}`;
+        let subtotalHtml = ''; if (hasDiscount && originalSubTotal > 0) { subtotalHtml = `<p><strong>${getText('subtotal_label')}:</strong> <span style="text-decoration: line-through;">${formatPrice(originalSubTotal)}</span></p>`; }
+        orderPreviewContent.innerHTML = `<p><strong>${getText('order_id_label')}:</strong> <span>${o.id}</span></p><p><strong>${getText('order_placed_label')}:</strong> <span>${ft}</span></p><p><strong>${getText('order_status_label')}:</strong><span style="text-transform:capitalize;font-weight:bold;"> ${tst}</span></p><p><strong>${getText('order_payment_label')}:</strong><span style="text-transform:capitalize;"> ${tp}</span></p>${subtotalHtml}<p><strong>${getText('order_total_label')}:</strong> <span>${formatPrice(o.totalAmount)}</span></p><p><strong>${getText('order_items_label')}:</strong></p>${ih}`;
         renderStatusButtons(o);
     }
      function renderStatusButtons(o) { if(!orderStatusControls) return; orderStatusControls.innerHTML = ''; const p = ['pending', 'preparing', 'delivered']; p.forEach(s => { const b = document.createElement('button'); b.className = 'button small-button status-button'; b.dataset.status = s; const t = getText(`order_status_${s}`); b.textContent = t.charAt(0).toUpperCase() + t.slice(1); b.disabled = (o.status === s); b.classList.toggle('active', o.status === s); let ic = ''; if (s === 'pending') ic = 'fas fa-hourglass-start'; else if (s === 'preparing') ic = 'fas fa-cogs'; else if (s === 'delivered') ic = 'fas fa-check-circle'; if(ic) { const i = document.createElement('i'); i.className = ic; b.prepend(i, ' '); } b.addEventListener('click', () => updateOrderStatus(o.id, s)); orderStatusControls.appendChild(b); }); }
      function updateOrderStatus(id, n) { const i = allOrders.findIndex(o => o.id === id); if (i === -1) return; allOrders[i].status = n; console.log(`Order ${id} status -> ${n}`); handleOrderSearch(); }
      function handleOrderSearch() { if(!orderSearchInput) return; const s = orderSearchInput.value.trim().toLowerCase(), o = s ? allOrders.filter(ord => ord.id.toLowerCase().includes(s)) : allOrders; renderOrderLog(o); if (currentAdminOrderSelection && o.some(ord => ord.id === currentAdminOrderSelection)) showOrderDetails(currentAdminOrderSelection); else clearOrderPreview(); }
 
-    // --- START: Product Management Functions ---
-     function populateProductManagementList() {
-        if (!productListContainer) return;
-        productListContainer.innerHTML = ''; // Clear existing list
+    // --- START: Product Management Functions (Screen 9) ---
+    function populateProductManagementList() {
+        // Get container reference *specifically when needed* or assume it's screen 9
+        const listContainer = document.getElementById('product-list-container');
+        if (!listContainer || (currentScreen && currentScreen.id !== 'screen-9')) {
+             // Don't populate if not on screen 9 or container doesn't exist
+             return;
+         }
+        listContainer.innerHTML = ''; // Clear existing list
 
         baseMenuData.forEach(item => {
             const itemDiv = document.createElement('div');
@@ -672,7 +652,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const name = getText(item.name_key);
             const price = formatPrice(item.price);
+            const editButtonText = getText('edit_button');
+            const removeButtonText = getText('remove_button');
+            const saveButtonText = getText('save_button');
 
+            // Added product-list-actions container
             itemDiv.innerHTML = `
                 <img src="${item.image}" alt="${name}" onerror="this.src='https://via.placeholder.com/40x40/eee?text=Img'; this.onerror=null;">
                 <div class="product-list-info">
@@ -680,19 +664,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="product-list-price">${price}</span>
                 </div>
                 <div class="product-quantity-control">
-
                     <input type="number" value="${item.quantity}" min="0" step="1" data-id="${item.id}" aria-label="${getText('product_quantity_label')} for ${name}">
-                    <button class="button small-button save-quantity-button" data-id="${item.id}">
-                        ${getText('save_button')}
+                    <button class="button small-button save-quantity-button" data-id="${item.id}" title="${saveButtonText}">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+                <div class="product-list-actions">
+                    <button class="button small-button action-button edit-product-button" data-id="${item.id}" title="${editButtonText}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="button small-button action-button remove-product-button" data-id="${item.id}" title="${removeButtonText}">
+                        <i class="fas fa-trash"></i>
                     </button>
                 </div>
             `;
-            productListContainer.appendChild(itemDiv);
+            listContainer.appendChild(itemDiv);
         });
+
+         // Add back the "No items" message if needed
+         if (baseMenuData.length === 0) {
+             listContainer.innerHTML = `<p class="no-orders-message">${getText('no_products_message') || 'No products defined.'}</p>`; // Add a new translation key if desired
+         }
     }
 
     function handleSaveQuantity(productId) {
-        const itemDiv = productListContainer.querySelector(`.product-list-item[data-product-id="${productId}"]`);
+        // Find the specific item div in the list container of Screen 9
+        const screen9 = document.getElementById('screen-9');
+        if (!screen9) return;
+        const itemDiv = screen9.querySelector(`.product-list-item[data-product-id="${productId}"]`);
         if (!itemDiv) return;
 
         const inputElement = itemDiv.querySelector(`input[type="number"][data-id="${productId}"]`);
@@ -702,26 +701,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const newQuantity = parseInt(inputElement.value, 10);
 
         if (isNaN(newQuantity) || newQuantity < 0) {
-            showCustomAlert("Invalid quantity entered. Please enter a number 0 or greater.", 'checkout_success_title'); // Reuse title or make specific
-            // Optionally revert input value
+            showCustomAlert("Invalid quantity entered. Please enter a number 0 or greater.", 'checkout_success_title');
             const originalItem = baseMenuData.find(item => item.id === productId);
             if (originalItem) inputElement.value = originalItem.quantity;
             return;
         }
 
-        // Find the item in the main data array and update it
         const itemIndex = baseMenuData.findIndex(item => item.id === productId);
         if (itemIndex > -1) {
             baseMenuData[itemIndex].quantity = newQuantity;
             console.log(`Updated quantity for ${productId} to ${newQuantity}`);
 
-            // Visual feedback on save button
-            saveButton.innerHTML = `<i class="fas fa-check"></i>`; // Show checkmark
+            saveButton.innerHTML = `<i class="fas fa-check"></i>`;
             saveButton.classList.add('saved');
+            // Use the actual save button text from translations for the title
+            const originalSaveText = getText('save_button');
+            saveButton.title = getText('saved_button'); // Update title while showing checkmark
+
             setTimeout(() => {
-                saveButton.textContent = getText('save_button');
+                // Restore save icon and original title
+                saveButton.innerHTML = `<i class="fas fa-save"></i>`;
                 saveButton.classList.remove('saved');
-            }, 1500); // Revert after 1.5 seconds
+                saveButton.title = originalSaveText; // Restore original title
+            }, 1500);
 
         } else {
             console.error(`Could not find product with ID ${productId} in baseMenuData to update quantity.`);
@@ -729,90 +731,263 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleAddNewProduct() {
-        if (!newProductNameInput || !newProductDescInput || !newProductPriceInput ||
-            !newProductQuantityInput || !newProductImageInput || !newProductCategorySelect ||
-            !addProductErrorMsg || !addNewProductButton) return;
+        // Get references specific to the add form in Screen 9
+         const addFormContainer = document.querySelector('#screen-9 .add-product-form');
+         if (!addFormContainer) return;
 
-        addProductErrorMsg.style.display = 'none'; // Hide previous error
+         const nameInput = addFormContainer.querySelector('#new-product-name');
+         const descInput = addFormContainer.querySelector('#new-product-desc');
+         const priceInput = addFormContainer.querySelector('#new-product-price');
+         const quantityInput = addFormContainer.querySelector('#new-product-quantity');
+         const imageInput = addFormContainer.querySelector('#new-product-image');
+         const categorySelect = addFormContainer.querySelector('#new-product-category');
+         const errorMsg = addFormContainer.querySelector('#add-product-error');
+         const addButton = addFormContainer.querySelector('#add-new-product-button');
 
-        const name = newProductNameInput.value.trim();
-        const description = newProductDescInput.value.trim();
-        const priceStr = newProductPriceInput.value;
-        const quantityStr = newProductQuantityInput.value;
-        const imageUrl = newProductImageInput.value.trim();
-        const category = newProductCategorySelect.value;
+        if (!nameInput || !descInput || !priceInput || !quantityInput || !imageInput || !categorySelect || !errorMsg || !addButton) return;
 
-        // --- Validation ---
+        errorMsg.style.display = 'none';
+
+        const name = nameInput.value.trim();
+        const description = descInput.value.trim();
+        const priceStr = priceInput.value;
+        const quantityStr = quantityInput.value;
+        const imageUrl = imageInput.value.trim();
+        const category = categorySelect.value;
+
         if (!name || !description || !priceStr || !quantityStr || !imageUrl || !category) {
-            addProductErrorMsg.textContent = getText('add_product_error_generic');
-            addProductErrorMsg.style.display = 'block';
+            errorMsg.textContent = getText('add_product_error_generic');
+            errorMsg.style.display = 'block';
             return;
         }
         const price = parseFloat(priceStr);
         if (isNaN(price) || price < 0) {
-            addProductErrorMsg.textContent = getText('add_product_error_price');
-            addProductErrorMsg.style.display = 'block';
+            errorMsg.textContent = getText('add_product_error_price');
+            errorMsg.style.display = 'block';
             return;
         }
         const quantity = parseInt(quantityStr, 10);
          if (isNaN(quantity) || quantity < 0) {
-            addProductErrorMsg.textContent = getText('add_product_error_quantity');
-            addProductErrorMsg.style.display = 'block';
+            errorMsg.textContent = getText('add_product_error_quantity');
+            errorMsg.style.display = 'block';
             return;
         }
-         // Basic URL check (can be improved)
          if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
-            addProductErrorMsg.textContent = getText('add_product_error_image');
-            addProductErrorMsg.style.display = 'block';
+            errorMsg.textContent = getText('add_product_error_image');
+            errorMsg.style.display = 'block';
             return;
          }
-         // --- End Validation ---
 
-         // Generate ID and translation keys
          const newId = `prod-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`;
          const nameKey = `item_name_${newId}`;
          const descKey = `item_desc_${newId}`;
 
-         // Add to translations (important for dynamic display)
-         // For simplicity, setting both en and ar to the entered text.
-         // A real app might require separate translation input or workflow.
          translations[nameKey] = { en: name, ar: name };
          translations[descKey] = { en: description, ar: description };
 
-         // Create new product object
          const newProduct = {
-             id: newId,
-             price: price,
-             image: imageUrl,
-             category: category,
-             quantity: quantity,
-             name_key: nameKey,
-             description_key: descKey
+             id: newId, price: price, image: imageUrl, category: category,
+             quantity: quantity, name_key: nameKey, description_key: descKey
          };
 
-         // Add to main data array
          baseMenuData.push(newProduct);
+         populateProductManagementList(); // Refresh list on screen 9
+         populateMenuGrid(); // Refresh main menu grid (screen 3)
 
-         // Refresh the product management list
-         populateProductManagementList();
-
-         // Refresh the main menu grid (in case user navigates back)
-         populateMenuGrid();
-
-         // Clear the form
-         newProductNameInput.value = '';
-         newProductDescInput.value = '';
-         newProductPriceInput.value = '';
-         newProductQuantityInput.value = '';
-         newProductImageInput.value = '';
-         newProductCategorySelect.value = 'sweet'; // Reset to default category
+         nameInput.value = '';
+         descInput.value = '';
+         priceInput.value = '';
+         quantityInput.value = '';
+         imageInput.value = '';
+         categorySelect.value = 'sweet';
 
          console.log("New product added:", newProduct);
-         // Show success alert *after* a short delay to allow UI to potentially update
          setTimeout(() => {
              showCustomAlert(getText('add_product_success').replace('{name}', name));
          }, 100);
     }
+
+     // --- Edit Product Modal Functions ---
+    function showEditProductModal() {
+        if (!editProductModalOverlay) return;
+        updateEditModalLanguage(); // Ensure text is correct
+        editProductErrorMsg.style.display = 'none'; // Hide error on open
+        requestAnimationFrame(() => {
+            editProductModalOverlay.classList.add('visible');
+            editProductNameInput?.focus(); // Focus first field
+        });
+    }
+
+    function hideEditProductModal() {
+        if (!editProductModalOverlay) return;
+        editProductModalOverlay.classList.remove('visible');
+        setTimeout(() => {
+            editProductIdInput.value = '';
+            editProductNameInput.value = '';
+            editProductDescInput.value = '';
+            editProductPriceInput.value = '';
+            editProductQuantityInput.value = '';
+            editProductImageInput.value = '';
+            editProductCategorySelect.value = 'sweet';
+            editProductErrorMsg.style.display = 'none';
+            editProductModalBox.dataset.editingProductId = '';
+        }, 300);
+    }
+
+    function updateEditModalLanguage() {
+        const titleEl = editProductModalBox?.querySelector('h3');
+        if(titleEl) titleEl.textContent = getText('edit_product_title');
+
+        editProductModalBox?.querySelectorAll('label[data-lang-key]').forEach(el => {
+            const key = el.dataset.langKey;
+            let translation = getText(key);
+            if (key === 'product_price_label') {
+                translation = translation.replace('{currency}', getCurrency());
+            }
+            el.textContent = translation;
+        });
+         editProductModalBox?.querySelectorAll('input[data-lang-placeholder-key]').forEach(el => {
+             const key = el.dataset.langPlaceholderKey;
+             el.placeholder = getText(key);
+         });
+         editProductCategorySelect?.querySelectorAll('option[data-lang-key]').forEach(opt => {
+             opt.textContent = getText(opt.dataset.langKey);
+         });
+        if(editProductErrorMsg) editProductErrorMsg.textContent = getText('edit_product_error_generic');
+        if(editProductCancelButton) editProductCancelButton.textContent = getText('cancel_button');
+        if(editProductSaveButton) editProductSaveButton.textContent = getText('save_changes_button');
+    }
+
+    function openEditProductModal(productId) {
+        const product = baseMenuData.find(item => item.id === productId);
+        if (!product || !editProductModalOverlay) {
+            console.error(`Product ${productId} not found for editing.`);
+            return;
+        }
+
+        // Get the actual text for the current language or fallback to English
+        const currentName = translations[product.name_key]?.[currentLanguage] || translations[product.name_key]?.['en'] || product.id;
+        const currentDesc = translations[product.description_key]?.[currentLanguage] || translations[product.description_key]?.['en'] || '';
+
+        editProductIdInput.value = product.id;
+        editProductNameInput.value = currentName;
+        editProductDescInput.value = currentDesc;
+        editProductPriceInput.value = product.price;
+        editProductQuantityInput.value = product.quantity;
+        editProductImageInput.value = product.image;
+        editProductCategorySelect.value = product.category;
+
+        editProductModalBox.dataset.editingProductId = productId;
+        showEditProductModal();
+    }
+
+    function handleSaveProductEdit() {
+         const productId = editProductIdInput.value;
+         if (!productId || !editProductModalBox || !editProductErrorMsg) {
+             console.error("Required elements not found for saving edit.");
+             return;
+         }
+         editProductErrorMsg.style.display = 'none'; // Hide previous error
+
+         const productIndex = baseMenuData.findIndex(item => item.id === productId);
+         if (productIndex === -1) {
+             console.error(`Product ${productId} not found in baseMenuData during save.`);
+             hideEditProductModal();
+             return;
+         }
+
+         const name = editProductNameInput.value.trim();
+         const description = editProductDescInput.value.trim();
+         const priceStr = editProductPriceInput.value;
+         const quantityStr = editProductQuantityInput.value;
+         const imageUrl = editProductImageInput.value.trim();
+         const category = editProductCategorySelect.value;
+
+         // --- Validation ---
+         if (!name || !description || !priceStr || !quantityStr || !imageUrl || !category) {
+            editProductErrorMsg.textContent = getText('edit_product_error_generic');
+            editProductErrorMsg.style.display = 'block';
+            return;
+        }
+        const price = parseFloat(priceStr);
+        if (isNaN(price) || price < 0) {
+            editProductErrorMsg.textContent = getText('edit_product_error_price');
+            editProductErrorMsg.style.display = 'block';
+            return;
+        }
+        const quantity = parseInt(quantityStr, 10);
+         if (isNaN(quantity) || quantity < 0) {
+            editProductErrorMsg.textContent = getText('edit_product_error_quantity');
+            editProductErrorMsg.style.display = 'block';
+            return;
+        }
+         if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+            editProductErrorMsg.textContent = getText('edit_product_error_image');
+            editProductErrorMsg.style.display = 'block';
+            return;
+         }
+         // --- End Validation ---
+
+         const originalNameKey = baseMenuData[productIndex].name_key;
+         const originalDescKey = baseMenuData[productIndex].description_key;
+
+         baseMenuData[productIndex].price = price;
+         baseMenuData[productIndex].quantity = quantity;
+         baseMenuData[productIndex].image = imageUrl;
+         baseMenuData[productIndex].category = category;
+
+         if (translations[originalNameKey]) {
+             translations[originalNameKey][currentLanguage] = name;
+             // If English is not the current language, consider updating 'en' too for consistency
+             if (currentLanguage !== 'en') {
+                 translations[originalNameKey]['en'] = name; // Update fallback
+             }
+         } else {
+             translations[originalNameKey] = { en: name, ar: name };
+         }
+         if (translations[originalDescKey]) {
+             translations[originalDescKey][currentLanguage] = description;
+             if (currentLanguage !== 'en') {
+                 translations[originalDescKey]['en'] = description; // Update fallback
+             }
+         } else {
+             translations[originalDescKey] = { en: description, ar: description };
+         }
+
+         console.log(`Product ${productId} updated.`);
+         hideEditProductModal();
+         populateProductManagementList(); // Refresh list on screen 9
+         populateMenuGrid(); // Refresh main menu grid for screen 3
+         showCustomAlert(getText('edit_product_success').replace('{name}', name));
+    }
+    // --- End Edit Product Modal Functions ---
+
+    // --- Remove Product Function ---
+    function handleRemoveProduct(productId) {
+         const productIndex = baseMenuData.findIndex(item => item.id === productId);
+         if (productIndex === -1) {
+             console.error(`Product ${productId} not found for removal.`);
+             return;
+         }
+
+         const productName = getText(baseMenuData[productIndex].name_key);
+         const confirmMessage = getText('confirm_remove_product').replace('{name}', productName);
+
+         if (confirm(confirmMessage)) {
+             const removedProduct = baseMenuData.splice(productIndex, 1)[0];
+             console.log(`Product ${productId} removed.`);
+
+             // Optional: Clean up translation keys
+             // delete translations[removedProduct.name_key];
+             // delete translations[removedProduct.description_key];
+
+             populateProductManagementList();
+             populateMenuGrid();
+             showCustomAlert(getText('remove_product_success').replace('{name}', productName));
+             // Consider implications for active carts or discovery mode if needed
+         }
+    }
+    // --- End Remove Product Function ---
      // --- END: Product Management Functions ---
 
 
@@ -822,7 +997,7 @@ document.addEventListener('DOMContentLoaded', () => {
         discoveryBundlesScroller.innerHTML = '';
         discoverySuggestionsGrid.innerHTML = '';
         discoveryCategoriesContainer.innerHTML = '';
-        const MAX_IMAGES_SHOWN = 4; // For bundles
+        const MAX_IMAGES_SHOWN = 4;
 
         // Bundles
         bundleOffers.forEach(bundle => { const card = document.createElement('div'); card.className = 'offer-card bundle-offer'; card.dataset.bundleId = bundle.id; const bundleName = getText(bundle.name_key); const bundleDesc = getText(bundle.description_key); let itemsHtml = `<p class="offer-items"><strong>${getText('includes_items')}</strong> `; let imageGridHtml = ''; let originalTotalPrice = 0; let allItemsFound = true; let imageCount = 0; bundle.itemIds.forEach(itemId => { const itemData = baseMenuData.find(i => i.id === itemId); if (itemData) { itemsHtml += `<span>${getText(itemData.name_key)}</span>`; originalTotalPrice += itemData.price; if (imageCount < MAX_IMAGES_SHOWN) { imageGridHtml += `<img src="${itemData.image}" alt="${getText(itemData.name_key)}">`; imageCount++; } } else { allItemsFound = false; console.warn(`Item ${itemId} not found for bundle ${bundle.id}`); } }); itemsHtml += '</p>'; let gridClass = 'offer-image-grid'; if (imageCount === 1) gridClass += ' count-1'; else if (imageCount === 3) gridClass += ' count-3'; const imageGridContainer = `<div class="${gridClass}">${imageGridHtml}</div>`; if (allItemsFound && originalTotalPrice > 0) { const discountMultiplier = (100 - bundle.discountPercent) / 100; const finalPrice = Math.round(originalTotalPrice * discountMultiplier); const discountTag = `<span class="bundle-discount-tag">${getText('discount_tag').replace('{percent}', bundle.discountPercent)}</span>`; card.innerHTML = ` ${discountTag} <h5>${bundleName}</h5> ${imageCount > 0 ? imageGridContainer : ''} <p class="offer-description">${bundleDesc}</p> ${itemsHtml} <div class="offer-actions"> <div class="bundle-pricing"> <span class="bundle-original-price">${getText('original_price')} ${formatPrice(originalTotalPrice)}</span> <span class="bundle-final-price">${getText('bundle_price')} ${formatPrice(finalPrice)}</span> </div> <button class="button rect-button add-bundle-button"> <i class="fas fa-cart-plus"></i> <span data-lang-key="add_bundle_button">${getText('add_bundle_button')}</span> </button> </div>`; discoveryBundlesScroller.appendChild(card); } });
@@ -833,8 +1008,8 @@ document.addEventListener('DOMContentLoaded', () => {
             gridItem.className = 'suggestion-grid-item';
             gridItem.dataset.suggestionId = suggestion.id;
             const suggName = getText(suggestion.name_key);
-            let itemsHtml = `<div class="suggestion-items">`; // Text list of items
-            let itemImagesHtml = ''; // Image row HTML
+            let itemsHtml = `<div class="suggestion-items">`;
+            let itemImagesHtml = '';
             let allItemsFound = true;
             let suggestionTotalPrice = 0;
 
@@ -843,32 +1018,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (itemData) {
                     itemsHtml += `<span>${getText(itemData.name_key)}</span>`;
                     suggestionTotalPrice += itemData.price;
-                    // Add image to the image row
                     itemImagesHtml += `<img src="${itemData.image}" alt="${getText(itemData.name_key)}" title="${getText(itemData.name_key)}">`;
-                    // Add plus separator if not the last item
-                    if (index < suggestion.itemIds.length - 1) {
-                        itemImagesHtml += ` <span class="plus-separator">+</span> `;
-                    }
-                } else {
-                    allItemsFound = false;
-                    console.warn(`Item ${itemId} not found for suggestion ${suggestion.id}`);
-                }
+                    if (index < suggestion.itemIds.length - 1) { itemImagesHtml += ` <span class="plus-separator">+</span> `; }
+                } else { allItemsFound = false; console.warn(`Item ${itemId} not found for suggestion ${suggestion.id}`); }
             });
-            itemsHtml += '</div>'; // Close text list
+            itemsHtml += '</div>';
 
             const itemImagesContainer = `<div class="suggestion-item-images">${itemImagesHtml}</div>`;
             const totalPriceHtml = `<p class="suggestion-total-price"><strong>${getText('suggestion_total_price')}</strong> ${formatPrice(suggestionTotalPrice)}</p>`;
 
             if (allItemsFound) {
                 const buttonHtml = ` <button class="button rect-button add-suggestion-button"> <i class="fas fa-cart-plus"></i> <span data-lang-key="add_suggestion_button">${getText('add_suggestion_button')}</span> </button>`;
-                // Assemble the grid item HTML - Replace icon with image container
-                gridItem.innerHTML = `
-                    ${itemImagesContainer}
-                    <h5>${suggName}</h5>
-                    ${itemsHtml}
-                    ${totalPriceHtml}
-                    ${buttonHtml}
-                `;
+                gridItem.innerHTML = `${itemImagesContainer}<h5>${suggName}</h5>${itemsHtml}${totalPriceHtml}${buttonHtml}`;
                 discoverySuggestionsGrid.appendChild(gridItem);
             }
         });
@@ -880,93 +1041,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const suggestion = mealSuggestions.find(s => s.id === suggestionId);
         if (!suggestion || !buttonElement) return;
 
-        // --- Check Stock Before Adding ---
         let allStockSufficient = true;
-        const itemsToAdd = []; // Store { id, data } for items with sufficient stock
+        const itemsToAdd = [];
 
         for (const itemId of suggestion.itemIds) {
             const itemData = baseMenuData.find(i => i.id === itemId);
-            if (!itemData) {
-                console.warn(`Item ${itemId} in suggestion ${suggestionId} not found.`);
-                allStockSufficient = false; // Mark as insufficient if any item is missing (though shouldn't happen)
-                break;
-            }
-
+            if (!itemData) { console.warn(`Item ${itemId} in suggestion ${suggestionId} not found.`); allStockSufficient = false; break; }
             const cartItem = cart.find(i => i.id === itemId && !i.isDiscount);
             const currentCartQuantity = cartItem ? cartItem.quantity : 0;
-
-            if (itemData.quantity <= currentCartQuantity) {
-                allStockSufficient = false;
-                showCustomAlert(`Sorry, '${getText(itemData.name_key)}' is out of stock!`, 'checkout_success_title');
-                break; // Stop checking if one item is out of stock
-            }
-            itemsToAdd.push({ id: itemId, data: itemData }); // Store valid item to add
-        }
-
-        if (!allStockSufficient) {
-            return; // Don't add anything if stock is insufficient for any item
-        }
-        // --- End Stock Check ---
-
-        // Add items now that stock is confirmed
-        itemsToAdd.forEach(itemInfo => {
-            const itemExists = cart.find(i => i.id === itemInfo.id && !i.isDiscount);
-            if (itemExists) {
-                itemExists.quantity++;
-            } else {
-                const cartProductData = { // Create copy for cart
-                    id: itemInfo.data.id,
-                    price: itemInfo.data.price,
-                    image: itemInfo.data.image,
-                    category: itemInfo.data.category,
-                    name_key: itemInfo.data.name_key,
-                    description_key: itemInfo.data.description_key,
-                    quantity: 1
-                };
-                cart.push(cartProductData);
-            }
-        });
-
-        updateCartUI();
-
-        // Button feedback
-        if (suggestionButtonTimeouts[suggestionId]) { clearTimeout(suggestionButtonTimeouts[suggestionId]); }
-        buttonElement.classList.add('added');
-        const icon = buttonElement.querySelector('i');
-        const span = buttonElement.querySelector('span');
-        if (icon) icon.className = 'fas fa-check';
-        if (span) { span.dataset.langKey = 'suggestion_added_button'; span.textContent = getText('suggestion_added_button'); }
-
-        suggestionButtonTimeouts[suggestionId] = setTimeout(() => {
-            if (buttonElement && buttonElement.classList.contains('added')) {
-                buttonElement.classList.remove('added');
-                if (icon) icon.className = 'fas fa-cart-plus';
-                if (span) { span.dataset.langKey = 'add_suggestion_button'; span.textContent = getText('add_suggestion_button'); }
-            }
-            delete suggestionButtonTimeouts[suggestionId];
-        }, 1500);
-    }
-
-    function addBundleToCart(bundleId, buttonElement) {
-        const bundle = bundleOffers.find(b => b.id === bundleId);
-        if (!bundle || !buttonElement) return;
-
-        // --- Check Stock Before Adding ---
-        let allStockSufficient = true;
-        const itemsToAdd = []; // Store { id, data } for items with sufficient stock
-
-        for (const itemId of bundle.itemIds) {
-            const itemData = baseMenuData.find(i => i.id === itemId);
-            if (!itemData) {
-                console.warn(`Item ${itemId} in bundle ${bundleId} not found.`);
-                allStockSufficient = false;
-                break;
-            }
-
-            const cartItem = cart.find(i => i.id === itemId && !i.isDiscount);
-            const currentCartQuantity = cartItem ? cartItem.quantity : 0;
-
-            if (itemData.quantity <= currentCartQuantity) {
+             if (itemData.quantity !== 999 && itemData.quantity <= currentCartQuantity) { // Check non-unlimited items
                 allStockSufficient = false;
                 showCustomAlert(`Sorry, '${getText(itemData.name_key)}' is out of stock!`, 'checkout_success_title');
                 break;
@@ -974,68 +1057,74 @@ document.addEventListener('DOMContentLoaded', () => {
             itemsToAdd.push({ id: itemId, data: itemData });
         }
 
-        if (!allStockSufficient) {
-            return;
-        }
-        // --- End Stock Check ---
+        if (!allStockSufficient) { return; }
 
-        // Add items and calculate discount
+        itemsToAdd.forEach(itemInfo => {
+            const itemExists = cart.find(i => i.id === itemInfo.id && !i.isDiscount);
+            if (itemExists) { itemExists.quantity++; }
+            else {
+                const cartProductData = { id: itemInfo.data.id, price: itemInfo.data.price, image: itemInfo.data.image, category: itemInfo.data.category, name_key: itemInfo.data.name_key, description_key: itemInfo.data.description_key, quantity: 1 };
+                cart.push(cartProductData);
+            }
+        });
+        updateCartUI();
+
+        if (suggestionButtonTimeouts[suggestionId]) { clearTimeout(suggestionButtonTimeouts[suggestionId]); }
+        buttonElement.classList.add('added');
+        const icon = buttonElement.querySelector('i'); const span = buttonElement.querySelector('span');
+        if (icon) icon.className = 'fas fa-check'; if (span) { span.dataset.langKey = 'suggestion_added_button'; span.textContent = getText('suggestion_added_button'); }
+        suggestionButtonTimeouts[suggestionId] = setTimeout(() => { if (buttonElement && buttonElement.classList.contains('added')) { buttonElement.classList.remove('added'); if (icon) icon.className = 'fas fa-cart-plus'; if (span) { span.dataset.langKey = 'add_suggestion_button'; span.textContent = getText('add_suggestion_button'); } } delete suggestionButtonTimeouts[suggestionId]; }, 1500);
+    }
+
+    function addBundleToCart(bundleId, buttonElement) {
+        const bundle = bundleOffers.find(b => b.id === bundleId);
+        if (!bundle || !buttonElement) return;
+
+        let allStockSufficient = true;
+        const itemsToAdd = [];
+
+        for (const itemId of bundle.itemIds) {
+            const itemData = baseMenuData.find(i => i.id === itemId);
+            if (!itemData) { console.warn(`Item ${itemId} in bundle ${bundleId} not found.`); allStockSufficient = false; break; }
+            const cartItem = cart.find(i => i.id === itemId && !i.isDiscount);
+            const currentCartQuantity = cartItem ? cartItem.quantity : 0;
+            if (itemData.quantity !== 999 && itemData.quantity <= currentCartQuantity) { // Check non-unlimited items
+                allStockSufficient = false;
+                showCustomAlert(`Sorry, '${getText(itemData.name_key)}' is out of stock!`, 'checkout_success_title');
+                break;
+            }
+            itemsToAdd.push({ id: itemId, data: itemData });
+        }
+
+        if (!allStockSufficient) { return; }
+
         let originalTotalPrice = 0;
         itemsToAdd.forEach(itemInfo => {
             originalTotalPrice += itemInfo.data.price;
             const itemExists = cart.find(cartItem => cartItem.id === itemInfo.id && !cartItem.isDiscount);
-            if (itemExists) {
-                itemExists.quantity++;
-            } else {
-                 const cartProductData = { // Create copy for cart
-                    id: itemInfo.data.id,
-                    price: itemInfo.data.price,
-                    image: itemInfo.data.image,
-                    category: itemInfo.data.category,
-                    name_key: itemInfo.data.name_key,
-                    description_key: itemInfo.data.description_key,
-                    quantity: 1
-                };
+            if (itemExists) { itemExists.quantity++; }
+            else {
+                 const cartProductData = { id: itemInfo.data.id, price: itemInfo.data.price, image: itemInfo.data.image, category: itemInfo.data.category, name_key: itemInfo.data.name_key, description_key: itemInfo.data.description_key, quantity: 1 };
                 cart.push(cartProductData);
             }
         });
 
-        // Add discount item if applicable
         const discountMultiplier = (100 - bundle.discountPercent) / 100;
         const finalPrice = Math.round(originalTotalPrice * discountMultiplier);
         const discountAmount = originalTotalPrice - finalPrice;
         if (discountAmount > 0) {
             const discountItemId = `discount-${bundleId}-${Date.now()}`;
-            const discountItem = {
-                id: discountItemId,
-                name_key: 'bundle_discount_applied',
-                price: -discountAmount,
-                quantity: 1,
-                isDiscount: true,
-                image: 'https://img.icons8.com/ios-filled/50/discount--v1.png' // Placeholder image for discount
-            };
+            const discountItem = { id: discountItemId, name_key: 'bundle_discount_applied', price: -discountAmount, quantity: 1, isDiscount: true, image: 'https://img.icons8.com/ios-filled/50/discount--v1.png' };
             cart.push(discountItem);
             console.log(`Applied discount: ${discountAmount} for bundle ${bundleId}`);
         }
-
         updateCartUI();
 
-        // Button feedback
         if (bundleButtonTimeouts[bundleId]) { clearTimeout(bundleButtonTimeouts[bundleId]); }
         buttonElement.classList.add('added');
-        const icon = buttonElement.querySelector('i');
-        const span = buttonElement.querySelector('span');
-        if (icon) icon.className = 'fas fa-check';
-        if (span) { span.dataset.langKey = 'bundle_added_button'; span.textContent = getText('bundle_added_button'); }
-
-        bundleButtonTimeouts[bundleId] = setTimeout(() => {
-            if (buttonElement && buttonElement.classList.contains('added')) {
-                buttonElement.classList.remove('added');
-                if (icon) icon.className = 'fas fa-cart-plus';
-                if (span) { span.dataset.langKey = 'add_bundle_button'; span.textContent = getText('add_bundle_button'); }
-            }
-            delete bundleButtonTimeouts[bundleId];
-        }, 1500);
+        const icon = buttonElement.querySelector('i'); const span = buttonElement.querySelector('span');
+        if (icon) icon.className = 'fas fa-check'; if (span) { span.dataset.langKey = 'bundle_added_button'; span.textContent = getText('bundle_added_button'); }
+        bundleButtonTimeouts[bundleId] = setTimeout(() => { if (buttonElement && buttonElement.classList.contains('added')) { buttonElement.classList.remove('added'); if (icon) icon.className = 'fas fa-cart-plus'; if (span) { span.dataset.langKey = 'add_bundle_button'; span.textContent = getText('add_bundle_button'); } } delete bundleButtonTimeouts[bundleId]; }, 1500);
     }
     // --- End Discovery Mode Functions ---
 
@@ -1044,13 +1133,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function showCustomAlert(m, titleKey = 'checkout_success_title') { if (!customAlertOverlay || !customAlertMessage) return; if(customAlertTitle) customAlertTitle.dataset.langKey = titleKey; updateModalLanguage(); customAlertMessage.textContent = m; requestAnimationFrame(() => { customAlertOverlay.classList.add('visible'); }); }
     function hideCustomAlert() {
         if (!customAlertOverlay || !customAlertOverlay.classList.contains('visible')) return;
-        const msg = customAlertMessage?.textContent; // Get message before hiding
+        const msg = customAlertMessage?.textContent;
         customAlertOverlay.classList.remove('visible');
         const isCartEmptyAlert = msg === getText('cart_is_empty_alert');
-        const isOutOfStockAlert = msg?.includes('out of stock') || msg?.includes('available'); // Simple check
-        // Navigate back only if it was a successful order confirmation
-        if(currentScreen?.id !== 'screen-3' && !isCartEmptyAlert && !isOutOfStockAlert){
-            showScreen('screen-3');
+        const isOutOfStockAlert = msg?.includes('out of stock') || msg?.includes('available');
+        const isSuccessAlert = !isCartEmptyAlert && !isOutOfStockAlert && msg?.includes('Order ID'); // Check if it was a successful order msg
+
+        if (isSuccessAlert && currentScreen?.id !== 'screen-3') {
+            showScreen('screen-3'); // Go back to menu only on successful checkout confirmation
         }
     }
     // --- End Custom Alert Functions ---
@@ -1059,9 +1149,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function updatePasscodeModalLanguage() {
         if(passcodeModalTitle) passcodeModalTitle.textContent = getText('discovery_passcode_modal_title');
         if(passcodeModalInput) passcodeModalInput.placeholder = getText('discovery_passcode_prompt');
-        if(passcodeModalError) passcodeModalError.textContent = getText('discovery_passcode_incorrect_message'); // Set text even if hidden
+        if(passcodeModalError) passcodeModalError.textContent = getText('discovery_passcode_incorrect_message');
         if(passcodeModalOk) passcodeModalOk.textContent = getText('ok_button');
-        if(passcodeModalCancel) passcodeModalCancel.textContent = getText('cancel_button'); // Changed key
+        if(passcodeModalCancel) passcodeModalCancel.textContent = getText('cancel_button');
     }
     function showPasscodeModal() {
         if (!passcodeModalOverlay) return;
@@ -1073,10 +1163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if(passcodeModalInput) passcodeModalInput.focus();
         });
     }
-    function hidePasscodeModal() {
-        if (!passcodeModalOverlay) return;
-        passcodeModalOverlay.classList.remove('visible');
-    }
+    function hidePasscodeModal() { if (!passcodeModalOverlay) return; passcodeModalOverlay.classList.remove('visible'); }
     function handlePasscodeSubmit() {
         const enteredPasscode = passcodeModalInput?.value;
         if (enteredPasscode === DISCOVERY_PASSCODE) {
@@ -1095,10 +1182,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Event Listeners ---
-    // General Navigation (using data-target)
+    // General Navigation
      navigationElements.forEach(e => {
          const targetId = e.dataset.target;
-         // Exclude the preview back button from this generic handler
          if (targetId && e.id !== 'item-preview-back-button') {
              e.addEventListener('click', () => showScreen(targetId));
          }
@@ -1108,7 +1194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gotoAdminLoginButton?.addEventListener('click', () => showScreen('screen-6'));
     registerSubmitButton?.addEventListener('click', () => { const e = registerEmailInput.value.trim(), p = registerPasswordInput.value, c = registerPasswordConfirmInput.value, a = registerPhotoPicker?.querySelector('.profile-pic.active'); if(!registerErrorMsg) return; registerErrorMsg.style.display = 'none'; if (!e || !p || !c) { registerErrorMsg.textContent = getText('register_error_fields'); registerErrorMsg.style.display = 'block'; return; } if (p !== c) { registerErrorMsg.textContent = getText('register_error_match'); registerErrorMsg.style.display = 'block'; return; } if (!a) { registerErrorMsg.textContent = getText('register_error_photo'); registerErrorMsg.style.display = 'block'; return; } currentUser = { email: e, profilePic: a.src }; registerEmailInput.value = ''; registerPasswordInput.value = ''; registerPasswordConfirmInput.value = ''; updateUserInfoUI(); showScreen('screen-3'); });
     registerPhotoPicker?.addEventListener('click', e => { if (e.target.classList.contains('profile-pic')) { registerPhotoPicker.querySelectorAll('.profile-pic').forEach(p => p.classList.remove('active')); e.target.classList.add('active'); } });
-    logoutButton?.addEventListener('click', () => { currentUser = null; cart = []; selectedPaymentMethod = 'cash'; updateCartUI(); updateUserInfoUI(); if(paymentMethodsContainer) paymentMethodsContainer.querySelectorAll('.payment-button').forEach(b => b.classList.toggle('active', b.dataset.method === 'cash')); if (menuSortButtonsContainer) { const d = baseMenuData[0]?.category || 'sweet'; menuSortButtonsContainer.querySelectorAll('.sort-button').forEach(b => b.classList.toggle('active', b.dataset.category === d)); populateMenuGrid(); } isDiscoveryModeActivated = false; localStorage.removeItem('discoveryModeActivated'); updateDiscoverButtonVisibility(); updateDiscoveryToggleVisualState(); /* Added toggle update */ showScreen('screen-1'); });
+    logoutButton?.addEventListener('click', () => { currentUser = null; cart = []; selectedPaymentMethod = 'cash'; updateCartUI(); updateUserInfoUI(); if(paymentMethodsContainer) paymentMethodsContainer.querySelectorAll('.payment-button').forEach(b => b.classList.toggle('active', b.dataset.method === 'cash')); if (menuSortButtonsContainer) { const d = baseMenuData[0]?.category || 'sweet'; menuSortButtonsContainer.querySelectorAll('.sort-button').forEach(b => b.classList.toggle('active', b.dataset.category === d)); populateMenuGrid(); } isDiscoveryModeActivated = false; localStorage.removeItem('discoveryModeActivated'); updateDiscoverButtonVisibility(); updateDiscoveryToggleVisualState(); showScreen('screen-1'); });
     menuGrid?.addEventListener('click', e => { const m = e.target.closest('.menu-item'), p = e.target.closest('.price-button'); if (m) { const id = m.dataset.id; if (p) { addToCart(id); p.style.transition = 'transform 0.1s ease-out, background-color 0.1s ease-out'; p.style.backgroundColor = 'var(--active-green)'; p.style.transform = 'scale(1.1)'; setTimeout(() => { p.style.backgroundColor = ''; p.style.transform = ''; setTimeout(() => p.style.transition = '', 150); }, 150); } else { showItemPreview(id); } } });
     menuSortButtonsContainer?.addEventListener('click', e => { if (e.target.classList.contains('sort-button')) { const b = e.target; if (b.classList.contains('active')) return; menuSortButtonsContainer.querySelectorAll('.sort-button').forEach(btn => btn.classList.remove('active')); b.classList.add('active'); applyFilter(document.getElementById('screen-3'), true); } });
     paymentMethodsContainer?.addEventListener('click', e => { const b = e.target.closest('.payment-button'); if (b && !b.classList.contains('active')) { selectedPaymentMethod = b.dataset.method; paymentMethodsContainer.querySelectorAll('.payment-button').forEach(btn => btn.classList.remove('active')); b.classList.add('active'); } });
@@ -1120,28 +1206,11 @@ document.addEventListener('DOMContentLoaded', () => {
     orderSearchInput?.addEventListener('keypress', e => { if (e.key === 'Enter') handleOrderSearch(); });
     orderSearchInput?.addEventListener('input', () => { if (orderSearchInput.value.trim() === '') handleOrderSearch(); });
 
-    // Item Preview Back Button Listener
-    itemPreviewBackButton?.addEventListener('click', () => {
-         const targetScreenId = previousScreenId || 'screen-3'; // Default back to menu
-         console.log("Going back to:", targetScreenId);
-         showScreen(targetScreenId);
-         // Reset previousScreenId AFTER navigating back
-         previousScreenId = null;
-     });
-
+    itemPreviewBackButton?.addEventListener('click', () => { const targetScreenId = previousScreenId || 'screen-3'; console.log("Going back to:", targetScreenId); showScreen(targetScreenId); previousScreenId = null; });
     addToCartPreviewButton?.addEventListener('click', e => { const b = e.target.closest('button'), id = b?.dataset.itemId; if (id) { addToCart(id); if (previewButtonTimeout) { clearTimeout(previewButtonTimeout); } setPreviewButtonState(true); previewButtonTimeout = setTimeout(() => { if (currentScreen && currentScreen.id === 'screen-7' && addToCartPreviewButton.dataset.itemId === id) { setPreviewButtonState(false); } previewButtonTimeout = null; }, 1500); } });
     toggleFullScreenButton?.addEventListener('click', () => { bodyElement.classList.toggle('full-screen-mode'); const f = bodyElement.classList.contains('full-screen-mode'); toggleFullScreenButton.innerHTML = f ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>'; toggleFullScreenButton.title = f ? 'Exit Full Screen' : 'Enter Full Screen'; });
+     discoverButton?.addEventListener('click', () => { if (isDiscoveryModeActivated) { showScreen('screen-8'); } else { console.warn("Discover button clicked but Discovery Mode is not activated."); } });
 
-    // Listener for Discover button (navigates if activated)
-     discoverButton?.addEventListener('click', () => {
-         if (isDiscoveryModeActivated) {
-             showScreen('screen-8');
-         } else {
-             console.warn("Discover button clicked but Discovery Mode is not activated.");
-         }
-     });
-
-     // Event delegation for Discovery Screen
     discoveryBundlesScroller?.addEventListener('click', (e) => { const bundleButton = e.target.closest('.add-bundle-button'); if (bundleButton) { const card = bundleButton.closest('.offer-card'); const bundleId = card?.dataset.bundleId; if (bundleId) { addBundleToCart(bundleId, bundleButton); } } });
     discoverySuggestionsGrid?.addEventListener('click', (e) => { const suggestionButton = e.target.closest('.add-suggestion-button'); if (suggestionButton) { const card = suggestionButton.closest('.suggestion-grid-item'); const suggestionId = card?.dataset.suggestionId; if (suggestionId) { addSuggestionToCart(suggestionId, suggestionButton); } } });
     discoveryCategoriesContainer?.addEventListener('click', e => { const categoryItem = e.target.closest('.discovery-category-item'); const priceButton = e.target.closest('.price-button'); if (categoryItem && !priceButton) { const itemId = categoryItem.dataset.id; if(itemId) { showItemPreview(itemId); } } });
@@ -1153,79 +1222,110 @@ document.addEventListener('DOMContentLoaded', () => {
     if (languageOptions) { languageOptions.addEventListener('click', (e) => { const o = e.target.closest('.option-item[data-lang]'); if (o && !o.classList.contains('active')) { const n = o.dataset.lang; appContainer.classList.add('language-switching'); setTimeout(() => { currentLanguage = n; localStorage.setItem('appLanguage', currentLanguage); updateLanguageUI(); closeAllSettingsDropdowns(); requestAnimationFrame(() => { appContainer.classList.remove('language-switching'); }); }, parseFloat(getComputedStyle(appContainer).getPropertyValue('--lang-change-speed') || '0.3') * 1000); } else if (o) { closeAllSettingsDropdowns(); } }); }
     if (themeOptions) { themeOptions.addEventListener('click', (e) => { const o = e.target.closest('.option-item[data-theme]'); if (o && !o.classList.contains('active')) { const n = o.dataset.theme; applyTheme(n); updateThemeDisplay(); closeAllSettingsDropdowns(); } else if (o) { closeAllSettingsDropdowns(); } }); }
 
-     // MODIFIED: Add Passcode check for Discovery Mode Toggle
     if (discoveryModeToggle) {
         const toggleAction = () => {
             if (isDiscoveryModeActivated) {
-                // Currently ON, turn OFF (no passcode needed)
                 isDiscoveryModeActivated = false;
                 localStorage.setItem('discoveryModeActivated', isDiscoveryModeActivated);
                 updateDiscoveryToggleVisualState();
                 updateDiscoverButtonVisibility();
-            } else {
-                // Currently OFF, show modal to turn ON
-                showPasscodeModal();
-            }
+            } else { showPasscodeModal(); }
          };
          discoveryModeToggle.addEventListener('click', toggleAction);
-         discoveryModeToggle.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                 e.preventDefault();
-                 toggleAction();
-            }
-         });
+         discoveryModeToggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAction(); } });
      }
-
     // --- End Settings Panel Event Listeners ---
 
     // --- Custom Alert Event Listeners ---
     customAlertCloseBtn?.addEventListener('click', hideCustomAlert);
     customAlertOverlay?.addEventListener('click', (e) => { if (e.target === customAlertOverlay) { hideCustomAlert(); } });
-    // --- Passcode Modal Event Listeners (Updated IDs & Logic) ---
+    // --- Passcode Modal Event Listeners ---
     passcodeModalOk?.addEventListener('click', handlePasscodeSubmit);
     passcodeModalCancel?.addEventListener('click', hidePasscodeModal);
     passcodeModalOverlay?.addEventListener('click', (e) => { if (e.target === passcodeModalOverlay) { hidePasscodeModal(); } });
     passcodeModalInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { handlePasscodeSubmit(); } });
     // --- End Passcode Modal Event Listeners ---
 
-    // --- START: Product Management Listeners ---
-    productListContainer?.addEventListener('click', e => {
+    // --- START: Product Management Listeners (Scoped to Screen 9) ---
+    appContainer.addEventListener('click', e => {
+        if (!currentScreen || currentScreen.id !== 'screen-9') return; // Only act if on Screen 9
+
+        const listContainer = currentScreen.querySelector('#product-list-container'); // Target list container within Screen 9
+        const addFormContainer = currentScreen.querySelector('.add-product-form'); // Target add form container
+
+        // Handle Save Quantity
         if (e.target.classList.contains('save-quantity-button')) {
             const productId = e.target.dataset.id;
-            if (productId) {
-                handleSaveQuantity(productId);
-            }
-        }
-        // Prevent clicks on input/button triggering anything else if needed
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') {
-            e.stopPropagation();
-        }
-    });
-
-    // Prevent form submission if inside a form element (though it's divs here)
-    productListContainer?.addEventListener('keypress', e => {
-         if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type === 'number') {
-             e.preventDefault(); // Prevent potential form submission
-             const productId = e.target.dataset.id;
-             if(productId) {
-                 handleSaveQuantity(productId); // Save on Enter key in quantity input
-                 e.target.blur(); // Unfocus the input
+            if (productId && listContainer && listContainer.contains(e.target)) {
+                 handleSaveQuantity(productId);
              }
+        }
+         // Handle Edit Product
+         else if (e.target.classList.contains('edit-product-button') || e.target.closest('.edit-product-button')) {
+             const button = e.target.classList.contains('edit-product-button') ? e.target : e.target.closest('.edit-product-button');
+             const productId = button?.dataset.id;
+             if (productId && listContainer && listContainer.contains(button)) {
+                 openEditProductModal(productId);
+             }
+         }
+         // Handle Remove Product
+         else if (e.target.classList.contains('remove-product-button') || e.target.closest('.remove-product-button')) {
+              const button = e.target.classList.contains('remove-product-button') ? e.target : e.target.closest('.remove-product-button');
+             const productId = button?.dataset.id;
+             if (productId && listContainer && listContainer.contains(button)) {
+                  handleRemoveProduct(productId);
+             }
+         }
+         // Handle Add New Product (Ensure button is within the form container)
+         else if (e.target.id === 'add-new-product-button' && addFormContainer && addFormContainer.contains(e.target)) {
+              handleAddNewProduct();
+         }
+
+         // Prevent clicks on list container's input/button triggering anything else
+         if ((e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') && listContainer && listContainer.contains(e.target)) {
+             e.stopPropagation();
          }
      });
 
+    // Prevent form submission on Enter in quantity input (Scoped to Screen 9)
+    appContainer.addEventListener('keypress', e => {
+        if (currentScreen && currentScreen.id === 'screen-9' && e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type === 'number') {
+            const listContainer = currentScreen.querySelector('#product-list-container');
+            if (listContainer && listContainer.contains(e.target)) {
+                 e.preventDefault();
+                 const productId = e.target.dataset.id;
+                 if(productId) {
+                     handleSaveQuantity(productId);
+                     e.target.blur();
+                 }
+            }
+        }
+     });
+    // --- END: Product Management Listeners ---
 
-    addNewProductButton?.addEventListener('click', handleAddNewProduct);
-     // --- END: Product Management Listeners ---
+    // --- Edit Product Modal Listeners ---
+    editProductSaveButton?.addEventListener('click', handleSaveProductEdit);
+    editProductCancelButton?.addEventListener('click', hideEditProductModal);
+    editProductModalOverlay?.addEventListener('click', (e) => {
+        if (e.target === editProductModalOverlay) { hideEditProductModal(); }
+    });
+    editProductModalBox?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
+                e.preventDefault();
+                handleSaveProductEdit();
+            }
+        }
+    });
+    // --- End Edit Product Modal Listeners ---
 
 
     // --- Initialization ---
     applyTheme(currentTheme);
-    updateLanguageUI(); // Includes updates for settings and discover button
+    updateLanguageUI();
     showScreen('screen-1');
     updateCartUI();
     updateUserInfoUI();
-    // Initial visibility checks
     updateDiscoverButtonVisibility();
-    updateDiscoveryToggleVisualState(); // Set toggle based on saved state
+    updateDiscoveryToggleVisualState();
 });

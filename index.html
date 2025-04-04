@@ -138,7 +138,7 @@
              </div>
         </div>
 
-        <!-- Screen 5: Order Management (Main) -->
+        <!-- Screen 5: Order Management -->
         <div class="screen" id="screen-5">
             <div class="screen-content management-container">
                  <div class="header">
@@ -152,6 +152,13 @@
                      <input type="text" id="order-search-input" data-lang-placeholder-key="search_order_id_placeholder" placeholder="Search by Order ID...">
                      <button class="button small-button" id="order-search-button"><i class="fas fa-search"></i> <span data-lang-key="search_button">Search</span></button>
                  </div>
+
+                 <!-- ADDED: Button to go to Product Management -->
+                 <button class="button small-button" id="goto-product-mgmt-button" data-target="screen-9" style="margin-top: 15px; background-color: #28a745; width: auto;">
+                     <i class="fas fa-boxes"></i> <span data-lang-key="manage_products_button">Manage Products</span>
+                 </button>
+                 <!-- END ADDED Button -->
+
                  <div class="order-management-layout">
                      <div class="order-log-section">
                          <h4 data-lang-key="order_log_title">Order Log</h4>
@@ -164,12 +171,7 @@
                      </div>
                 </div> <!-- END order-management-layout -->
 
-                <!-- Button to navigate to Product Management Screen -->
-                <div class="manage-products-nav-section">
-                     <button class="button rect-button" id="goto-product-management-button">
-                          <i class="fas fa-edit"></i> <span data-lang-key="manage_products_button">Manage Products</span>
-                     </button>
-                </div>
+                 <!-- PRODUCT MANAGEMENT SECTION MOVED TO SCREEN 9 -->
 
             </div> <!-- END screen-content -->
         </div> <!-- END screen-5 -->
@@ -223,55 +225,64 @@
         </div>
         <!-- End Screen 8 -->
 
-        <!-- Screen 9: Product Management -->
+        <!-- START: Screen 9: Product Management (NEW) -->
         <div class="screen" id="screen-9">
-            <div class="screen-content product-management-container">
-                <div class="header">
-                     <button class="header-button back-button" data-target="screen-5"> <!-- Back to Screen 5 -->
-                         <i class="fas fa-arrow-left"></i> <span data-lang-key="back_button">Back</span>
+            <div class="screen-content management-container">
+                 <div class="header">
+                     <button class="header-button back-button" data-target="screen-5"> <!-- Back to Order Management -->
+                         <i class="fas fa-arrow-left"></i> <span data-lang-key="back_to_orders_button">Back to Orders</span>
                      </button>
-                     <h3 class="screen-title" data-lang-key="manage_products_title">Manage Products</h3>
-                     <div style="width: 80px; flex-shrink: 0;"></div> <!-- Keep Spacer -->
+                     <h3 class="screen-title" data-lang-key="product_management_title">Product Management</h3>
+                     <div style="width: 80px; flex-shrink: 0;"></div> <!-- Spacer -->
                  </div>
 
-                <div class="product-list-container" id="product-list-container-screen9">
-                    <!-- Product items (with edit/remove buttons) will be loaded here by JS -->
-                </div>
+                 <!-- START: Product Management Section (MOVED HERE) -->
+                <div class="product-management-section" style="margin-top: 0; border-top: none; padding-top: 0;"> <!-- Adjustments -->
+                    <!-- Product List Title (optional, could be removed if header is enough) -->
+                    <!-- <h4 data-lang-key="manage_products_title">Manage Products</h4> -->
 
-                <div class="add-product-form">
-                    <h5 data-lang-key="add_new_product_title">Add New Product</h5>
-                    <div class="form-box">
-                        <label for="new-product-name-s9" data-lang-key="product_name_label">Product Name:</label>
-                        <input type="text" id="new-product-name-s9" data-lang-placeholder-key="product_name_placeholder" placeholder="e.g., Special Sandwich">
-
-                        <label for="new-product-desc-s9" data-lang-key="product_desc_label">Description:</label>
-                        <input type="text" id="new-product-desc-s9" data-lang-placeholder-key="product_desc_placeholder" placeholder="e.g., Chicken, lettuce, tomato...">
-
-                        <label for="new-product-price-s9" data-lang-key="product_price_label">Price ({currency}):</label>
-                        <input type="number" id="new-product-price-s9" min="0" step="0.01" data-lang-placeholder-key="product_price_placeholder" placeholder="e.g., 55.50">
-
-                        <label for="new-product-quantity-s9" data-lang-key="product_quantity_label">Initial Quantity:</label>
-                        <input type="number" id="new-product-quantity-s9" min="0" step="1" data-lang-placeholder-key="product_quantity_placeholder" placeholder="e.g., 50 (use 999 for unlimited)">
-
-                        <label for="new-product-image-s9" data-lang-key="product_image_label">Image URL:</label>
-                        <input type="text" id="new-product-image-s9" data-lang-placeholder-key="product_image_placeholder" placeholder="https://...">
-
-                        <label for="new-product-category-s9" data-lang-key="product_category_label">Category:</label>
-                        <select id="new-product-category-s9">
-                            <option value="sweet" data-lang-key="sort_sweet">Sweet</option>
-                            <option value="lunch" data-lang-key="sort_lunch">Lunch</option>
-                            <option value="snacks" data-lang-key="sort_snacks">Snacks</option>
-                            <!-- Add more categories if needed -->
-                        </select>
-
-                        <p id="add-product-error-s9" class="error-message" data-lang-key="add_product_error_generic">Please fill all fields correctly.</p>
+                    <div class="product-list-container" id="product-list-container">
+                        <!-- Product items will be loaded here by JS, including Edit/Remove buttons -->
                     </div>
-                    <button class="button small-button" id="add-new-product-button-s9">
-                        <i class="fas fa-plus-circle"></i> <span data-lang-key="add_product_button">Add Product</span>
-                    </button>
+
+                    <div class="add-product-form">
+                        <h5 data-lang-key="add_new_product_title">Add New Product</h5>
+                        <div class="form-box">
+                            <label for="new-product-name" data-lang-key="product_name_label">Product Name:</label>
+                            <input type="text" id="new-product-name" data-lang-placeholder-key="product_name_placeholder" placeholder="e.g., Special Sandwich">
+
+                            <label for="new-product-desc" data-lang-key="product_desc_label">Description:</label>
+                            <input type="text" id="new-product-desc" data-lang-placeholder-key="product_desc_placeholder" placeholder="e.g., Chicken, lettuce, tomato...">
+
+                            <label for="new-product-price" data-lang-key="product_price_label">Price ({currency}):</label>
+                            <input type="number" id="new-product-price" min="0" step="0.01" data-lang-placeholder-key="product_price_placeholder" placeholder="e.g., 55.50">
+
+                            <label for="new-product-quantity" data-lang-key="product_quantity_label">Initial Quantity:</label>
+                            <input type="number" id="new-product-quantity" min="0" step="1" data-lang-placeholder-key="product_quantity_placeholder" placeholder="e.g., 50 (use 999 for unlimited)">
+
+                            <label for="new-product-image" data-lang-key="product_image_label">Image URL:</label>
+                            <input type="text" id="new-product-image" data-lang-placeholder-key="product_image_placeholder" placeholder="https://...">
+
+                            <label for="new-product-category" data-lang-key="product_category_label">Category:</label>
+                            <select id="new-product-category">
+                                <option value="sweet" data-lang-key="sort_sweet">Sweet</option>
+                                <option value="lunch" data-lang-key="sort_lunch">Lunch</option>
+                                <option value="snacks" data-lang-key="sort_snacks">Snacks</option>
+                                <!-- Add more categories if needed -->
+                            </select>
+
+                            <p id="add-product-error" class="error-message" data-lang-key="add_product_error_generic">Please fill all fields correctly.</p>
+                        </div>
+                        <button class="button small-button" id="add-new-product-button">
+                            <i class="fas fa-plus-circle"></i> <span data-lang-key="add_product_button">Add Product</span>
+                        </button>
+                    </div>
                 </div>
+                <!-- END: Product Management Section -->
+
             </div> <!-- END screen-content -->
         </div> <!-- END screen-9 -->
+        <!-- END: Screen 9: Product Management -->
 
 
     </div><!-- end app-container -->
@@ -349,13 +360,14 @@
     </div>
     <!-- End Passcode Modal -->
 
-    <!-- Edit Product Modal -->
+    <!-- Add Edit Product Modal -->
     <div id="edit-product-modal-overlay" class="modal-overlay">
         <div id="edit-product-modal-box" class="modal-box">
             <h3 data-lang-key="edit_product_title">Edit Product</h3>
             <!-- Hidden input to store the ID of the product being edited -->
             <input type="hidden" id="edit-product-id">
-            <div class="form-box" style="width: 100%; max-width: none;">
+
+            <div class="form-box" style="margin-bottom: 10px; width: 100%;">
                 <label for="edit-product-name" data-lang-key="product_name_label">Product Name:</label>
                 <input type="text" id="edit-product-name" data-lang-placeholder-key="product_name_placeholder">
 
@@ -376,34 +388,18 @@
                     <option value="sweet" data-lang-key="sort_sweet">Sweet</option>
                     <option value="lunch" data-lang-key="sort_lunch">Lunch</option>
                     <option value="snacks" data-lang-key="sort_snacks">Snacks</option>
-                    <!-- Options should match the add form -->
                 </select>
-
-                <p id="edit-product-error" class="error-message" data-lang-key="add_product_error_generic">Please fill fields correctly.</p>
             </div>
-            <div class="modal-buttons-horizontal">
+
+            <p id="edit-product-error" class="error-message" data-lang-key="edit_product_error_generic">Please fill all fields correctly.</p>
+
+            <div class="passcode-modal-buttons"> <!-- Reusing modal button container style -->
                 <button id="edit-product-cancel" class="button cancel-button" data-lang-key="cancel_button">Cancel</button>
-                <button id="edit-product-save" class="button save-button" data-lang-key="save_changes_button">Save Changes</button>
+                <button id="edit-product-save" class="button ok-button" data-lang-key="save_changes_button">Save</button>
             </div>
         </div>
     </div>
     <!-- End Edit Product Modal -->
-
-    <!-- Confirm Remove Modal -->
-    <div id="confirm-remove-modal-overlay" class="modal-overlay">
-        <div id="confirm-remove-modal-box" class="modal-box">
-            <h3 data-lang-key="confirm_remove_title">Confirm Removal</h3>
-             <!-- Hidden input to store the ID of the product being removed -->
-            <input type="hidden" id="remove-product-id">
-            <p id="confirm-remove-message"></p>
-            <div class="modal-buttons-horizontal">
-                <button id="confirm-remove-cancel" class="button cancel-button" data-lang-key="cancel_button">Cancel</button>
-                <button id="confirm-remove-confirm" class="button remove-button" data-lang-key="remove_button">Remove</button>
-            </div>
-        </div>
-    </div>
-    <!-- End Confirm Remove Modal -->
-
 
     <!-- Link to your external JavaScript file -->
     <script src="script.js"></script>
