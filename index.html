@@ -80,9 +80,7 @@
                 <div class="sort-options">
                     <p data-lang-key="sort_label">Sort</p>
                     <div class="sort-buttons" id="menu-sort-buttons">
-                        <button class="sort-button active" data-category="sweet" data-lang-key="sort_sweet">sweet</button>
-                        <button class="sort-button" data-category="lunch" data-lang-key="sort_lunch">lunch</button>
-                        <button class="sort-button" data-category="snacks" data-lang-key="sort_snacks">snacks</button>
+                        <!-- Sort buttons populated by JS based on categories -->
                     </div>
                 </div>
                 <button class="button small-button" id="discover-button" style="display: none; margin-top: -5px; margin-bottom: 20px;">
@@ -153,11 +151,11 @@
                      <button class="button small-button" id="order-search-button"><i class="fas fa-search"></i> <span data-lang-key="search_button">Search</span></button>
                  </div>
 
-                 <!-- ADDED: Button to go to Product Management -->
+                 <!-- Button to go to Product Management -->
                  <button class="button small-button" id="goto-product-mgmt-button" data-target="screen-9" style="margin-top: 15px; background-color: #28a745; width: auto;">
                      <i class="fas fa-boxes"></i> <span data-lang-key="manage_products_button">Manage Products</span>
                  </button>
-                 <!-- END ADDED Button -->
+                 <!-- END Button -->
 
                  <div class="order-management-layout">
                      <div class="order-log-section">
@@ -170,8 +168,6 @@
                          <div class="order-status-controls" id="order-status-controls"></div>
                      </div>
                 </div> <!-- END order-management-layout -->
-
-                 <!-- PRODUCT MANAGEMENT SECTION MOVED TO SCREEN 9 -->
 
             </div> <!-- END screen-content -->
         </div> <!-- END screen-5 -->
@@ -225,34 +221,74 @@
         </div>
         <!-- End Screen 8 -->
 
-        <!-- START: Screen 9: Product Management (NEW) -->
+        <!-- START: Screen 9: Product Management (REVISED STRUCTURE + CATEGORY MGMT) -->
         <div class="screen" id="screen-9">
             <div class="screen-content management-container">
                  <div class="header">
-                     <button class="header-button back-button" data-target="screen-5"> <!-- Back to Order Management -->
+                     <!-- Back Button: Dynamically changes target -->
+                     <button class="header-button back-button" id="product-mgmt-back-button" data-target="screen-5">
                          <i class="fas fa-arrow-left"></i> <span data-lang-key="back_to_orders_button">Back to Orders</span>
                      </button>
-                     <h3 class="screen-title" data-lang-key="product_management_title">Product Management</h3>
+                     <!-- Title: Dynamically changes -->
+                     <h3 class="screen-title" id="product-mgmt-title" data-lang-key="product_management_title">Product Management</h3>
                      <div style="width: 80px; flex-shrink: 0;"></div> <!-- Spacer -->
                  </div>
 
-                 <!-- START: Product Management Section (MOVED HERE) -->
-                <div class="product-management-section" style="margin-top: 0; border-top: none; padding-top: 0;"> <!-- Adjustments -->
-                    <!-- Product List Title (optional, could be removed if header is enough) -->
-                    <!-- <h4 data-lang-key="manage_products_title">Manage Products</h4> -->
+                 <!-- Container for Category List View -->
+                 <div id="category-view-container" class="view-container active">
+                     <h4 data-lang-key="manage_categories_title">Manage Categories</h4>
+                     <p class="drag-hint" data-lang-key="drag_categories_hint">Drag and drop to reorder categories.</p>
+                     <div class="category-list-container scrollable-list" id="category-list-container">
+                         <!-- Draggable Category items will be loaded here by JS -->
+                     </div>
 
-                    <div class="product-list-container" id="product-list-container">
-                        <!-- Product items will be loaded here by JS, including Edit/Remove buttons -->
-                    </div>
+                     <!-- START: Add Category Form -->
+                      <div class="add-category-form" id="add-category-form" style="border-top: var(--border-thickness) dashed var(--border-color); padding-top: 20px; margin-top: 20px;">
+                          <h5 data-lang-key="add_category_title">Add New Category</h5>
+                          <div class="form-box">
+                              <label for="new-category-name-en" data-lang-key="category_name_en_label">Category Name (English):</label>
+                              <input type="text" id="new-category-name-en" data-lang-placeholder-key="category_name_placeholder" placeholder="e.g., Breakfast">
 
-                    <div class="add-product-form">
-                        <h5 data-lang-key="add_new_product_title">Add New Product</h5>
-                        <div class="form-box">
-                            <label for="new-product-name" data-lang-key="product_name_label">Product Name:</label>
-                            <input type="text" id="new-product-name" data-lang-placeholder-key="product_name_placeholder" placeholder="e.g., Special Sandwich">
+                              <label for="new-category-name-ar" data-lang-key="category_name_ar_label">Category Name (Arabic):</label>
+                              <input type="text" id="new-category-name-ar" data-lang-placeholder-key="category_name_placeholder" placeholder="مثال: فطور">
 
-                            <label for="new-product-desc" data-lang-key="product_desc_label">Description:</label>
-                            <input type="text" id="new-product-desc" data-lang-placeholder-key="product_desc_placeholder" placeholder="e.g., Chicken, lettuce, tomato...">
+                              <p id="add-category-error" class="error-message" data-lang-key="add_category_error_generic">Please enter names in both languages.</p>
+                          </div>
+                          <button class="button small-button" id="add-new-category-button">
+                              <i class="fas fa-plus-circle"></i> <span data-lang-key="add_category_button">Add Category</span>
+                          </button>
+                      </div>
+                     <!-- END: Add Category Form -->
+
+                 </div> <!-- END category-view-container -->
+
+                 <!-- Container for Product Grid View (within a category) -->
+                 <div id="product-view-container" class="view-container">
+                     <!-- Category Title will be updated by JS -->
+                     <h4 id="product-view-category-title">Category Products</h4>
+                     <p class="drag-hint" data-lang-key="drag_products_hint">Drag and drop to reorder products within this category.</p>
+                     <!-- Product Grid (User-like display) -->
+                     <div class="product-grid-container scrollable-list" id="product-grid-container">
+                         <!-- Draggable Product items will be loaded here by JS -->
+                     </div>
+
+                     <!-- Add Product Form (Now inside the product view) -->
+                     <div class="add-product-form" id="add-product-form-container" style="border-top: var(--border-thickness) dashed var(--border-color); padding-top: 20px; margin-top: 20px;">
+                         <h5 data-lang-key="add_new_product_title">Add New Product to <span id="add-product-category-name">Category</span></h5>
+                         <div class="form-box">
+                            <!-- START: Modified Product Inputs -->
+                            <label for="new-product-name-en" data-lang-key="product_name_en_label">Product Name (English):</label>
+                            <input type="text" id="new-product-name-en" data-lang-placeholder-key="product_name_en_placeholder" placeholder="e.g., Special Sandwich">
+
+                            <label for="new-product-name-ar" data-lang-key="product_name_ar_label">Product Name (Arabic):</label>
+                            <input type="text" id="new-product-name-ar" data-lang-placeholder-key="product_name_ar_placeholder" placeholder="e.g., ساندويتش خاص">
+
+                            <label for="new-product-desc-en" data-lang-key="product_desc_en_label">Description (English):</label>
+                            <input type="text" id="new-product-desc-en" data-lang-placeholder-key="product_desc_en_placeholder" placeholder="e.g., Chicken, lettuce, tomato...">
+
+                            <label for="new-product-desc-ar" data-lang-key="product_desc_ar_label">Description (Arabic):</label>
+                            <input type="text" id="new-product-desc-ar" data-lang-placeholder-key="product_desc_ar_placeholder" placeholder="e.g., دجاج، خس، طماطم...">
+                            <!-- END: Modified Product Inputs -->
 
                             <label for="new-product-price" data-lang-key="product_price_label">Price ({currency}):</label>
                             <input type="number" id="new-product-price" min="0" step="0.01" data-lang-placeholder-key="product_price_placeholder" placeholder="e.g., 55.50">
@@ -263,22 +299,15 @@
                             <label for="new-product-image" data-lang-key="product_image_label">Image URL:</label>
                             <input type="text" id="new-product-image" data-lang-placeholder-key="product_image_placeholder" placeholder="https://...">
 
-                            <label for="new-product-category" data-lang-key="product_category_label">Category:</label>
-                            <select id="new-product-category">
-                                <option value="sweet" data-lang-key="sort_sweet">Sweet</option>
-                                <option value="lunch" data-lang-key="sort_lunch">Lunch</option>
-                                <option value="snacks" data-lang-key="sort_snacks">Snacks</option>
-                                <!-- Add more categories if needed -->
-                            </select>
+                            <input type="hidden" id="new-product-category-key"> <!-- Store category key -->
 
-                            <p id="add-product-error" class="error-message" data-lang-key="add_product_error_generic">Please fill all fields correctly.</p>
+                            <p id="add-product-error" class="error-message" data-lang-key="add_product_error_en_ar_generic">Please fill all fields, including English and Arabic names/descriptions.</p>
                         </div>
-                        <button class="button small-button" id="add-new-product-button">
-                            <i class="fas fa-plus-circle"></i> <span data-lang-key="add_product_button">Add Product</span>
-                        </button>
-                    </div>
-                </div>
-                <!-- END: Product Management Section -->
+                         <button class="button small-button" id="add-new-product-button">
+                             <i class="fas fa-plus-circle"></i> <span data-lang-key="add_product_button">Add Product</span>
+                         </button>
+                     </div><!-- END add-product-form-container -->
+                 </div><!-- END product-view-container -->
 
             </div> <!-- END screen-content -->
         </div> <!-- END screen-9 -->
@@ -360,19 +389,26 @@
     </div>
     <!-- End Passcode Modal -->
 
-    <!-- Add Edit Product Modal -->
+    <!-- Edit Product Modal (MODIFIED FOR EN/AR) -->
     <div id="edit-product-modal-overlay" class="modal-overlay">
         <div id="edit-product-modal-box" class="modal-box">
             <h3 data-lang-key="edit_product_title">Edit Product</h3>
-            <!-- Hidden input to store the ID of the product being edited -->
             <input type="hidden" id="edit-product-id">
 
-            <div class="form-box" style="margin-bottom: 10px; width: 100%;">
-                <label for="edit-product-name" data-lang-key="product_name_label">Product Name:</label>
-                <input type="text" id="edit-product-name" data-lang-placeholder-key="product_name_placeholder">
+            <div class="form-box"> <!-- Scrollable area -->
+                <!-- START: Modified Product Inputs -->
+                <label for="edit-product-name-en" data-lang-key="product_name_en_label">Product Name (English):</label>
+                <input type="text" id="edit-product-name-en" data-lang-placeholder-key="product_name_en_placeholder">
 
-                <label for="edit-product-desc" data-lang-key="product_desc_label">Description:</label>
-                <input type="text" id="edit-product-desc" data-lang-placeholder-key="product_desc_placeholder">
+                <label for="edit-product-name-ar" data-lang-key="product_name_ar_label">Product Name (Arabic):</label>
+                <input type="text" id="edit-product-name-ar" data-lang-placeholder-key="product_name_ar_placeholder">
+
+                <label for="edit-product-desc-en" data-lang-key="product_desc_en_label">Description (English):</label>
+                <input type="text" id="edit-product-desc-en" data-lang-placeholder-key="product_desc_en_placeholder">
+
+                <label for="edit-product-desc-ar" data-lang-key="product_desc_ar_label">Description (Arabic):</label>
+                <input type="text" id="edit-product-desc-ar" data-lang-placeholder-key="product_desc_ar_placeholder">
+                <!-- END: Modified Product Inputs -->
 
                 <label for="edit-product-price" data-lang-key="product_price_label">Price ({currency}):</label>
                 <input type="number" id="edit-product-price" min="0" step="0.01" data-lang-placeholder-key="product_price_placeholder">
@@ -385,11 +421,9 @@
 
                 <label for="edit-product-category" data-lang-key="product_category_label">Category:</label>
                 <select id="edit-product-category">
-                    <option value="sweet" data-lang-key="sort_sweet">Sweet</option>
-                    <option value="lunch" data-lang-key="sort_lunch">Lunch</option>
-                    <option value="snacks" data-lang-key="sort_snacks">Snacks</option>
+                    <!-- Options will be populated dynamically by JS based on 'categories' array -->
                 </select>
-            </div>
+            </div><!-- end form-box -->
 
             <p id="edit-product-error" class="error-message" data-lang-key="edit_product_error_generic">Please fill all fields correctly.</p>
 
@@ -400,6 +434,46 @@
         </div>
     </div>
     <!-- End Edit Product Modal -->
+
+    <!-- START: Edit Category Modal -->
+    <div id="edit-category-modal-overlay" class="modal-overlay">
+        <div id="edit-category-modal-box" class="modal-box">
+            <h3 data-lang-key="edit_category_title">Edit Category</h3>
+            <!-- Hidden inputs to store keys -->
+            <input type="hidden" id="edit-category-key">
+            <input type="hidden" id="edit-category-name-key">
+
+            <div class="form-box" style="margin-bottom: 10px; width: 100%;">
+                <label for="edit-category-name-en" data-lang-key="category_name_en_label">Category Name (English):</label>
+                <input type="text" id="edit-category-name-en" data-lang-placeholder-key="category_name_placeholder">
+
+                <label for="edit-category-name-ar" data-lang-key="category_name_ar_label">Category Name (Arabic):</label>
+                <input type="text" id="edit-category-name-ar" data-lang-placeholder-key="category_name_placeholder">
+            </div>
+
+            <p id="edit-category-error" class="error-message" data-lang-key="edit_category_error_generic">Please enter names in both languages.</p>
+
+            <div class="passcode-modal-buttons"> <!-- Reusing modal button container style -->
+                <button id="edit-category-cancel" class="button cancel-button" data-lang-key="cancel_button">Cancel</button>
+                <button id="edit-category-save" class="button ok-button" data-lang-key="save_changes_button">Save</button>
+            </div>
+        </div>
+    </div>
+    <!-- END: Edit Category Modal -->
+
+    <!-- START: Custom Confirmation Modal -->
+    <div id="custom-confirm-modal-overlay" class="modal-overlay">
+        <div id="custom-confirm-modal-box" class="modal-box confirm-modal"> <!-- Added confirm-modal class for potential specific styling -->
+            <h3 id="custom-confirm-title" data-lang-key="confirm_action_title">Confirm Action</h3>
+            <p id="custom-confirm-message"></p>
+            <div class="passcode-modal-buttons"> <!-- Reuse button container style -->
+                <button id="custom-confirm-cancel-button" class="button cancel-button" data-lang-key="cancel_button">Cancel</button>
+                <button id="custom-confirm-ok-button" class="button ok-button confirm-button" data-lang-key="confirm_button">Confirm</button> <!-- Added confirm-button class -->
+            </div>
+        </div>
+    </div>
+    <!-- END: Custom Confirmation Modal -->
+
 
     <!-- Link to your external JavaScript file -->
     <script src="script.js"></script>

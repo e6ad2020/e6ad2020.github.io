@@ -278,35 +278,39 @@ html[lang="ar"] #discovery-toggle-group .settings-label { text-align: right; }
 /* RTL Passcode Modal */
 html[lang="ar"] .passcode-modal-buttons { flex-direction: row-reverse; }
 /* RTL Product Management */
-html[lang="ar"] .product-list-item { flex-direction: row-reverse; }
-html[lang="ar"] .product-list-info { text-align: right; }
-html[lang="ar"] .product-quantity-control { flex-direction: row-reverse; }
-html[lang="ar"] .product-quantity-control input[type="number"] { text-align: center; /* Keep centered for RTL */ }
-html[lang="ar"] .add-product-form label { text-align: right; }
-html[lang="ar"] .add-product-form select {
+html[lang="ar"] .category-list-item { flex-direction: row-reverse; }
+html[lang="ar"] .category-name { text-align: right; }
+html[lang="ar"] .category-actions { order: -1; /* Move actions to the start in flex */ }
+html[lang="ar"] .drag-handle { padding: 0 5px; margin-left: 0; margin-right: 5px; /* Adjust handle spacing */ }
+html[lang="ar"] .product-grid-item-admin .product-name-admin,
+html[lang="ar"] .product-grid-item-admin .product-price-admin { text-align: center; } /* Keep centered */
+html[lang="ar"] .product-grid-item-admin .admin-actions-overlay { right: auto; left: 5px; }
+html[lang="ar"] .add-product-form label, html[lang="ar"] .add-category-form label { text-align: right; }
+html[lang="ar"] .add-product-form select, html[lang="ar"] .add-category-form select {
      background-position: left 10px top 50%;
      padding-left: 30px;
      padding-right: 12px;
 }
-html[lang="ar"] .product-management-section h4,
-html[lang="ar"] .add-product-form h5 { text-align: center !important; } /* Ensure centered */
+html[lang="ar"] #category-view-container h4,
+html[lang="ar"] #product-view-container h4,
+html[lang="ar"] .add-product-form h5,
+html[lang="ar"] .add-category-form h5 { text-align: center !important; } /* Ensure centered */
 /* Fix for 2-column layout label alignment in RTL */
 @media (min-width: 992px) {
-    html[lang="ar"] .add-product-form label {
+    html[lang="ar"] #add-product-form-container label {
         text-align: left; /* Labels on the right side align left */
     }
+    html[lang="ar"] #add-category-form label {
+        text-align: left; /* Also apply to add category form */
+    }
 }
-/* NEW: RTL for product list actions */
-html[lang="ar"] .product-list-actions {
-     margin-left: 0;
-     margin-right: 5px;
-     flex-direction: row-reverse;
-}
-/* NEW: RTL for Edit Modal */
-html[lang="ar"] #edit-product-modal-box label {
+/* NEW: RTL for Edit Modals */
+html[lang="ar"] #edit-product-modal-box label,
+html[lang="ar"] #edit-category-modal-box label {
     text-align: right;
 }
-html[lang="ar"] #edit-product-modal-box select {
+html[lang="ar"] #edit-product-modal-box select,
+html[lang="ar"] #edit-category-modal-box select { /* Apply to category modal too if needed */
     background-position: left 10px top 50%;
     padding-left: 30px;
     padding-right: 10px;
@@ -600,589 +604,155 @@ body[data-theme="dark-grey"] #custom-alert-box p, body[data-theme="night"] #cust
 /* --- End Custom Alert Modal Styles --- */
 
 /* --- Passcode Modal Styles (Settings Theme) --- */
-#passcode-modal-overlay {
-    z-index: 1200; /* Above settings panel */
-    font-family: var(--font-en); /* Base font */
-}
+#passcode-modal-overlay { z-index: 1200; font-family: var(--font-en); }
 html[lang="ar"] #passcode-modal-overlay { font-family: var(--font-ar); }
-
-#passcode-modal-box {
-    /* Base modal appearance matching Settings Panel */
-    background-color: #4a4a4a;
-    border: 1px solid #666;
-    color: #e0e0e0;
-    width: 290px;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-    /* Other modal properties */
-    max-width: 90%;
-    text-align: center;
-    transform: scale(0.9);
-    opacity: 0;
-    transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
-    will-change: transform, opacity;
- }
-.modal-overlay.visible #passcode-modal-box {
-    transform: scale(1);
-    opacity: 1;
-}
-
-#passcode-modal-box h3 {
-     color: #e0e0e0; /* Light text */
-     font-size: 1.2rem;
-     margin-top: 0; /* Reset margin */
-     margin-bottom: 15px;
-     text-align: center !important;
-     font-weight: 600;
-     -webkit-text-stroke: 0;
-     text-stroke: 0;
- }
-
-#passcode-modal-box input[type="password"] {
-     width: 100%;
-     padding: 10px 15px;
-     margin-bottom: 20px;
-     text-align: center;
-     font-size: 1.1rem;
-     background-color: #5f5f5f; /* Settings interactive bg */
-     color: #e0e0e0; /* Light text */
-     border: 1px solid #777; /* Settings interactive border */
-     border-radius: 8px; /* Settings interactive radius */
-     box-sizing: border-box;
- }
- #passcode-modal-box input[type="password"]:focus {
-     outline: none;
-     box-shadow: 0 0 0 2px #00bcd4; /* Settings focus */
- }
- #passcode-modal-box input::placeholder {
-    color: #aaa;
-    text-align: center;
- }
- html[lang="ar"] #passcode-modal-box input::placeholder {
-    text-align: center;
- }
-
- #passcode-modal-box .error-message {
-     font-size: 0.85rem;
-     margin-top: -15px;
-     margin-bottom: 15px;
-     color: #EF9A9A; /* Settings-like error red */
-     display: none;
-     text-align: center !important;
- }
-
-.passcode-modal-buttons {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     gap: 15px;
-     margin-top: 15px;
- }
-
-/* General button style inside passcode modal (Settings Theme) */
-#passcode-modal-box .button {
-     margin-top: 0;
-     padding: 10px 15px;
-     font-size: 1rem;
-     font-weight: 700;
-     background-color: #5f5f5f; /* Settings interactive bg */
-     border: 1px solid #777; /* Settings interactive border */
-     color: #e0e0e0; /* Light text */
-     transition: background-color var(--fast-transition-speed) ease, transform var(--fast-transition-speed) ease;
-     cursor: pointer;
-     user-select: none;
-     font-family: inherit;
- }
- #passcode-modal-box .button:hover:not(:active) {
-     background-color: #6a6a6a; /* Settings hover */
- }
- #passcode-modal-box .button:active {
-     transform: scale(0.96);
-     background-color: #555; /* Settings active */
- }
-
- /* Specific styles for Cancel button */
- #passcode-modal-box .button.cancel-button {
-     flex-grow: 1;
-     border-radius: 8px; /* Match settings dropdown radius */
-     text-align: center;
- }
-
- /* Specific styles for OK button */
- #passcode-modal-box .button.ok-button {
-     width: 55px;
-     height: 55px;
-     border-radius: 50%;
-     padding: 0;
-     flex-shrink: 0;
-     line-height: calc(55px - 2 * 1px);
-     font-size: 1.1rem;
- }
+#passcode-modal-box { background-color: #4a4a4a; border: 1px solid #666; color: #e0e0e0; width: 290px; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); max-width: 90%; text-align: center; transform: scale(0.9); opacity: 0; transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease; will-change: transform, opacity; }
+.modal-overlay.visible #passcode-modal-box { transform: scale(1); opacity: 1; }
+#passcode-modal-box h3 { color: #e0e0e0; font-size: 1.2rem; margin-top: 0; margin-bottom: 15px; text-align: center !important; font-weight: 600; -webkit-text-stroke: 0; text-stroke: 0; }
+#passcode-modal-box input[type="password"] { width: 100%; padding: 10px 15px; margin-bottom: 20px; text-align: center; font-size: 1.1rem; background-color: #5f5f5f; color: #e0e0e0; border: 1px solid #777; border-radius: 8px; box-sizing: border-box; }
+#passcode-modal-box input[type="password"]:focus { outline: none; box-shadow: 0 0 0 2px #00bcd4; }
+#passcode-modal-box input::placeholder { color: #aaa; text-align: center; } html[lang="ar"] #passcode-modal-box input::placeholder { text-align: center; }
+#passcode-modal-box .error-message { font-size: 0.85rem; margin-top: -15px; margin-bottom: 15px; color: #EF9A9A; display: none; text-align: center !important; }
+.passcode-modal-buttons { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-top: 15px; }
+#passcode-modal-box .button { margin-top: 0; padding: 10px 15px; font-size: 1rem; font-weight: 700; background-color: #5f5f5f; border: 1px solid #777; color: #e0e0e0; transition: background-color var(--fast-transition-speed) ease, transform var(--fast-transition-speed) ease; cursor: pointer; user-select: none; font-family: inherit; }
+#passcode-modal-box .button:hover:not(:active) { background-color: #6a6a6a; }
+#passcode-modal-box .button:active { transform: scale(0.96); background-color: #555; }
+#passcode-modal-box .button.cancel-button { flex-grow: 1; border-radius: 8px; text-align: center; }
+#passcode-modal-box .button.ok-button { width: 55px; height: 55px; border-radius: 50%; padding: 0; flex-shrink: 0; line-height: calc(55px - 2 * 1px); font-size: 1.1rem; }
 /* --- End Passcode Modal Styles --- */
 
-/* --- START: Product Management Styles --- */
-/* Style for the button on Screen 5 */
-#goto-product-mgmt-button {
-    border-color: #1e7e34; /* Darker green border */
-    background-color: #28a745; /* Keep green */
-    color: #fff; /* White text */
-}
-#goto-product-mgmt-button:hover {
-    background-color: #218838; /* Darker green on hover */
-    border-color: #1e7e34;
-}
-body[data-theme="dark-grey"] #goto-product-mgmt-button,
-body[data-theme="night"] #goto-product-mgmt-button,
-body[data-theme="mono-dark"] #goto-product-mgmt-button {
-    background-color: #54A265; /* A green that works on dark */
-    border-color: #3B824A;
-    color: #fff;
-}
-body[data-theme="dark-grey"] #goto-product-mgmt-button:hover,
-body[data-theme="night"] #goto-product-mgmt-button:hover,
-body[data-theme="mono-dark"] #goto-product-mgmt-button:hover {
-    background-color: #479157;
-}
+/* --- START: Custom Confirmation Modal Styles --- */
+#custom-confirm-modal-overlay { z-index: 1250; /* Ensure it's above other modals if needed */ }
+#custom-confirm-modal-box { /* Reuse general modal styling */ background-color: #FFF3E0; /* Light orange/warning background */ border-color: #FFB74D; /* Orange border */ color: #333; width: 340px; }
+body[data-theme="dark-grey"] #custom-confirm-modal-box, body[data-theme="night"] #custom-confirm-modal-box, body[data-theme="mono-dark"] #custom-confirm-modal-box { background-color: #554333; /* Darker warning background */ border-color: #FFCC80; color: #eee; }
+#custom-confirm-modal-box h3 { /* Reuse general modal h3 style */ color: #E65100; /* Dark orange title */ -webkit-text-stroke: 0; text-stroke: 0; }
+body[data-theme="dark-grey"] #custom-confirm-modal-box h3, body[data-theme="night"] #custom-confirm-modal-box h3, body[data-theme="mono-dark"] #custom-confirm-modal-box h3 { color: #FFCC80; /* Light orange title */ }
+#custom-confirm-modal-box p { /* Reuse general modal p style */ color: #555; /* Slightly darker text for readability */ font-weight: 600; }
+body[data-theme="dark-grey"] #custom-confirm-modal-box p, body[data-theme="night"] #custom-confirm-modal-box p, body[data-theme="mono-dark"] #custom-confirm-modal-box p { color: #ddd; }
+#custom-confirm-modal-box .passcode-modal-buttons { /* Reuse button container style */ }
+#custom-confirm-modal-box .button { /* Reuse general button style from passcode modal */ font-family: inherit; font-weight: 700; padding: 10px 20px; }
+#custom-confirm-modal-box .cancel-button { background-color: #BDBDBD; border-color: #9E9E9E; color: #333; flex-grow: 1; border-radius: 8px; }
+#custom-confirm-modal-box .cancel-button:hover:not(:active) { background-color: #ccc; }
+#custom-confirm-modal-box .confirm-button { background-color: var(--remove-red); /* Red for confirm/delete */ border-color: color-mix(in srgb, var(--remove-red) 80%, black); color: white; flex-grow: 1; border-radius: 8px; }
+#custom-confirm-modal-box .confirm-button:hover:not(:active) { background-color: color-mix(in srgb, var(--remove-red) 80%, white); }
+/* Dark theme adjustments for confirm modal buttons */
+body[data-theme="dark-grey"] #custom-confirm-modal-box .cancel-button, body[data-theme="night"] #custom-confirm-modal-box .cancel-button, body[data-theme="mono-dark"] #custom-confirm-modal-box .cancel-button { background-color: #616161; border-color: #757575; color: #eee; }
+body[data-theme="dark-grey"] #custom-confirm-modal-box .cancel-button:hover:not(:active), body[data-theme="night"] #custom-confirm-modal-box .cancel-button:hover:not(:active), body[data-theme="mono-dark"] #custom-confirm-modal-box .cancel-button:hover:not(:active) { background-color: #757575; }
+body[data-theme="dark-grey"] #custom-confirm-modal-box .confirm-button, body[data-theme="night"] #custom-confirm-modal-box .confirm-button, body[data-theme="mono-dark"] #custom-confirm-modal-box .confirm-button { background-color: var(--remove-red); border-color: color-mix(in srgb, var(--remove-red) 70%, black); color: white; /* Keep white text on red */ }
+body[data-theme="dark-grey"] #custom-confirm-modal-box .confirm-button:hover:not(:active), body[data-theme="night"] #custom-confirm-modal-box .confirm-button:hover:not(:active), body[data-theme="mono-dark"] #custom-confirm-modal-box .confirm-button:hover:not(:active) { background-color: color-mix(in srgb, var(--remove-red) 80%, white); }
+/* --- END: Custom Confirmation Modal Styles --- */
 
 
-/* Adjustments for Product Management Section moved to Screen 9 */
-#screen-9 .product-management-section {
-    margin-top: 0;
-    border-top: none;
-    padding-top: 0;
-    width: 100%; /* Ensure it takes full width within screen-content */
-    flex-grow: 1; /* Allow it to grow */
-    display: flex; /* Enable flex for column layout */
-    flex-direction: column;
-}
-#screen-9 .product-list-container {
-     flex-grow: 1; /* Allow list to take available space */
-     margin-bottom: 20px; /* Space between list and add form */
-}
-#screen-9 .add-product-form {
-    margin-top: 0; /* No extra margin needed */
-    flex-shrink: 0; /* Don't let add form shrink */
-}
-
-
-/* Styles for the list container */
-.product-list-container {
-    max-height: 350px; /* Limit height and make scrollable */
-    overflow-y: auto;
-    border: var(--border-thickness) solid var(--border-color);
-    border-radius: var(--element-border-radius);
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.05);
-    margin-bottom: 30px; /* Space before Add New form */
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: border-color var(--view-change-speed) ease;
-}
-
-.product-list-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: var(--lighter-blue-bg);
-    border: var(--border-thickness) solid var(--border-color);
-    border-radius: 5px;
-    padding: 8px 12px;
-    transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease;
-}
-html[lang="ar"] .product-list-item { flex-direction: row-reverse; }
-
-.product-list-item img {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 4px;
-    flex-shrink: 0;
-    background-color: #eee;
-    border: 1px solid rgba(0,0,0,0.1);
-}
-
-.product-list-info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column; /* Stack name and price */
-    gap: 2px;
-    min-width: 0; /* Prevent overflow */
-}
-html[lang="ar"] .product-list-info { text-align: right; }
-
-.product-list-name {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-color-dark);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color var(--view-change-speed) ease;
-}
-
-.product-list-price {
-    font-size: 0.85rem;
-    color: var(--text-color-dark);
-    opacity: 0.8;
-    transition: color var(--view-change-speed) ease;
-}
-
-.product-quantity-control {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0; /* Prevent shrinking */
-}
-html[lang="ar"] .product-quantity-control { flex-direction: row-reverse; }
-
-.product-quantity-control input[type="number"] {
-    width: 60px; /* Fixed width for quantity input */
-    padding: 5px 8px;
-    font-size: 0.9rem;
-    text-align: center;
-    border-radius: 4px;
-    /* Use existing input styles but smaller */
-    background-color: var(--main-bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-color-dark);
-    transition: box-shadow var(--fast-transition-speed) ease, background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease;
-    margin-bottom: 0; /* Override general input margin */
-}
-/* Remove spinner buttons */
-.product-quantity-control input[type=number]::-webkit-inner-spin-button,
-.product-quantity-control input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.product-quantity-control input[type=number] {
-  -moz-appearance: textfield; /* Firefox */
-}
-html[lang="ar"] .product-quantity-control input[type="number"] { text-align: center; /* Keep centered for RTL */ }
-
-
-.product-quantity-control .button.save-quantity-button {
-    margin-top: 0;
-    padding: 4px 10px;
-    font-size: 0.8rem;
-    min-width: 55px; /* Ensure button has minimum width */
-     line-height: normal; /* Reset line height */
-     display: inline-flex; /* Ensure icon centers */
-     align-items: center;
-     justify-content: center;
-     background-color: var(--button-bg-color);
-     border-color: var(--border-color);
-     color: var(--text-color-dark);
-}
-.product-quantity-control .button.save-quantity-button i { margin: 0 !important; font-size: 1em; } /* Style checkmark */
-.product-quantity-control .button.save-quantity-button.saved {
-    background-color: var(--active-green);
-    color: var(--text-color-dark); /* Adjust if needed for contrast */
-}
-body[data-theme="green"] .product-quantity-control .button.save-quantity-button.saved,
-body[data-theme="yellow"] .product-quantity-control .button.save-quantity-button.saved,
-body[data-theme="orange"] .product-quantity-control .button.save-quantity-button.saved {
-     color: var(--text-color-dark); /* Ensure dark text on these themes */
-}
-body[data-theme="mono-dark"] .product-quantity-control .button.save-quantity-button.saved {
-     color: var(--main-bg-color-mono-dark); /* Ensure black text on white bg */
-}
-
-/* Styles for Edit/Remove buttons in the product list */
-.product-list-actions {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-    margin-left: 5px; /* Add some space before actions */
-}
-html[lang="ar"] .product-list-actions {
-     margin-left: 0;
-     margin-right: 5px;
-     flex-direction: row-reverse;
-}
-
-.product-list-actions .button.action-button {
-    padding: 5px 8px;
-    font-size: 0.8rem;
-    min-width: 30px;
-    margin: 0; /* Remove default button margin */
-    border-radius: 4px;
-    line-height: normal;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-.product-list-actions .button.action-button i {
-    margin: 0 !important;
-    font-size: 1em;
-}
-
-.product-list-actions .edit-product-button {
-    background-color: #ffc107; /* Yellow */
-    border-color: #d39e00;
-    color: #000;
-}
-.product-list-actions .edit-product-button:hover {
-    background-color: #e0a800;
-}
-
-.product-list-actions .remove-product-button {
-    background-color: var(--remove-red); /* Use theme red */
-    border-color: color-mix(in srgb, var(--remove-red) 80%, black);
-    color: #fff;
-}
-.product-list-actions .remove-product-button:hover {
-    background-color: color-mix(in srgb, var(--remove-red) 80%, black);
-}
-/* Theme adjustments for action buttons */
-body[data-theme="dark-grey"] .product-list-actions .remove-product-button,
-body[data-theme="orange"] .product-list-actions .remove-product-button {
-     color: var(--text-color-dark);
-}
-body[data-theme="mono-dark"] .product-list-actions .edit-product-button {
-    color: #000; border-color: #fff; background-color: #fff;
-}
-body[data-theme="mono-dark"] .product-list-actions .edit-product-button:hover {
-    background-color: #eee;
-}
-body[data-theme="mono-dark"] .product-list-actions .remove-product-button {
-    background-color: var(--remove-red-mono-dark);
-    color: var(--main-bg-color-mono-dark);
-    border-color: var(--text-color-dark-mono-dark);
-}
-body[data-theme="mono-dark"] .product-list-actions .remove-product-button:hover {
-     background-color: color-mix(in srgb, var(--remove-red-mono-dark) 80%, black);
-}
-
-/* Add New Product Form Styles */
-.add-product-form {
-    margin-top: 30px;
-    padding: 20px;
-    border: var(--border-thickness) dashed var(--border-color);
-    border-radius: var(--element-border-radius);
-    background-color: rgba(255, 255, 255, 0.05);
-    transition: border-color var(--view-change-speed) ease;
-}
-
-.add-product-form h5 {
-    font-size: 1.3rem;
-    color: var(--text-color-dark);
-    margin-top: 0;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 600;
-    transition: color var(--view-change-speed) ease;
-}
-html[lang="ar"] .add-product-form h5 { text-align: center !important; }
-
-.add-product-form .form-box {
-    max-width: none; /* Allow form to take width */
-    width: 100%;
-    margin-bottom: 15px; /* Reduce bottom margin */
-}
-
-.add-product-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-color-dark);
-    text-align: left;
-    transition: color var(--view-change-speed) ease;
-}
-html[lang="ar"] .add-product-form label { text-align: right; }
-
-.add-product-form input[type="text"],
-.add-product-form input[type="number"],
-.add-product-form select {
-    width: 100%;
-    margin-bottom: 15px;
-    /* Inherit base input styles */
-}
-.add-product-form select {
-     background-color: var(--lighter-blue-bg);
-     border: var(--border-thickness) solid var(--border-color);
-     border-radius: var(--element-border-radius);
-     padding: 10px 12px; /* Adjusted padding for select */
-     box-sizing: border-box;
-     color: var(--text-color-dark);
-     font-size: 1rem;
-     transition: box-shadow var(--fast-transition-speed) ease, background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease;
-     font-family: inherit;
-     cursor: pointer;
-     appearance: none; /* Remove default arrow */
-     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-     background-repeat: no-repeat;
-     background-position: right 10px top 50%;
-     background-size: .65em auto;
-     padding-right: 30px; /* Make space for arrow */
-}
-html[lang="ar"] .add-product-form select {
-     background-position: left 10px top 50%;
-     padding-left: 30px;
-     padding-right: 12px;
-}
-
-
-.add-product-form .button#add-new-product-button {
-    width: auto; /* Button size based on content */
-    margin-left: auto; /* Align button to the end */
-    margin-right: auto; /* Center button */
-    display: block; /* Center block */
-    margin-top: 10px; /* Space above button */
-}
-html[lang="ar"] .add-product-form .button#add-new-product-button {
-    /* RTL alignment if needed, but centering works */
-}
-
-/* Specific theme adjustments for product management */
-body[data-theme="dark-grey"] .product-list-item,
-body[data-theme="night"] .product-list-item,
-body[data-theme="mono-dark"] .product-list-item {
-    background-color: var(--lighter-blue-bg); /* Use lighter bg for contrast */
-}
- body[data-theme="dark-grey"] .product-management-section h4,
- body[data-theme="night"] .product-management-section h4,
- body[data-theme="mono-dark"] .product-management-section h4,
- body[data-theme="dark-grey"] .add-product-form h5,
- body[data-theme="night"] .add-product-form h5,
- body[data-theme="mono-dark"] .add-product-form h5 {
-      color: var(--text-color-light); /* Light heading text */
- }
- /* Correct text color for inputs/selects in dark themes */
- body[data-theme="dark-grey"] .product-quantity-control input[type="number"],
- body[data-theme="night"] .product-quantity-control input[type="number"],
- body[data-theme="mono-dark"] .product-quantity-control input[type="number"],
- body[data-theme="dark-grey"] .add-product-form input,
- body[data-theme="night"] .add-product-form input,
- body[data-theme="mono-dark"] .add-product-form input,
- body[data-theme="dark-grey"] .add-product-form select,
- body[data-theme="night"] .add-product-form select,
- body[data-theme="mono-dark"] .add-product-form select {
-    color: var(--text-color-dark); /* Ensure dark text on light bg */
- }
- /* Correct text color for labels in dark themes */
- body[data-theme="dark-grey"] .add-product-form label,
- body[data-theme="night"] .add-product-form label,
- body[data-theme="mono-dark"] .add-product-form label,
- body[data-theme="dark-grey"] .product-list-name,
- body[data-theme="night"] .product-list-name,
- body[data-theme="mono-dark"] .product-list-name,
- body[data-theme="dark-grey"] .product-list-price,
- body[data-theme="night"] .product-list-price,
- body[data-theme="mono-dark"] .product-list-price {
-     color: var(--text-color-dark); /* Ensure dark text on light bg */
- }
-/* --- END: Product Management Styles --- */
-
-
-/* --- Edit Product Modal Styles --- */
-#edit-product-modal-overlay {
-    z-index: 1150; /* Ensure it's above other elements if needed */
-}
-#edit-product-modal-box {
-    width: 380px; /* Slightly wider for form */
-    max-width: 95%;
-    /* Base modal colors/border come from .modal-box */
-}
-#edit-product-modal-box .form-box {
-    max-width: none;
-    width: 100%;
-}
-#edit-product-modal-box label {
-    display: block;
-    margin-bottom: 3px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-align: left;
-     color: #333; /* Default light theme text */
-}
-#edit-product-modal-box input,
-#edit-product-modal-box select {
-    width: 100%;
-    margin-bottom: 12px;
-    padding: 8px 10px;
-    font-size: 0.95rem;
-     /* Default light theme input styles */
-    background-color: #fff;
-    border: 1px solid #aaa;
-    color: #111;
-    border-radius: 5px;
-}
-#edit-product-modal-box select {
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23555%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 10px top 50%;
-    background-size: .6em auto;
-    padding-right: 30px;
-}
-#edit-product-modal-box input:focus,
-#edit-product-modal-box select:focus {
-     outline: none;
-     box-shadow: 0 0 0 2px var(--active-green);
-     border-color: var(--active-green);
-}
-html[lang="ar"] #edit-product-modal-box label {
-    text-align: right;
-}
-html[lang="ar"] #edit-product-modal-box select {
-    background-position: left 10px top 50%;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-
-#edit-product-error {
-    margin-top: -5px;
-    margin-bottom: 15px;
-    font-size: 0.85rem;
-}
-
-/* Dark theme adjustments for Edit Modal */
-body[data-theme="dark-grey"] #edit-product-modal-box,
-body[data-theme="night"] #edit-product-modal-box,
-body[data-theme="mono-dark"] #edit-product-modal-box {
-    background-color: #424242;
-    color: #eee;
-    border-color: #616161;
-}
-body[data-theme="dark-grey"] #edit-product-modal-box label,
-body[data-theme="night"] #edit-product-modal-box label,
-body[data-theme="mono-dark"] #edit-product-modal-box label {
-    color: #ccc;
-}
-body[data-theme="dark-grey"] #edit-product-modal-box input,
-body[data-theme="night"] #edit-product-modal-box input,
-body[data-theme="mono-dark"] #edit-product-modal-box input,
-body[data-theme="dark-grey"] #edit-product-modal-box select,
-body[data-theme="night"] #edit-product-modal-box select,
-body[data-theme="mono-dark"] #edit-product-modal-box select {
-     background-color: #555;
-     border: 1px solid #777;
-     color: #eee;
-}
-body[data-theme="dark-grey"] #edit-product-modal-box select,
-body[data-theme="night"] #edit-product-modal-box select,
-body[data-theme="mono-dark"] #edit-product-modal-box select {
-     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-}
-
-#edit-product-modal-box .passcode-modal-buttons .button {
-     /* Inherit base styles from .modal-box .button */
-     /* Specific overrides if needed */
-}
-#edit-product-modal-box #edit-product-save {
-     /* Style like OK button */
-     background-color: var(--active-green);
-     color: var(--text-color-dark); /* Adjust for theme */
-}
-body[data-theme="green"] #edit-product-save,
-body[data-theme="yellow"] #edit-product-save,
-body[data-theme="orange"] #edit-product-save { color: var(--text-color-dark); }
-body[data-theme="mono-dark"] #edit-product-save { color: var(--main-bg-color-mono-dark); }
-body[data-theme="dark-grey"] #edit-product-save { color: #000; }
+/* --- START: Edit Product Modal Styles (REVISED FOR SCROLLING) --- */
+#edit-product-modal-overlay { z-index: 1150; align-items: center; }
+#edit-product-modal-box { width: 380px; max-width: 95%; max-height: 85vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; background-color: var(--main-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--element-border-radius); box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-color-dark); transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease; }
+#edit-product-modal-box h3 { padding: 20px 25px 15px 25px; margin: 0; flex-shrink: 0; border-bottom: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent); text-align: center !important; font-size: 1.4rem; color: var(--text-color-dark); font-weight: 700; -webkit-text-stroke: 0; text-stroke: 0; transition: color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; }
+body[data-theme="dark-grey"] #edit-product-modal-box h3, body[data-theme="night"] #edit-product-modal-box h3, body[data-theme="mono-dark"] #edit-product-modal-box h3 { color: var(--text-color-light); border-bottom-color: color-mix(in srgb, var(--border-color) 50%, transparent); }
+#edit-product-modal-box .form-box { max-width: none; width: 100%; overflow-y: auto; flex-grow: 1; padding: 20px 25px 10px 25px; margin-bottom: 0; scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--border-color) 50%, transparent) color-mix(in srgb, var(--main-bg-color) 50%, transparent); }
+#edit-product-modal-box .form-box::-webkit-scrollbar { width: 8px; } #edit-product-modal-box .form-box::-webkit-scrollbar-track { background: color-mix(in srgb, var(--main-bg-color) 50%, transparent); border-radius: 4px; } #edit-product-modal-box .form-box::-webkit-scrollbar-thumb { background-color: color-mix(in srgb, var(--border-color) 70%, transparent); border-radius: 4px; border: 2px solid color-mix(in srgb, var(--main-bg-color) 50%, transparent); }
+body[data-theme="dark-grey"] #edit-product-modal-box .form-box, body[data-theme="night"] #edit-product-modal-box .form-box, body[data-theme="mono-dark"] #edit-product-modal-box .form-box { scrollbar-color: #777 #444; } body[data-theme="dark-grey"] #edit-product-modal-box .form-box::-webkit-scrollbar-track, body[data-theme="night"] #edit-product-modal-box .form-box::-webkit-scrollbar-track, body[data-theme="mono-dark"] #edit-product-modal-box .form-box::-webkit-scrollbar-track { background: #444; } body[data-theme="dark-grey"] #edit-product-modal-box .form-box::-webkit-scrollbar-thumb, body[data-theme="night"] #edit-product-modal-box .form-box::-webkit-scrollbar-thumb, body[data-theme="mono-dark"] #edit-product-modal-box .form-box::-webkit-scrollbar-thumb { background-color: #777; border-color: #444; }
+#edit-product-modal-box label { display: block; margin-bottom: 3px; font-size: 0.9rem; font-weight: 600; text-align: left; color: var(--text-color-dark); transition: color var(--view-change-speed) ease; }
+#edit-product-modal-box input, #edit-product-modal-box select { width: 100%; margin-bottom: 12px; padding: 8px 10px; font-size: 0.95rem; background-color: var(--lighter-blue-bg); border: 1px solid var(--border-color); color: var(--text-color-dark); border-radius: 5px; transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease, box-shadow var(--fast-transition-speed) ease; }
+#edit-product-modal-box select { appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23555%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 10px top 50%; background-size: .6em auto; padding-right: 30px; }
+body[data-theme="dark-grey"] #edit-product-modal-box select, body[data-theme="night"] #edit-product-modal-box select, body[data-theme="mono-dark"] #edit-product-modal-box select { background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); }
+#edit-product-modal-box input:focus, #edit-product-modal-box select:focus { outline: none; box-shadow: 0 0 0 2px var(--active-green); border-color: var(--active-green); }
+html[lang="ar"] #edit-product-modal-box label { text-align: right; } html[lang="ar"] #edit-product-modal-box select { background-position: left 10px top 50%; padding-left: 30px; padding-right: 10px; }
+#edit-product-error { order: 2; padding: 0 25px 10px 25px; margin: 0; font-size: 0.85rem; flex-shrink: 0; color: red; display: none; text-align: center !important; }
+#edit-product-modal-box .passcode-modal-buttons { order: 3; padding: 15px 25px 20px 25px; flex-shrink: 0; border-top: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent); margin-top: 0; background-color: inherit; transition: border-color var(--view-change-speed) ease; }
+body[data-theme="dark-grey"] #edit-product-modal-box label, body[data-theme="night"] #edit-product-modal-box label, body[data-theme="mono-dark"] #edit-product-modal-box label { color: #ccc; } body[data-theme="dark-grey"] #edit-product-modal-box input, body[data-theme="night"] #edit-product-modal-box input, body[data-theme="mono-dark"] #edit-product-modal-box input, body[data-theme="dark-grey"] #edit-product-modal-box select, body[data-theme="night"] #edit-product-modal-box select, body[data-theme="mono-dark"] #edit-product-modal-box select { background-color: #555; border: 1px solid #777; color: #eee; } body[data-theme="dark-grey"] #edit-product-modal-box input::placeholder, body[data-theme="night"] #edit-product-modal-box input::placeholder, body[data-theme="mono-dark"] #edit-product-modal-box input::placeholder { color: #aaa; }
+#edit-product-modal-box #edit-product-save { background-color: var(--active-green); color: var(--text-color-dark); border-color: var(--border-color); }
+body[data-theme="green"] #edit-product-save, body[data-theme="yellow"] #edit-product-save, body[data-theme="orange"] #edit-product-save { color: var(--text-color-dark); } body[data-theme="dark-grey"] #edit-product-save { color: #000; } body[data-theme="night"] #edit-product-save { color: #000; } body[data-theme="mono-dark"] #edit-product-save { color: var(--main-bg-color-mono-dark); }
+body[data-theme="dark-grey"] #edit-product-modal-box .button, body[data-theme="night"] #edit-product-modal-box .button, body[data-theme="mono-dark"] #edit-product-modal-box .button { background-color: #5f5f5f; border-color: #777; color: #e0e0e0; } body[data-theme="dark-grey"] #edit-product-modal-box .button:hover:not(:active), body[data-theme="night"] #edit-product-modal-box .button:hover:not(:active), body[data-theme="mono-dark"] #edit-product-modal-box .button:hover:not(:active) { background-color: #6a6a6a; } body[data-theme="dark-grey"] #edit-product-modal-box .button:active, body[data-theme="night"] #edit-product-modal-box .button:active, body[data-theme="mono-dark"] #edit-product-modal-box .button:active { background-color: #555; }
+body[data-theme="dark-grey"] #edit-product-save, body[data-theme="night"] #edit-product-save, body[data-theme="mono-dark"] #edit-product-save { background-color: var(--active-green); border-color: var(--border-color); }
 /* --- End Edit Product Modal Styles --- */
+
+/* --- START: Edit Category Modal Styles --- */
+#edit-category-modal-overlay { z-index: 1160; } /* Ensure above product edit modal if somehow overlaps */
+#edit-category-modal-box { width: 360px; /* Slightly smaller maybe */ max-width: 95%; /* Reuse styles from product modal */ /* Copy base styles from #edit-product-modal-box */ background-color: var(--main-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--element-border-radius); box-shadow: 0 5px 15px rgba(0,0,0,0.3); color: var(--text-color-dark); display: flex; flex-direction: column; padding: 0; transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease; }
+#edit-category-modal-box h3 { /* Reuse styles from product modal */ padding: 20px 25px 15px 25px; margin: 0; flex-shrink: 0; border-bottom: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent); text-align: center !important; font-size: 1.4rem; color: var(--text-color-dark); font-weight: 700; -webkit-text-stroke: 0; text-stroke: 0; transition: color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; }
+body[data-theme="dark-grey"] #edit-category-modal-box h3, body[data-theme="night"] #edit-category-modal-box h3, body[data-theme="mono-dark"] #edit-category-modal-box h3 { color: var(--text-color-light); border-bottom-color: color-mix(in srgb, var(--border-color) 50%, transparent); }
+#edit-category-modal-box .form-box { /* Reuse styles */ padding: 20px 25px 10px 25px; margin-bottom: 0; flex-grow: 1; /* Allow some growth */ overflow-y: auto; /* Add scroll if needed, less likely than product */ }
+#edit-category-modal-box label { /* Reuse styles */ display: block; margin-bottom: 3px; font-size: 0.9rem; font-weight: 600; color: var(--text-color-dark); transition: color var(--view-change-speed) ease; }
+#edit-category-modal-box input { /* Reuse styles */ width: 100%; margin-bottom: 12px; padding: 8px 10px; font-size: 0.95rem; background-color: var(--lighter-blue-bg); border: 1px solid var(--border-color); color: var(--text-color-dark); border-radius: 5px; transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease, box-shadow var(--fast-transition-speed) ease; }
+#edit-category-modal-box input:focus { outline: none; box-shadow: 0 0 0 2px var(--active-green); border-color: var(--active-green); }
+#edit-category-error { /* Reuse styles */ order: 2; padding: 0 25px 10px 25px; margin: 0; font-size: 0.85rem; flex-shrink: 0; color: red; display: none; text-align: center !important; }
+#edit-category-modal-box .passcode-modal-buttons { /* Reuse styles */ order: 3; padding: 15px 25px 20px 25px; flex-shrink: 0; border-top: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent); margin-top: 0; background-color: inherit; transition: border-color var(--view-change-speed) ease; }
+/* Dark theme adjustments for Edit Category Modal */
+body[data-theme="dark-grey"] #edit-category-modal-box label, body[data-theme="night"] #edit-category-modal-box label, body[data-theme="mono-dark"] #edit-category-modal-box label { color: #ccc; }
+body[data-theme="dark-grey"] #edit-category-modal-box input, body[data-theme="night"] #edit-category-modal-box input, body[data-theme="mono-dark"] #edit-category-modal-box input { background-color: #555; border: 1px solid #777; color: #eee; }
+body[data-theme="dark-grey"] #edit-category-modal-box input::placeholder, body[data-theme="night"] #edit-category-modal-box input::placeholder, body[data-theme="mono-dark"] #edit-category-modal-box input::placeholder { color: #aaa; }
+#edit-category-modal-box #edit-category-save { background-color: var(--active-green); color: var(--text-color-dark); border-color: var(--border-color); }
+body[data-theme="green"] #edit-category-save, body[data-theme="yellow"] #edit-category-save, body[data-theme="orange"] #edit-category-save { color: var(--text-color-dark); } body[data-theme="dark-grey"] #edit-category-save { color: #000; } body[data-theme="night"] #edit-category-save { color: #000; } body[data-theme="mono-dark"] #edit-category-save { color: var(--main-bg-color-mono-dark); }
+body[data-theme="dark-grey"] #edit-category-modal-box .button, body[data-theme="night"] #edit-category-modal-box .button, body[data-theme="mono-dark"] #edit-category-modal-box .button { background-color: #5f5f5f; border-color: #777; color: #e0e0e0; } body[data-theme="dark-grey"] #edit-category-modal-box .button:hover:not(:active), body[data-theme="night"] #edit-category-modal-box .button:hover:not(:active), body[data-theme="mono-dark"] #edit-category-modal-box .button:hover:not(:active) { background-color: #6a6a6a; } body[data-theme="dark-grey"] #edit-category-modal-box .button:active, body[data-theme="night"] #edit-category-modal-box .button:active, body[data-theme="mono-dark"] #edit-category-modal-box .button:active { background-color: #555; }
+body[data-theme="dark-grey"] #edit-category-save, body[data-theme="night"] #edit-category-save, body[data-theme="mono-dark"] #edit-category-save { background-color: var(--active-green); border-color: var(--border-color); }
+/* --- END: Edit Category Modal Styles --- */
+
+
+/* --- START: Product Management Styles (Screen 9 REVISED) --- */
+#goto-product-mgmt-button { border-color: #1e7e34; background-color: #28a745; color: #fff; }
+#goto-product-mgmt-button:hover { background-color: #218838; border-color: #1e7e34; }
+body[data-theme="dark-grey"] #goto-product-mgmt-button, body[data-theme="night"] #goto-product-mgmt-button, body[data-theme="mono-dark"] #goto-product-mgmt-button { background-color: #54A265; border-color: #3B824A; color: #fff; }
+body[data-theme="dark-grey"] #goto-product-mgmt-button:hover, body[data-theme="night"] #goto-product-mgmt-button:hover, body[data-theme="mono-dark"] #goto-product-mgmt-button:hover { background-color: #479157; }
+#screen-9 .management-container { gap: 15px; }
+.view-container { width: 100%; display: none; flex-direction: column; flex-grow: 1; }
+.view-container.active { display: flex; animation: fadeInView 0.4s ease-out forwards; }
+@keyframes fadeInView { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+#category-view-container h4, #product-view-container h4 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-color-dark); -webkit-text-stroke: none; text-stroke: none; text-align: center; padding-bottom: 8px; border-bottom: 1px solid color-mix(in srgb, var(--border-color) 60%, transparent); transition: color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; }
+body[data-theme="dark-grey"] #category-view-container h4, body[data-theme="dark-grey"] #product-view-container h4, body[data-theme="night"] #category-view-container h4, body[data-theme="night"] #product-view-container h4, body[data-theme="mono-dark"] #category-view-container h4, body[data-theme="mono-dark"] #product-view-container h4 { color: var(--text-color-light); }
+.drag-hint { font-size: 0.85rem; color: var(--text-color-dark); opacity: 0.7; text-align: center; margin-top: -5px; margin-bottom: 15px; transition: color var(--view-change-speed) ease; }
+body[data-theme="dark-grey"] .drag-hint, body[data-theme="night"] .drag-hint, body[data-theme="mono-dark"] .drag-hint { color: var(--text-color-dark); }
+.scrollable-list { flex-grow: 1; overflow-y: auto; border: var(--border-thickness) solid var(--border-color); border-radius: var(--element-border-radius); padding: 10px; background-color: rgba(255, 255, 255, 0.05); transition: border-color var(--view-change-speed) ease; min-height: 200px; }
+.category-list-container { display: flex; flex-direction: column; gap: 10px; }
+.category-list-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; background-color: var(--lighter-blue-bg); border: var(--border-thickness) solid var(--border-color); border-radius: 5px; padding: 12px 15px; cursor: pointer; transition: background-color var(--fast-transition-speed) ease, border-color var(--view-change-speed) ease, transform var(--fast-transition-speed) ease, box-shadow var(--fast-transition-speed) ease; position: relative; }
+.category-list-item:hover { background-color: color-mix(in srgb, var(--lighter-blue-bg) 80%, white); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.category-list-item .category-name { font-size: 1.1rem; font-weight: 600; color: var(--text-color-dark); flex-grow: 1; transition: color var(--view-change-speed) ease; text-transform: capitalize; }
+/* NEW Category Actions Container */
+.category-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.category-actions .button.action-button { padding: 4px 6px; font-size: 0.75rem; min-width: 26px; margin: 0; border-radius: 3px; background-color: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.2); color: var(--text-color-dark); opacity: 0.8; transition: opacity 0.2s ease, background-color 0.2s ease; }
+.category-list-item:hover .category-actions .button.action-button { opacity: 1; }
+.category-actions .button.action-button:hover { background-color: rgba(0,0,0,0.2); }
+.category-actions .button.action-button i { font-size: 0.9em; margin: 0; vertical-align: middle; }
+.category-actions .drag-handle { cursor: grab; color: var(--text-color-dark); opacity: 0.6; font-size: 1.2rem; padding: 0 5px; margin-left: 5px; /* Space between buttons and handle */ }
+.category-actions .drag-handle:active { cursor: grabbing; }
+html[lang="ar"] .category-actions { order: -1; } html[lang="ar"] .category-actions .drag-handle { margin-left: 0; margin-right: 5px; }
+body[data-theme="dark-grey"] .category-actions .drag-handle, body[data-theme="night"] .category-actions .drag-handle, body[data-theme="mono-dark"] .category-actions .drag-handle { color: var(--text-color-dark); opacity: 0.8; }
+body[data-theme="dark-grey"] .category-actions .button.action-button, body[data-theme="night"] .category-actions .button.action-button, body[data-theme="mono-dark"] .category-actions .button.action-button { background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: var(--text-color-dark); }
+body[data-theme="dark-grey"] .category-actions .button.action-button:hover, body[data-theme="night"] .category-actions .button.action-button:hover, body[data-theme="mono-dark"] .category-actions .button.action-button:hover { background-color: rgba(255,255,255,0.2); }
+
+
+.product-grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding-bottom: 10px; }
+.product-grid-item-admin { background-color: var(--main-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--element-border-radius); padding: 10px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-sizing: border-box; cursor: grab; transition: transform var(--fast-transition-speed) ease, box-shadow var(--fast-transition-speed) ease, background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; position: relative; }
+.product-grid-item-admin:active { cursor: grabbing; }
+.product-grid-item-admin img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 5px; margin-bottom: 8px; border: 1px solid rgba(0,0,0,0.1); background-color: #eee; pointer-events: none; }
+.product-grid-item-admin .product-name-admin { margin: 0 0 8px 0; font-size: 0.95rem; font-weight: 600; color: var(--text-color-dark); pointer-events: none; text-align: center; transition: color var(--view-change-speed) ease; white-space: normal; overflow-wrap: break-word; line-height: 1.3; }
+.product-grid-item-admin .product-price-admin { font-size: 0.9rem; font-weight: 700; color: var(--text-color-dark); margin-bottom: 10px; transition: color var(--view-change-speed) ease; }
+.product-grid-item-admin .admin-actions-overlay { position: absolute; top: 5px; right: 5px; display: flex; flex-direction: column; gap: 5px; background-color: rgba(0, 0, 0, 0.3); padding: 5px; border-radius: 4px; opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 5; }
+html[lang="ar"] .product-grid-item-admin .admin-actions-overlay { right: auto; left: 5px; }
+.product-grid-item-admin:hover .admin-actions-overlay { opacity: 1; }
+.product-grid-item-admin .admin-actions-overlay .button.action-button { padding: 4px 6px; font-size: 0.75rem; min-width: 26px; margin: 0; border-radius: 3px; }
+.product-grid-item-admin .admin-actions-overlay .button.action-button i { font-size: 0.9em; }
+/* Drag and Drop Visuals */
+.dragging { opacity: 0.5; border-style: dashed !important; }
+.dragging-over { background-color: color-mix(in srgb, var(--active-green) 30%, transparent) !important; box-shadow: inset 0 0 0 2px var(--active-green); }
+
+/* Add Product Form Container & Add Category Form */
+#add-product-form-container, .add-category-form { width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; }
+#add-product-form-container h5, .add-category-form h5 { font-size: 1.2rem; margin-bottom: 15px; color: var(--text-color-dark); text-align: center; transition: color var(--view-change-speed) ease; }
+#add-product-form-container h5 #add-product-category-name { font-weight: bold; text-transform: capitalize; }
+body[data-theme="dark-grey"] #add-product-form-container h5, body[data-theme="dark-grey"] .add-category-form h5, body[data-theme="night"] #add-product-form-container h5, body[data-theme="night"] .add-category-form h5, body[data-theme="mono-dark"] #add-product-form-container h5, body[data-theme="mono-dark"] .add-category-form h5 { color: var(--text-color-light); }
+/* Default layout for forms (stacking) */
+#add-product-form-container .form-box, .add-category-form .form-box { display: flex; flex-direction: column; gap: 0; }
+#add-product-form-container label, .add-category-form label { text-align: left; margin-bottom: 3px; font-size: 0.9rem; }
+html[lang="ar"] #add-product-form-container label, html[lang="ar"] .add-category-form label { text-align: right; }
+#add-product-form-container input, #add-product-form-container select, .add-category-form input { margin-bottom: 12px; }
+.add-category-form .form-box { max-width: 450px; margin-left: auto; margin-right: auto; }
+.add-category-form #add-new-category-button { margin-left: auto; margin-right: auto; display: block; }
+
+
+/* Specific Theme Adjustments for product mgmt */
+body[data-theme="dark-grey"] .category-list-item, body[data-theme="night"] .category-list-item, body[data-theme="mono-dark"] .category-list-item { background-color: var(--lighter-blue-bg); }
+body[data-theme="dark-grey"] .category-name, body[data-theme="night"] .category-name, body[data-theme="mono-dark"] .category-name { color: var(--text-color-dark); }
+/* --- END: Product Management Styles --- */
 
 
 /* --- START: Fixes for Monochrome Dark Text Visibility --- */
@@ -1201,33 +771,12 @@ body[data-theme="mono-dark"] #discover-button { color: #000000 !important; borde
 body[data-theme="mono-dark"] #discover-button:hover { color: #000000 !important; background-color: #ffda63 !important; }
 body[data-theme="mono-dark"] .remove-item-button { background-color: var(--remove-red-mono-dark); color: var(--main-bg-color-mono-dark); border-color: var(--text-color-dark-mono-dark); }
 body[data-theme="mono-dark"] .remove-item-button:hover { background-color: color-mix(in srgb, var(--remove-red-mono-dark) 80%, black); }
-/* Edit Modal buttons dark theme fix */
-body[data-theme="dark-grey"] #edit-product-modal-box .button,
-body[data-theme="night"] #edit-product-modal-box .button,
-body[data-theme="mono-dark"] #edit-product-modal-box .button {
-    background-color: #5f5f5f;
-    border-color: #777;
-    color: #e0e0e0;
-}
-body[data-theme="dark-grey"] #edit-product-modal-box .button:hover:not(:active),
-body[data-theme="night"] #edit-product-modal-box .button:hover:not(:active),
-body[data-theme="mono-dark"] #edit-product-modal-box .button:hover:not(:active) {
-    background-color: #6a6a6a;
-}
-body[data-theme="dark-grey"] #edit-product-modal-box .button:active,
-body[data-theme="night"] #edit-product-modal-box .button:active,
-body[data-theme="mono-dark"] #edit-product-modal-box .button:active {
-     background-color: #555;
-}
-body[data-theme="dark-grey"] #edit-product-save,
-body[data-theme="night"] #edit-product-save,
-body[data-theme="mono-dark"] #edit-product-save {
-     background-color: var(--active-green);
-     border-color: var(--border-color);
-}
-body[data-theme="dark-grey"] #edit-product-save { color: #000; }
-body[data-theme="night"] #edit-product-save { color: #000; }
-body[data-theme="mono-dark"] #edit-product-save { color: var(--main-bg-color-mono-dark); }
+
+/* Product Management dark fixes */
+body[data-theme="mono-dark"] .category-name { color: #000; }
+body[data-theme="mono-dark"] .category-list-item .drag-handle { color: #000; }
+body[data-theme="mono-dark"] .product-name-admin, body[data-theme="mono-dark"] .product-price-admin { color: var(--text-color-light-mono-dark); }
+body[data-theme="mono-dark"] .add-category-form h5 { color: var(--text-color-light); }
 /* --- END: Fixes for Monochrome Dark Text Visibility --- */
 
 /* Management/Discover Button Text Color Fix for Yellow/Orange Theme */
@@ -1260,16 +809,7 @@ body[data-theme="light-blue"] .offer-card { background: linear-gradient(135deg, 
 .offer-card h5 { margin: 0 0 12px 0; font-size: 1.25rem; font-weight: 700; color: var(--text-color-dark); transition: color var(--view-change-speed) ease; line-height: 1.3; }
 .offer-image-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 15px; max-height: 120px; overflow: hidden; }
 .offer-image-grid.count-1 { grid-template-columns: 1fr; max-height: 80px; } .offer-image-grid.count-3 { grid-template-columns: repeat(3, 1fr); max-height: 60px; } .offer-image-grid.count-4 { grid-template-columns: repeat(2, 1fr); }
-.offer-image-grid img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background-color: #eee;
-    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-}
+.offer-image-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; border: 1px solid rgba(0,0,0,0.1); background-color: #eee; -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
 .offer-card p.offer-description { margin: 0 0 15px 0; font-size: 0.9rem; color: var(--text-color-dark); line-height: 1.5; transition: color var(--view-change-speed) ease; }
 .offer-card .offer-items { margin-bottom: 15px; font-size: 0.9rem; color: var(--text-color-dark); font-weight: 600; transition: color var(--view-change-speed) ease; line-height: 1.6; }
 .offer-card .offer-items span { display: inline-block; background-color: color-mix(in srgb, var(--button-bg-color) 70%, #000000 5%); padding: 3px 9px; border-radius: var(--pill-border-radius); margin-right: 6px; margin-bottom: 6px; font-weight: 600; border: 1px solid color-mix(in srgb, var(--border-color) 60%, transparent); transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease; }
@@ -1303,36 +843,10 @@ body[data-theme="mono-dark"] .bundle-discount-tag { background-color: var(--remo
 @media (min-width: 600px) { .discovery-suggestions-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); } }
 .suggestion-grid-item { background-color: var(--main-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--element-border-radius); padding: 15px; display: flex; flex-direction: column; transition: transform var(--fast-transition-speed) ease, box-shadow var(--fast-transition-speed) ease, background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; box-shadow: 0 2px 6px rgba(0,0,0,0.08); position: relative; }
 .suggestion-grid-item:hover { transform: translateY(-3px); box-shadow: 0 5px 12px rgba(0,0,0,0.12); }
-.suggestion-item-images {
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     gap: 5px; /* Controls spacing between image/plus */
-     margin-bottom: 15px; /* Space below images */
-     flex-wrap: wrap; /* Allow wrapping if too many items */
-     min-height: 50px; /* Increased */
- }
- .suggestion-item-images img {
-     width: 45px; /* Increased */
-     height: 45px; /* Increased */
-     border-radius: 50%;
-     object-fit: cover;
-     border: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent);
-     background-color: #eee; /* Fallback bg */
- }
- .suggestion-item-images .plus-separator {
-     font-size: 1.3rem; /* Increased */
-     font-weight: 600;
-     color: var(--text-color-dark);
-     transition: color var(--view-change-speed) ease;
-     padding: 0 2px; /* Small padding around plus */
- }
- body[data-theme="dark-grey"] .suggestion-item-images .plus-separator,
- body[data-theme="night"] .suggestion-item-images .plus-separator,
- body[data-theme="mono-dark"] .suggestion-item-images .plus-separator {
-     color: var(--text-color-light);
- }
-
+.suggestion-item-images { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; min-height: 50px; }
+.suggestion-item-images img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent); background-color: #eee; }
+.suggestion-item-images .plus-separator { font-size: 1.3rem; font-weight: 600; color: var(--text-color-dark); transition: color var(--view-change-speed) ease; padding: 0 2px; }
+body[data-theme="dark-grey"] .suggestion-item-images .plus-separator, body[data-theme="night"] .suggestion-item-images .plus-separator, body[data-theme="mono-dark"] .suggestion-item-images .plus-separator { color: var(--text-color-light); }
 .suggestion-grid-item h5 { margin: 0 0 10px 0; font-size: 1.15rem; font-weight: 700; color: var(--text-color-dark); text-align: center; transition: color var(--view-change-speed) ease; }
 .suggestion-grid-item .suggestion-items { margin-bottom: 15px; text-align: center; font-size: 0.9rem; line-height: 1.7; flex-grow: 1; }
 .suggestion-grid-item .suggestion-items span { display: inline-block; background-color: color-mix(in srgb, var(--button-bg-color) 70%, #000000 5%); padding: 3px 9px; border-radius: var(--pill-border-radius); margin: 3px; font-weight: 600; color: var(--text-color-dark); border: 1px solid color-mix(in srgb, var(--border-color) 60%, transparent); transition: background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease; }
@@ -1352,23 +866,9 @@ html[lang="ar"] .discovery-category-grid { direction: rtl; }
 .discovery-category-grid::-webkit-scrollbar { height: 6px; } .discovery-category-grid::-webkit-scrollbar-track { background: transparent; } .discovery-category-grid::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; }
 body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, body[data-theme="night"] .discovery-category-grid::-webkit-scrollbar-thumb, body[data-theme="mono-dark"] .discovery-category-grid::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.2); }
 .discovery-category-item { flex: 0 0 150px; background-color: var(--main-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--element-border-radius); padding: 12px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-sizing: border-box; cursor: pointer; transition: transform var(--fast-transition-speed) ease, box-shadow var(--fast-transition-speed) ease, background-color var(--view-change-speed) ease, border-color var(--view-change-speed) ease; }
-.discovery-category-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
+.discovery-category-item:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
 .discovery-category-item:active { transform: scale(0.98) translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.discovery-category-item img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background-color: #eee;
-    pointer-events: none;
-    -webkit-mask-image: none;
-    mask-image: none;
-}
+.discovery-category-item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 5px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.1); background-color: #eee; pointer-events: none; -webkit-mask-image: none; mask-image: none; }
 .discovery-category-item p { margin: 0 0 10px 0; font-size: 1rem; font-weight: 600; color: var(--text-color-dark); pointer-events: none; text-align: center; transition: color var(--view-change-speed) ease;}
 .discovery-category-item .price-button { background-color: var(--button-bg-color); border: var(--border-thickness) solid var(--border-color); border-radius: var(--pill-border-radius); padding: 5px 15px; font-size: 0.9rem; font-weight: 700; color: var(--text-color-dark); display: inline-block; transition: background-color var(--fast-transition-speed) ease, transform var(--fast-transition-speed) ease, border-color var(--view-change-speed) ease, color var(--view-change-speed) ease; pointer-events: auto; user-select: none; z-index: 5; position: relative; font-family: inherit; }
 .discovery-category-item .price-button:active { transform: scale(0.95); background-color: color-mix(in srgb, var(--button-bg-color) 60%, white); }
@@ -1392,6 +892,15 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
     .suggestion-item-images { min-height: 55px; }
     .suggestion-item-images img { width: 50px; height: 50px; }
     .suggestion-item-images .plus-separator { font-size: 1.4rem; }
+    /* Product Management Adjustments */
+    .product-grid-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+        gap: 20px;
+    }
+    #add-product-form-container, .add-category-form {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
 @media (min-width: 992px) {
      html { font-size: 18px; } body:not(.full-screen-mode) { padding: 40px 30px; align-items: center; } .app-container:not(body.full-screen-mode *) { max-width: 800px; min-height: 700px; border-radius: 50px; } .screen { padding: 35px 40px; } .screen-content { padding-bottom: 90px; } h2 { font-size: 2.5rem; } h4 { font-size: 2rem; } #screen-5 h4 { font-size: 1.7rem; } .menu-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; } .cart-total { gap: 10px; } .total-calculation { max-height: 120px; } .item-preview-container { padding-top: 20px; } .preview-image { max-width: 350px; } .preview-name { font-size: 2.2rem; } .preview-description { font-size: 1.1rem; max-width: 700px; } .preview-price { font-size: 1.5rem; padding: 8px 25px; } .add-to-cart-preview-button { max-width: 320px; padding: 14px 25px; font-size: 1.4rem; } .management-container { gap: 30px; } .order-management-layout { flex-direction: row; align-items: flex-start; gap: 25px; width: 100%; } html[lang="ar"] .order-management-layout { flex-direction: row-reverse; } .order-log-section { flex: 1 1 45%; } .order-log-container { max-height: 420px; } .order-preview-section { flex: 1 1 55%; min-height: 420px; } .order-preview-content { font-size: 1rem; }
@@ -1404,76 +913,52 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
      .suggestion-item-images img { width: 55px; height: 55px; }
      .suggestion-item-images .plus-separator { font-size: 1.5rem; }
 
-     /* Product Management 992px+ */
-     .product-list-container {
-         max-height: 450px;
+     /* Product & Category Management 992px+ */
+     .scrollable-list {
+         max-height: calc(100vh - 280px); /* Adjust max height */
      }
-     .product-list-item {
-         gap: 15px;
-         padding: 10px 15px;
+     #category-view-container .scrollable-list {
+          max-height: calc(100vh - 200px); /* Allow more height for categories */
      }
-     .product-list-item img {
-          width: 45px;
-          height: 45px;
-     }
-     .product-list-name { font-size: 1rem; }
-     .product-quantity-control input[type="number"] {
-         width: 70px;
-     }
-     .product-quantity-control .button.save-quantity-button {
-          padding: 5px 12px;
-          font-size: 0.85rem;
-          min-width: 60px;
-     }
-     /* Add Product Form Grid Layout */
-     .add-product-form .form-box {
-         display: grid;
-         grid-template-columns: repeat(2, 1fr); /* 2 columns for inputs */
-         gap: 15px 20px; /* Row and column gap */
-         align-items: center; /* Align labels and inputs vertically */
-      }
-      .add-product-form label {
-          margin-bottom: 0; /* Remove bottom margin as gap handles spacing */
-          text-align: right; /* Align labels to the right */
-      }
-      html[lang="ar"] .add-product-form label { text-align: left; }
-      .add-product-form input, .add-product-form select {
-          margin-bottom: 0; /* Remove bottom margin */
-      }
-      /* Span error message and button across columns */
-      .add-product-form .error-message { grid-column: 1 / -1; }
-      #add-new-product-button { grid-column: 1 / -1; justify-self: center; } /* Center button */
+     .category-list-item .category-name { font-size: 1.2rem; }
 
-     /* Adjust Product Management Layout on Screen 9 */
-     #screen-9 .product-management-section {
-         display: flex;
-         flex-direction: row; /* Side-by-side */
-         gap: 30px;
-         align-items: flex-start; /* Align tops */
+     .product-grid-container {
+         grid-template-columns: repeat(3, 1fr); /* 3 columns */
+         gap: 25px;
      }
-     #screen-9 .product-list-container {
-         flex: 1 1 55%; /* List takes more space */
-         margin-bottom: 0; /* Remove bottom margin */
-         max-height: calc(100vh - 250px); /* Example height calc */
-     }
-      #screen-9 .add-product-form {
-         flex: 1 1 45%; /* Add form takes less space */
-         /* Keep grid layout for inputs */
-     }
-      #screen-9 .add-product-form .form-box {
-         grid-template-columns: 1fr; /* Stack labels/inputs in add form column */
-         gap: 10px;
+      /* Add Product Form Grid Layout */
+     #add-product-form-container .form-box {
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         gap: 15px 20px;
+         align-items: center;
       }
-      #screen-9 .add-product-form label {
-          text-align: left; /* Labels above inputs */
+      #add-product-form-container label {
+          margin-bottom: 0;
+          text-align: right;
       }
-      html[lang="ar"] #screen-9 .add-product-form label {
-          text-align: right; /* RTL labels above */
+      html[lang="ar"] #add-product-form-container label { text-align: left; }
+      #add-product-form-container input, #add-product-form-container select {
+          margin-bottom: 0;
       }
-       #screen-9 .add-product-form #add-new-product-button {
-           grid-column: 1 / -1; /* Button still spans */
-           justify-self: center;
-       }
+      #add-product-form-container .error-message { grid-column: 1 / -1; }
+      #add-product-form-container #add-new-product-button { grid-column: 1 / -1; justify-self: center; }
+
+      /* Optional: Add Category Form Grid Layout */
+      .add-category-form .form-box {
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         gap: 15px 20px;
+         align-items: center;
+      }
+      .add-category-form label {
+          margin-bottom: 0;
+          text-align: right;
+      }
+      html[lang="ar"] .add-category-form label { text-align: left; }
+      .add-category-form input { margin-bottom: 0; }
+      .add-category-form .error-message { grid-column: 1 / -1; }
+      .add-category-form #add-new-category-button { grid-column: 1 / -1; justify-self: center; }
 
 } /* End 992px */
 @media (min-width: 1200px) {
@@ -1485,10 +970,13 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
      .suggestion-item-images img { width: 60px; height: 60px; }
      .suggestion-item-images .plus-separator { font-size: 1.6rem; }
      /* Product Management 1200px+ */
-     .product-list-container {
-          max-height: 500px;
-     }
-     #screen-9 .product-list-container {
-          max-height: calc(100vh - 220px); /* Adjust height */
+     .scrollable-list {
+          max-height: calc(100vh - 260px);
+      }
+      #category-view-container .scrollable-list {
+          max-height: calc(100vh - 180px);
+      }
+     .product-grid-container {
+         grid-template-columns: repeat(4, 1fr); /* 4 columns */
      }
 }
