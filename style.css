@@ -285,6 +285,8 @@ html[lang="ar"] .drag-handle { padding: 0 5px; margin-left: 0; margin-right: 5px
 html[lang="ar"] .product-grid-item-admin .product-name-admin,
 html[lang="ar"] .product-grid-item-admin .product-price-admin { text-align: center; } /* Keep centered */
 html[lang="ar"] .product-grid-item-admin .admin-actions-overlay { right: auto; left: 5px; }
+html[lang="ar"] #add-product-form-container, html[lang="ar"] .add-category-form { text-align: center; /* Center button */ }
+html[lang="ar"] #add-product-form-container .form-box, html[lang="ar"] .add-category-form .form-box { text-align: right; /* Content within form box */ }
 html[lang="ar"] .add-product-form label, html[lang="ar"] .add-category-form label { text-align: right; }
 html[lang="ar"] .add-product-form select, html[lang="ar"] .add-category-form select {
      background-position: left 10px top 50%;
@@ -736,17 +738,34 @@ html[lang="ar"] .product-grid-item-admin .admin-actions-overlay { right: auto; l
 .dragging-over { background-color: color-mix(in srgb, var(--active-green) 30%, transparent) !important; box-shadow: inset 0 0 0 2px var(--active-green); }
 
 /* Add Product Form Container & Add Category Form */
-#add-product-form-container, .add-category-form { width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; }
+#add-product-form-container, .add-category-form {
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* Center inline-block children like the button */
+}
 #add-product-form-container h5, .add-category-form h5 { font-size: 1.2rem; margin-bottom: 15px; color: var(--text-color-dark); text-align: center; transition: color var(--view-change-speed) ease; }
 #add-product-form-container h5 #add-product-category-name { font-weight: bold; text-transform: capitalize; }
 body[data-theme="dark-grey"] #add-product-form-container h5, body[data-theme="dark-grey"] .add-category-form h5, body[data-theme="night"] #add-product-form-container h5, body[data-theme="night"] .add-category-form h5, body[data-theme="mono-dark"] #add-product-form-container h5, body[data-theme="mono-dark"] .add-category-form h5 { color: var(--text-color-light); }
 /* Default layout for forms (stacking) */
-#add-product-form-container .form-box, .add-category-form .form-box { display: flex; flex-direction: column; gap: 0; }
+#add-product-form-container .form-box, .add-category-form .form-box { display: flex; flex-direction: column; gap: 0; text-align: left; /* Reset text-align for form content */ }
+html[lang="ar"] #add-product-form-container .form-box, html[lang="ar"] .add-category-form .form-box { text-align: right; /* Reset text-align for form content in RTL */ }
 #add-product-form-container label, .add-category-form label { text-align: left; margin-bottom: 3px; font-size: 0.9rem; }
 html[lang="ar"] #add-product-form-container label, html[lang="ar"] .add-category-form label { text-align: right; }
 #add-product-form-container input, #add-product-form-container select, .add-category-form input { margin-bottom: 12px; }
 .add-category-form .form-box { max-width: 450px; margin-left: auto; margin-right: auto; }
-.add-category-form #add-new-category-button { margin-left: auto; margin-right: auto; display: block; }
+.add-category-form #add-new-category-button { margin-left: auto; margin-right: auto; display: inline-block; /* Changed from block */ }
+
+/* Center the Add Product button specifically */
+#add-product-form-container #add-new-product-button {
+    display: inline-block; /* Make it inline-block to respect text-align center */
+    margin-top: 20px; /* Add some space above */
+    width: auto; /* Ensure it takes only necessary width */
+    /* Remove grid properties inherited from media query if needed */
+    grid-column: auto;
+    justify-self: auto;
+}
 
 
 /* Specific Theme Adjustments for product mgmt */
@@ -932,7 +951,9 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
          grid-template-columns: repeat(2, 1fr);
          gap: 15px 20px;
          align-items: center;
+         text-align: left; /* Ensure grid content is left-aligned */
       }
+      html[lang="ar"] #add-product-form-container .form-box { text-align: right; }
       #add-product-form-container label {
           margin-bottom: 0;
           text-align: right;
@@ -942,7 +963,12 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
           margin-bottom: 0;
       }
       #add-product-form-container .error-message { grid-column: 1 / -1; }
-      #add-product-form-container #add-new-product-button { grid-column: 1 / -1; justify-self: center; }
+      #add-product-form-container #add-new-product-button {
+          grid-column: 1 / -1;
+          justify-self: center; /* Center button within the grid container */
+          display: inline-block; /* Override default block button */
+          width: auto; /* Let content size button */
+      }
 
       /* Optional: Add Category Form Grid Layout */
       .add-category-form .form-box {
@@ -950,7 +976,9 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
          grid-template-columns: repeat(2, 1fr);
          gap: 15px 20px;
          align-items: center;
+         text-align: left; /* Ensure grid content is left-aligned */
       }
+      html[lang="ar"] .add-category-form .form-box { text-align: right; }
       .add-category-form label {
           margin-bottom: 0;
           text-align: right;
@@ -958,7 +986,10 @@ body[data-theme="dark-grey"] .discovery-category-grid::-webkit-scrollbar-thumb, 
       html[lang="ar"] .add-category-form label { text-align: left; }
       .add-category-form input { margin-bottom: 0; }
       .add-category-form .error-message { grid-column: 1 / -1; }
-      .add-category-form #add-new-category-button { grid-column: 1 / -1; justify-self: center; }
+      .add-category-form #add-new-category-button {
+          grid-column: 1 / -1;
+          justify-self: center; /* Center button */
+      }
 
 } /* End 992px */
 @media (min-width: 1200px) {
