@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Element References ---
-    // (Keep all existing references)
     const appContainer = document.querySelector('.app-container'),
           allScreens = document.querySelectorAll('.screen'),
           navigationElements = document.querySelectorAll('[data-target]'),
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
           previewItemImage = document.getElementById('preview-item-image'),
           previewItemName = document.getElementById('preview-item-name'),
           previewItemDescription = document.getElementById('preview-item-description'),
-          previewItemPrice = document.getElementById('preview-item-price'),
+          previewItemPrice = document.getElementById('preview-price'),
           addToCartPreviewButton = document.getElementById('add-to-cart-preview-button'),
           cartBadgePreview = document.getElementById('cart-badge-preview'),
           // Screen 8 elements
@@ -68,13 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
           themeOptions = document.getElementById('theme-options'),
           discoveryModeToggle = document.getElementById('discovery-mode-toggle'); // Toggle in Settings
 
+    // Modals (Keep references here)
     const customAlertOverlay = document.getElementById('custom-alert-overlay');
     const customAlertBox = document.getElementById('custom-alert-box');
     const customAlertMessage = document.getElementById('custom-alert-message');
     const customAlertCloseBtn = document.getElementById('custom-alert-close');
     const customAlertTitle = customAlertBox?.querySelector('h3'); // Use optional chaining
 
-    // Passcode Modal Elements
     const passcodeModalOverlay = document.getElementById('passcode-modal-overlay');
     const passcodeModalBox = document.getElementById('passcode-modal-box');
     const passcodeModalTitle = document.getElementById('passcode-modal-title');
@@ -83,57 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const passcodeModalOk = document.getElementById('passcode-modal-ok');
     const passcodeModalCancel = document.getElementById('passcode-modal-cancel');
 
-    // Screen 9 Product Management Elements (REVISED)
-    const gotoProductMgmtButton = document.getElementById('goto-product-mgmt-button'); // Button on screen 5
-    const productMgmtBackButton = document.getElementById('product-mgmt-back-button');
-    const productMgmtTitle = document.getElementById('product-mgmt-title');
-    const categoryViewContainer = document.getElementById('category-view-container');
-    const categoryListContainer = document.getElementById('category-list-container');
-    const productViewContainer = document.getElementById('product-view-container');
-    const productViewCategoryTitle = document.getElementById('product-view-category-title');
-    const productGridContainer = document.getElementById('product-grid-container');
-    const addProductFormContainer = document.getElementById('add-product-form-container'); // Container for the form
-    const addProductCategoryName = document.getElementById('add-product-category-name'); // Span for category name in add form
-    const newProductCategoryKeyInput = document.getElementById('new-product-category-key'); // Hidden input in add form
-
-    // Add Category Form Elements (NEW)
-    const categoryAddForm = document.getElementById('add-category-form');
-    const newCategoryNameEnInput = document.getElementById('new-category-name-en');
-    const newCategoryNameArInput = document.getElementById('new-category-name-ar');
-    const addCategoryButton = document.getElementById('add-new-category-button');
-    const addCategoryErrorMsg = document.getElementById('add-category-error');
-
-    // Edit Category Modal Elements (NEW)
     const editCategoryModalOverlay = document.getElementById('edit-category-modal-overlay');
     const editCategoryModalBox = document.getElementById('edit-category-modal-box');
-    const editCategoryKeyInput = document.getElementById('edit-category-key'); // Hidden input
-    const editCategoryNameKeyInput = document.getElementById('edit-category-name-key'); // Hidden input
+    const editCategoryKeyInput = document.getElementById('edit-category-key');
+    const editCategoryNameKeyInput = document.getElementById('edit-category-name-key');
     const editCategoryNameEnInput = document.getElementById('edit-category-name-en');
     const editCategoryNameArInput = document.getElementById('edit-category-name-ar');
     const editCategoryErrorMsg = document.getElementById('edit-category-error');
     const editCategorySaveButton = document.getElementById('edit-category-save');
     const editCategoryCancelButton = document.getElementById('edit-category-cancel');
 
-    // Add Product Form EN/AR Inputs (replace old single inputs)
-    const newProductNameEnInput = document.getElementById('new-product-name-en');
-    const newProductNameArInput = document.getElementById('new-product-name-ar');
-    const newProductDescEnInput = document.getElementById('new-product-desc-en');
-    const newProductDescArInput = document.getElementById('new-product-desc-ar');
-    // Also keep references to other add product inputs
-    const newProductPriceInput = document.getElementById('new-product-price');
-    const newProductQuantityInput = document.getElementById('new-product-quantity');
-    const newProductImageInput = document.getElementById('new-product-image');
-    const addProductErrorMsg = document.getElementById('add-product-error'); // For product add errors
-    const addNewProductButton = document.getElementById('add-new-product-button');
-
-    // Edit Product Modal Elements (including new EN/AR)
     const editProductModalOverlay = document.getElementById('edit-product-modal-overlay');
     const editProductModalBox = document.getElementById('edit-product-modal-box');
     const editProductIdInput = document.getElementById('edit-product-id');
-    const editProductNameEnInput = document.getElementById('edit-product-name-en'); // NEW
-    const editProductNameArInput = document.getElementById('edit-product-name-ar'); // NEW
-    const editProductDescEnInput = document.getElementById('edit-product-desc-en'); // NEW
-    const editProductDescArInput = document.getElementById('edit-product-desc-ar'); // NEW
+    const editProductNameEnInput = document.getElementById('edit-product-name-en');
+    const editProductNameArInput = document.getElementById('edit-product-name-ar');
+    const editProductDescEnInput = document.getElementById('edit-product-desc-en');
+    const editProductDescArInput = document.getElementById('edit-product-desc-ar');
     const editProductPriceInput = document.getElementById('edit-product-price');
     const editProductQuantityInput = document.getElementById('edit-product-quantity');
     const editProductImageInput = document.getElementById('edit-product-image');
@@ -142,29 +107,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const editProductSaveButton = document.getElementById('edit-product-save');
     const editProductCancelButton = document.getElementById('edit-product-cancel');
 
-    // --- NEW: Custom Confirm Modal Elements ---
     const customConfirmModalOverlay = document.getElementById('custom-confirm-modal-overlay');
     const customConfirmModalBox = document.getElementById('custom-confirm-modal-box');
     const customConfirmTitle = document.getElementById('custom-confirm-title');
     const customConfirmMessage = document.getElementById('custom-confirm-message');
     const customConfirmOkBtn = document.getElementById('custom-confirm-ok-button');
     const customConfirmCancelBtn = document.getElementById('custom-confirm-cancel-button');
-    // --- End New References ---
+
+    // Screen 9 Product Management Form Elements (Keep references here)
+    const gotoProductMgmtButton = document.getElementById('goto-product-mgmt-button');
+    const productMgmtBackButton = document.getElementById('product-mgmt-back-button');
+    const productMgmtTitle = document.getElementById('product-mgmt-title');
+    const categoryViewContainer = document.getElementById('category-view-container');
+    const categoryListContainer = document.getElementById('category-list-container');
+    const productViewContainer = document.getElementById('product-view-container');
+    const productViewCategoryTitle = document.getElementById('product-view-category-title');
+    const productGridContainer = document.getElementById('product-grid-container');
+    const addProductFormContainer = document.getElementById('add-product-form-container');
+    const addProductCategoryName = document.getElementById('add-product-category-name');
+    const newProductCategoryKeyInput = document.getElementById('new-product-category-key');
+
+    const categoryAddForm = document.getElementById('add-category-form');
+    const newCategoryNameEnInput = document.getElementById('new-category-name-en');
+    const newCategoryNameArInput = document.getElementById('new-category-name-ar');
+    const addCategoryButton = document.getElementById('add-new-category-button');
+    const addCategoryErrorMsg = document.getElementById('add-category-error');
+
+    const newProductNameEnInput = document.getElementById('new-product-name-en');
+    const newProductNameArInput = document.getElementById('new-product-name-ar');
+    const newProductDescEnInput = document.getElementById('new-product-desc-en');
+    const newProductDescArInput = document.getElementById('new-product-desc-ar');
+    const newProductPriceInput = document.getElementById('new-product-price');
+    const newProductQuantityInput = document.getElementById('new-product-quantity');
+    const newProductImageInput = document.getElementById('new-product-image');
+    const addProductErrorMsg = document.getElementById('add-product-error');
+    const addNewProductButton = document.getElementById('add-new-product-button');
+
+
+    // --- Constants for localStorage Keys ---
+    const LS_KEYS = {
+        PRODUCTS: 'canteenProducts',
+        ORDERS: 'canteenOrders',
+        CATEGORIES: 'productCategoriesOrder',
+        TRANSLATIONS: 'appTranslations',
+        LANGUAGE: 'appLanguage',
+        THEME: 'appTheme',
+        DISCOVERY_MODE: 'discoveryModeActivated'
+    };
 
     // --- State Variables ---
     let currentScreen = null,
-        currentUser = null,
+        currentUser = null, // User and Cart are NOT persisted across sessions
         cart = [],
-        selectedPaymentMethod = 'cash',
-        allOrders = [],
+        selectedPaymentMethod = 'cash', // Payment method is NOT persisted across sessions
         currentAdminOrderSelection = null;
     const ADMIN_EMAIL = "admin@canteen.app",
           ADMIN_PASSWORD = "admin123",
           DISCOVERY_PASSCODE = "4321",
           DEFAULT_PROFILE_PIC = 'https://i.postimg.cc/XYGqh5B2/IMG.png';
-    let currentLanguage = localStorage.getItem('appLanguage') || 'en';
-    let currentTheme = localStorage.getItem('appTheme') || 'blue';
-    let isDiscoveryModeActivated = localStorage.getItem('discoveryModeActivated') === 'true';
+    let currentLanguage = localStorage.getItem(LS_KEYS.LANGUAGE) || 'en';
+    let currentTheme = localStorage.getItem(LS_KEYS.THEME) || 'blue';
+    let isDiscoveryModeActivated = localStorage.getItem(LS_KEYS.DISCOVERY_MODE) === 'true';
     let previousScreenId = null; // Variable to track screen before item preview
     let previewButtonTimeout = null;
     let bundleButtonTimeouts = {};
@@ -172,13 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentMgmtView = 'categories'; // 'categories' or 'products'
     let currentMgmtCategory = null; // Key of the category being viewed/edited
     let draggedElement = null; // Track the element being dragged
-    let categories = []; // Holds category order and product order within
+    let categories = []; // Holds category order and product order within // Will be loaded/saved
     let currentConfirmCallback = null; // Callback for custom confirm OK
     let currentCancelCallback = null; // Callback for custom confirm Cancel
 
 
     // --- Data & Translations ---
-    let baseMenuData = [ // Changed to let
+    // Define initial/default data structures (use 'let' as they can be replaced by loaded data)
+    let baseMenuData = [
         {id: 'coffee', price: 30, image: 'https://media.elwatannews.com/media/img/mediaarc/large/20237496061663046251.jpg', category: 'sweet', quantity: 999, name_key: 'item_name_coffee', description_key: 'item_desc_coffee'},
         {id: 'pizza', price: 70, image: 'https://www.foodandwine.com/thmb/4qg95tjf0mgdHqez5OLLYc0PNT4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/classic-cheese-pizza-FT-RECIPE0422-31a2c938fc2546c9a07b7011658cfd05.jpg', category: 'lunch', quantity: 999, name_key: 'item_name_pizza', description_key: 'item_desc_pizza'},
         {id: 'cookies', price: 20, image: 'https://interpretationfordream.com/wp-content/uploads/2024/09/069873874340983.webp', category: 'sweet', quantity: 999, name_key: 'item_name_cookies', description_key: 'item_desc_cookies'},
@@ -196,17 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
         {id: 'onionrings', price: 30, image: 'https://i0.wp.com/www.angsarap.net/wp-content/uploads/2015/03/Onion-Rings-Wide.jpg', category: 'snacks', quantity: 999, name_key: 'item_name_onionrings', description_key: 'item_desc_onionrings'},
         {id: 'soup', price: 35, image: 'https://i.postimg.cc/HxCYPzWN/Soup.jpg', category: 'lunch', quantity: 999, name_key: 'item_name_soup', description_key: 'item_desc_soup'}
     ];
-    const mealSuggestions = [
-        { id: 'sugg-1', name_key: 'suggestion_burger_combo_name', description_key: 'suggestion_burger_combo_desc', itemIds: ['burger', 'fries', 'soda'] },
-        { id: 'sugg-2', name_key: 'suggestion_coffee_break_name', description_key: 'suggestion_coffee_break_desc', itemIds: ['coffee', 'muffin'] },
-        { id: 'sugg-3', name_key: 'suggestion_lunch_light_name', description_key: 'suggestion_lunch_light_desc', itemIds: ['salad', 'juice'] }
-    ];
-    const bundleOffers = [
-        { id: 'bundle-lunch-deal', name_key: 'bundle_lunch_deal_name', description_key: 'bundle_lunch_deal_desc', itemIds: ['pizza', 'salad', 'soda'], discountPercent: 15 },
-        { id: 'bundle-sweet-treat', name_key: 'bundle_sweet_treat_name', description_key: 'bundle_sweet_treat_desc', itemIds: ['cake', 'coffee', 'croissant'], discountPercent: 20 }
-    ];
-
-    let translations = { // Changed to let
+    let allOrders = []; // Initial empty array, will be loaded
+    let translations = {
         // --- Keep ALL existing translations from previous step ---
         welcome_title: { en: "Welcome to<br>EVA Canteen", ar: "أهلاً بكم في<br>كانتين إيفا" },
         canteen_name: { en: "EVA Canteen", ar: "كانتين إيفا" },
@@ -390,6 +385,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Confirm Messages (moved from previous confirm_delete_category/confirm_remove_product)
         confirm_delete_category_message: { en: "Are you sure you want to delete the category '{name}'? This action cannot be undone.", ar: "هل أنت متأكد من رغبتك في حذف الفئة '{name}'؟ لا يمكن التراجع عن هذا الإجراء." },
         confirm_remove_product_message: { en: "Are you sure you want to remove the product '{name}'? This action cannot be undone.", ar: "هل أنت متأكد من رغبتك في إزالة المنتج '{name}'؟ لا يمكن التراجع عن هذا الإجراء." },
+         // Import/Export Translations (Added)
+        config_management_title: { en: "Configuration Management", ar: "إدارة الإعدادات" },
+        export_config_button: { en: "Export Config", ar: "تصدير الإعدادات" },
+        import_config_button: { en: "Import Config", ar: "استيراد الإعدادات" },
+         export_config_success_alert: { en: "Configuration exported successfully!", ar: "تم تصدير الإعدادات بنجاح!" },
+         import_config_success_alert: { en: "Configuration imported successfully!", ar: "تم استيراد الإعدادات بنجاح!" },
+         import_config_no_file: { en: "No file selected for import.", ar: "لم يتم اختيار ملف للاستيراد." },
+         import_config_invalid_file: { en: "Invalid config file or version mismatch.", ar: "ملف الإعدادات غير صالح أو اختلاف في الإصدار." },
+         import_config_invalid_structure: { en: "Invalid data structure in config file.", ar: "هيكل البيانات في ملف الإعدادات غير صالح." },
+         import_config_process_error: { en: "Error processing config file.", ar: "حدث خطأ أثناء معالجة ملف الإعدادات." },
+         import_config_read_error: { en: "Error reading file.", ar: "حدث خطأ أثناء قراءة الملف." },
+
     };
 
 
@@ -397,8 +404,106 @@ document.addEventListener('DOMContentLoaded', () => {
     function getText(key) { const ts = translations[key]; if (ts) return ts[currentLanguage] || ts['en'] || `[${key}]`; console.warn(`TKey not found: ${key}`); return `[${key}]`; }
     function getCurrency() { return getText('currency_symbol'); } function formatPrice(p) { return `${p} ${getCurrency()}`; }
 
+    // --- Load Functions ---
+    function loadTranslations() {
+        try {
+            const savedTranslationsString = localStorage.getItem(LS_KEYS.TRANSLATIONS);
+            if (savedTranslationsString) {
+                const savedTranslations = JSON.parse(savedTranslationsString);
+                // Merge saved translations over default ones
+                translations = { ...translations, ...savedTranslations };
+                console.log("Loaded translations from localStorage.");
+            } else {
+                console.log("No saved translations found. Using defaults.");
+            }
+        } catch (e) {
+            console.error("Error loading translations from localStorage:", e);
+            // Fallback to default translations if load fails
+        }
+    }
+
+    function loadProducts() {
+        try {
+            const savedProductsString = localStorage.getItem(LS_KEYS.PRODUCTS);
+            if (savedProductsString) {
+                const savedProducts = JSON.parse(savedProductsString);
+                if (Array.isArray(savedProducts) && savedProducts.length > 0) {
+                    baseMenuData = savedProducts;
+                    console.log("Loaded products from localStorage.");
+                } else {
+                    console.log("Saved products data is empty or invalid. Using defaults.");
+                    // If saved data is empty/invalid, baseMenuData remains the default array
+                }
+            } else {
+                console.log("No saved products found. Using defaults.");
+                // If no saved data, baseMenuData remains the default array
+            }
+        } catch (e) {
+            console.error("Error loading products from localStorage:", e);
+            // Fallback to default baseMenuData if load fails
+        }
+    }
+
+    function loadOrders() {
+        try {
+            const savedOrdersString = localStorage.getItem(LS_KEYS.ORDERS);
+            if (savedOrdersString) {
+                const savedOrders = JSON.parse(savedOrdersString);
+                if (Array.isArray(savedOrders)) {
+                    // Convert timestamp strings back to Date objects
+                    allOrders = savedOrders.map(order => ({
+                        ...order,
+                        timestamp: new Date(order.timestamp) // Ensure timestamp is a Date object
+                    }));
+                    console.log("Loaded orders from localStorage.");
+                } else {
+                     console.log("Saved orders data is invalid. Starting fresh.");
+                     allOrders = []; // Start fresh if data is invalid
+                }
+            } else {
+                console.log("No saved orders found. Starting fresh.");
+                allOrders = []; // Start fresh if no saved data
+            }
+        } catch (e) {
+            console.error("Error loading orders from localStorage:", e);
+            allOrders = []; // Start fresh if load fails
+        }
+    }
+
+    // --- Save Functions ---
+    function saveTranslations() {
+        try {
+            // Save the entire current translations object
+            localStorage.setItem(LS_KEYS.TRANSLATIONS, JSON.stringify(translations));
+            console.log("Translations saved to localStorage.");
+        } catch (e) {
+            console.error("Error saving translations to localStorage:", e);
+        }
+    }
+
+    function saveProducts() {
+        try {
+            localStorage.setItem(LS_KEYS.PRODUCTS, JSON.stringify(baseMenuData));
+            console.log("Products saved to localStorage.");
+        } catch (e) {
+            console.error("Error saving products to localStorage:", e);
+        }
+    }
+
+    function saveOrders() {
+        try {
+            localStorage.setItem(LS_KEYS.ORDERS, JSON.stringify(allOrders));
+            console.log("Orders saved to localStorage.");
+        } catch (e) {
+            console.error("Error saving orders to localStorage:", e);
+        }
+    }
+
+    // saveCategories function is defined later as it depends on categories array.
+
+
     // --- Theme Switching Function ---
-    function applyTheme(themeName) { console.log("Applying theme:", themeName); bodyElement.dataset.theme = themeName; currentTheme = themeName; localStorage.setItem('appTheme', themeName); if (settingsPanel) updateThemeDisplay(); }
+    function applyTheme(themeName) { console.log("Applying theme:", themeName); bodyElement.dataset.theme = themeName; currentTheme = themeName; localStorage.setItem(LS_KEYS.THEME, themeName); if (settingsPanel) updateThemeDisplay(); }
 
     // --- Settings Panel Logic ---
     function toggleSettingsPanel(show) { if (!settingsPanel) return; const i = settingsPanel.classList.contains('visible'); if (typeof show === 'boolean') { if (show && !i) { settingsPanel.classList.add('visible'); document.addEventListener('click', handleOutsideSettingsClick, true); updateSettingsDisplays(); } else if (!show && i) { closeAllSettingsDropdowns(); settingsPanel.classList.remove('visible'); document.removeEventListener('click', handleOutsideSettingsClick, true); } } else { toggleSettingsPanel(!i); } }
@@ -415,6 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Language and UI Update Functions ---
     function updateLanguageUI() {
          htmlElement.lang = currentLanguage;
+         localStorage.setItem(LS_KEYS.LANGUAGE, currentLanguage); // Save language setting
          document.querySelectorAll('[data-lang-key]').forEach(el => {
              const key = el.dataset.langKey;
              let translation = getText(key);
@@ -705,7 +811,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetPreviewButtonState() { if(addToCartPreviewButton) { if (previewButtonTimeout) { clearTimeout(previewButtonTimeout); previewButtonTimeout = null; } setPreviewButtonState(false); addToCartPreviewButton.dataset.itemId = ''; } }
 
     // --- Order Placement and Management Functions ---
-     function generateOrderId() { return `ORD-${Date.now()}-${Math.floor(Math.random()*10)}`; }
+     function generateOrderId() { return `ORD-${Date.now()}-${Math.floor(Math.random()*10000)}`; }
      function placeOrder() {
          // Validate discounts *before* stock check and placing order
          const validatedCart = validateCartDiscounts(cart);
@@ -750,6 +856,8 @@ document.addEventListener('DOMContentLoaded', () => {
                  console.log(`Stock reduced for ${baseMenuData[productIndex].id}. New: ${baseMenuData[productIndex].quantity}`);
              }
          });
+         saveProducts(); // *** SAVE PRODUCTS AFTER STOCK DEDUCTION ***
+
 
          // Calculate final total based on the (potentially validated) cart
          const finalTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -763,6 +871,7 @@ document.addEventListener('DOMContentLoaded', () => {
              totalAmount: finalTotal, timestamp: new Date(), status: 'pending', paymentMethod: selectedPaymentMethod
          };
          allOrders.push(o);
+         saveOrders(); // *** SAVE ORDERS AFTER ADDING NEW ORDER ***
          console.log("Order Placed:", o);
 
          cart = []; // Clear cart AFTER successful order placement
@@ -776,7 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      .replace('{total}', formatPrice(o.totalAmount));
          showCustomAlert(m);
 
-         if (currentScreen && currentScreen.id === 'screen-9') {
+         if (currentScreen?.id === 'screen-9') {
              showScreen9View(currentMgmtView, currentMgmtCategory); // Refresh product view if stock changed
          }
      }
@@ -784,12 +893,18 @@ document.addEventListener('DOMContentLoaded', () => {
      function clearOrderPreview() { if(!orderPreviewContent || !orderStatusControls) return; orderPreviewContent.innerHTML = `<p class="order-preview-placeholder">${getText('order_preview_placeholder')}</p>`; orderStatusControls.innerHTML = ''; currentAdminOrderSelection = null; orderLogContainer?.querySelectorAll('.order-log-item.active').forEach(i => i.classList.remove('active')); }
      function showOrderDetails(id) { const o = allOrders.find(ord => ord.id === id); if (!o || !orderPreviewContent) { clearOrderPreview(); return; } const c = getCurrency(), l = currentLanguage === 'ar' ? 'ar-EG' : 'en-GB', ft = o.timestamp.toLocaleString(l, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }), tst = getText(`order_status_${o.status}`), tp = getText(`payment_${o.paymentMethod}`); let ih = '<ul>'; let originalSubTotal = 0; let hasDiscount = false; o.items.forEach(i => { const n = getText(i.name_key); if (i.isDiscount) { ih += `<li style="color: var(--active-green);"><em>${n}: -${formatPrice(Math.abs(i.price))}</em></li>`; hasDiscount = true; } else { ih += `<li>${getText('quantity_prefix')}${i.quantity} ${n} (${formatPrice(i.price * i.quantity)})</li>`; originalSubTotal += i.price * i.quantity; } }); ih += '</ul>'; let subtotalHtml = ''; if (hasDiscount && originalSubTotal > 0) { subtotalHtml = `<p><strong>${getText('subtotal_label')}:</strong> <span style="text-decoration: line-through;">${formatPrice(originalSubTotal)}</span></p>`; } orderPreviewContent.innerHTML = `<p><strong>${getText('order_id_label')}:</strong> <span>${o.id}</span></p><p><strong>${getText('order_placed_label')}:</strong> <span>${ft}</span></p><p><strong>${getText('order_status_label')}:</strong><span style="text-transform:capitalize;font-weight:bold;"> ${tst}</span></p><p><strong>${getText('order_payment_label')}:</strong><span style="text-transform:capitalize;"> ${tp}</span></p>${subtotalHtml}<p><strong>${getText('order_total_label')}:</strong> <span>${formatPrice(o.totalAmount)}</span></p><p><strong>${getText('order_items_label')}:</strong></p>${ih}`; renderStatusButtons(o); }
      function renderStatusButtons(o) { if(!orderStatusControls) return; orderStatusControls.innerHTML = ''; const p = ['pending', 'preparing', 'delivered']; p.forEach(s => { const b = document.createElement('button'); b.className = 'button small-button status-button'; b.dataset.status = s; const t = getText(`order_status_${s}`); b.textContent = t.charAt(0).toUpperCase() + t.slice(1); b.disabled = (o.status === s); b.classList.toggle('active', o.status === s); let ic = ''; if (s === 'pending') ic = 'fas fa-hourglass-start'; else if (s === 'preparing') ic = 'fas fa-cogs'; else if (s === 'delivered') ic = 'fas fa-check-circle'; if(ic) { const i = document.createElement('i'); i.className = ic; b.prepend(i, ' '); } b.addEventListener('click', () => updateOrderStatus(o.id, s)); orderStatusControls.appendChild(b); }); }
-     function updateOrderStatus(id, n) { const i = allOrders.findIndex(o => o.id === id); if (i === -1) return; allOrders[i].status = n; console.log(`Order ${id} status -> ${n}`); handleOrderSearch(); }
+     function updateOrderStatus(id, n) {
+         const i = allOrders.findIndex(o => o.id === id); if (i === -1) return;
+         allOrders[i].status = n;
+         saveOrders(); // *** SAVE ORDERS AFTER STATUS UPDATE ***
+         console.log(`Order ${id} status -> ${n}`);
+         handleOrderSearch(); // Re-run search to filter/sort and re-render
+     }
      function handleOrderSearch() { if(!orderSearchInput) return; const s = orderSearchInput.value.trim().toLowerCase(), o = s ? allOrders.filter(ord => ord.id.toLowerCase().includes(s)) : allOrders; renderOrderLog(o); if (currentAdminOrderSelection && o.some(ord => ord.id === currentAdminOrderSelection)) showOrderDetails(currentAdminOrderSelection); else clearOrderPreview(); }
 
     // --- Category / Product Order Management ---
     function initializeCategories() {
-        const storedCategories = localStorage.getItem('productCategoriesOrder');
+        const storedCategories = localStorage.getItem(LS_KEYS.CATEGORIES); // Use constant
         if (storedCategories) { try { categories = JSON.parse(storedCategories); if (!Array.isArray(categories) || categories.some(c => !c.key || !Array.isArray(c.productIds))) { console.warn("Invalid stored categories, rebuilding."); buildInitialCategories(); } else { syncCategoriesWithBaseData(); console.log("Loaded categories from localStorage"); } } catch (e) { console.error("Error parsing stored categories, rebuilding.", e); buildInitialCategories(); } } else { buildInitialCategories(); }
         saveCategories(); // Save after initializing/syncing
         populateSortButtons(); // Populate sort buttons after categories are ready
@@ -801,10 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function syncCategoriesWithBaseData() {
         const allProductIds = new Set(baseMenuData.map(p => p.id)); const categoryKeysInBase = new Set(baseMenuData.map(p => p.category)); categoryKeysInBase.forEach(catKey => { if (!categories.some(c => c.key === catKey)) { console.log(`Adding missing category: ${catKey}`); categories.push({ key: catKey, name_key: `sort_${catKey}`, productIds: baseMenuData.filter(p => p.category === catKey).map(p => p.id) }); } }); categories = categories.filter(c => categoryKeysInBase.has(c.key)); categories.forEach(category => { const currentCategoryProductIds = new Set(baseMenuData.filter(p => p.category === category.key).map(p => p.id)); category.productIds = category.productIds.filter(id => allProductIds.has(id) && baseMenuData.find(p => p.id === id)?.category === category.key); currentCategoryProductIds.forEach(id => { if (!category.productIds.includes(id)) { console.log(`Adding missing product ${id} to category ${category.key}`); category.productIds.push(id); } }); }); console.log("Categories synced with baseMenuData");
     }
-    function saveCategories() { try { localStorage.setItem('productCategoriesOrder', JSON.stringify(categories)); } catch (e) { console.error("Error saving categories:", e); } }
-    // --- End Category / Product Order Management ---
-
-    // --- Screen 9 View Management & Rendering ---
+    function saveCategories() { try { localStorage.setItem(LS_KEYS.CATEGORIES, JSON.stringify(categories)); console.log("Categories order saved."); } catch (e) { console.error("Error saving categories:", e); } }    // --- Screen 9 View Management & Rendering ---
     function showScreen9View(viewType, categoryKey = null) {
         if (!currentScreen || currentScreen.id !== 'screen-9') return;
         currentMgmtView = viewType; currentMgmtCategory = categoryKey;
@@ -964,13 +1076,15 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Validation passed. Adding category data..."); // <<< ADD LOG
         // Add to translations
         translations[newNameKey] = { en: nameEn, ar: nameAr };
+        saveTranslations(); // *** SAVE TRANSLATIONS ***
         // Add to categories array
         categories.push({ key: newCategoryKey, name_key: newNameKey, productIds: [] });
+        saveCategories(); // *** SAVE CATEGORIES ***
 
-        saveCategories();
         renderCategoryList();
         populateSortButtons();
         updateProductCategoryDropdowns();
+        updateLanguageUI(); // Refresh UI for new translation key
 
         // Clear form
         newCategoryNameEnInput.value = '';
@@ -1032,6 +1146,8 @@ document.addEventListener('DOMContentLoaded', () => {
             translations[nameKey] = { en: nameEn, ar: nameAr };
             console.warn(`Translation key ${nameKey} was missing, created new entry.`);
         }
+        saveTranslations(); // *** SAVE TRANSLATIONS ***
+
 
         // Close modal, refresh UI
         hideEditCategoryModal();
@@ -1071,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const categoryIndex = categories.findIndex(c => c.key === categoryKey);
         if (categoryIndex === -1) {
-            console.error(`Category ${categoryKey} not found for deletion.`);
+            console.error(`Category with key ${categoryKey} not found for deletion.`);
             return;
         }
 
@@ -1096,9 +1212,16 @@ document.addEventListener('DOMContentLoaded', () => {
             () => { // onConfirm callback
                 // Actual deletion logic moved here
                 categories.splice(categoryIndex, 1);
-                delete translations[category.name_key]; // Optional: Clean up translation
+                saveCategories(); // *** SAVE CATEGORIES ***
 
-                saveCategories(); // Save changes
+                // Optional: Clean up translation if the key is only used by this category
+                // (This is tricky, for simplicity we won't auto-delete translations here,
+                // leaving potential unused keys, or could implement garbage collection)
+                // For this simulation, let's delete the translation key assuming it's unique
+                delete translations[category.name_key];
+                saveTranslations(); // *** SAVE TRANSLATIONS ***
+
+
                 renderCategoryList(); // Refresh display
                 populateSortButtons(); // Update sort buttons on screen 3
                 updateProductCategoryDropdowns(); // Update dropdowns in modals
@@ -1122,13 +1245,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
          // Get ALL necessary inputs, including EN/AR
          const nameEnInput = addFormContainer.querySelector('#new-product-name-en');
-         const nameArInput = addFormContainer.querySelector('#new-product-name-ar');
-         const descEnInput = addFormContainer.querySelector('#new-product-desc-en');
-         const descArInput = addFormContainer.querySelector('#new-product-desc-ar');
-         const priceInput = addFormContainer.querySelector('#new-product-price');
-         const quantityInput = addFormContainer.querySelector('#new-product-quantity');
-         const imageInput = addFormContainer.querySelector('#new-product-image');
-         const errorMsg = addFormContainer.querySelector('#add-product-error');
+         const nameArInput = addProductFormContainer.querySelector('#new-product-name-ar');
+         const descEnInput = addProductFormContainer.querySelector('#new-product-desc-en');
+         const descArInput = addProductFormContainer.querySelector('#new-product-desc-ar');
+         const priceInput = addProductFormContainer.querySelector('#new-product-price');
+         const quantityInput = addProductFormContainer.querySelector('#new-product-quantity');
+         const imageInput = addProductFormContainer.querySelector('#new-product-image');
+         const errorMsg = addProductFormContainer.querySelector('#add-product-error');
 
          if (!nameEnInput || !nameArInput || !descEnInput || !descArInput || !priceInput || !quantityInput || !imageInput || !errorMsg) { console.error("Add product form elements missing."); return; }
 
@@ -1182,6 +1305,7 @@ document.addEventListener('DOMContentLoaded', () => {
          // Populate translations with both languages
          translations[nameKey] = { en: nameEn, ar: nameAr };
          translations[descKey] = { en: descriptionEn, ar: descriptionAr };
+         saveTranslations(); // *** SAVE TRANSLATIONS ***
 
          const newProduct = {
              id: newId, price: price, image: imageUrl, category: category,
@@ -1189,14 +1313,32 @@ document.addEventListener('DOMContentLoaded', () => {
          };
 
          baseMenuData.push(newProduct);
-         const categoryIndex = categories.findIndex(c => c.key === category); if (categoryIndex > -1) { categories[categoryIndex].productIds.push(newId); } else { console.warn(`Category ${category} not found while adding product.`); categories.push({ key: category, name_key: `sort_${category}`, productIds: [newId] }); }
-         renderProductGridForCategory(currentCategoryKey); populateMenuGrid(); saveCategories();
+         saveProducts(); // *** SAVE PRODUCTS ***
+
+         const categoryIndex = categories.findIndex(c => c.key === currentCategoryKey);
+         if (categoryIndex > -1) { categories[categoryIndex].productIds.push(newId); }
+         else { console.warn(`Category ${currentCategoryKey} not found while adding product to its list.`);
+             // Handle case where category might be missing from order list, though less likely now
+             // Add it to categories array if it's truly new and wasn't loaded
+             if (!categories.some(c => c.key === currentCategoryKey)) {
+                  categories.push({ key: currentCategoryKey, name_key: `sort_${currentCategoryKey}`, productIds: [newId] });
+             } else {
+                  // If category exists but wasn't found by key (shouldn't happen), try syncing
+                  syncCategoriesWithBaseData(); // Re-sync to pick up the new product
+             }
+         }
+         saveCategories(); // *** SAVE CATEGORIES (order changed) ***
+
+
+         renderProductGridForCategory(currentCategoryKey); // Refresh the current view
+         populateMenuGrid(); // Refresh main menu (screen 3)
+         updateLanguageUI(); // Refresh UI for new translation keys
 
          // Clear EN/AR fields as well
          nameEnInput.value = ''; nameArInput.value = ''; descEnInput.value = ''; descArInput.value = ''; priceInput.value = ''; quantityInput.value = ''; imageInput.value = '';
-         errorMsg.style.display = 'none';
+         addProductErrorMsg.style.display = 'none';
 
-         console.log("Product added successfully in function."); // <<< ADD LOG
+         console.log("Product added successfully.");
          setTimeout(() => { showCustomAlert(getText('add_product_success').replace('{name}', nameEn)); }, 100);
     }
 
@@ -1208,6 +1350,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const productName = getText(baseMenuData[productIndex].name_key);
         const productCategory = baseMenuData[productIndex].category;
+        const productToRemove = baseMenuData[productIndex]; // Get product data before splicing
+
         const confirmMessage = getText('confirm_remove_product_message').replace('{name}', productName);
 
         // --- Use Custom Confirm ---
@@ -1217,40 +1361,46 @@ document.addEventListener('DOMContentLoaded', () => {
             'delete_confirm_button', // Use specific "Delete" button text
             'cancel_button',
             () => { // onConfirm callback
-                // Actual removal logic moved here
                 const removedProduct = baseMenuData.splice(productIndex, 1)[0];
+                saveProducts(); // *** SAVE PRODUCTS ***
 
                 // Remove product ID from its category's list
                 const categoryIndex = categories.findIndex(c => c.key === productCategory);
                 if (categoryIndex > -1) {
-                    const productIds = categories[categoryIndex].productIds;
-                    const idIndex = productIds.indexOf(productId);
+                    const productIdsArray = categories[categoryIndex].productIds;
+                    const idIndex = productIdsArray.indexOf(productId);
                     if (idIndex > -1) {
-                        productIds.splice(idIndex, 1);
+                        productIdsArray.splice(idIndex, 1);
+                        saveCategories(); // *** SAVE CATEGORIES ***
                     } else {
                         console.warn(`Product ${productId} not in category order array.`);
                     }
                 } else {
-                    console.warn(`Category ${productCategory} not found while removing product.`);
+                    console.warn(`Category ${productCategory} not found while removing product from categories array.`);
                 }
 
-                // Optional: Clean up translation keys
+                // Optional: Clean up translation keys (assume unique for simulation)
                 delete translations[removedProduct.name_key];
                 delete translations[removedProduct.description_key];
+                saveTranslations(); // *** SAVE TRANSLATIONS ***
 
-                // Refresh views and save
+
+                // Refresh views
                 if (currentMgmtView === 'products' && currentMgmtCategory === productCategory) {
                     renderProductGridForCategory(currentMgmtCategory);
+                } else if (currentScreen?.id === 'screen-9' && currentMgmtView === 'categories') {
+                     // If viewing categories, just ensure data is saved, no render needed usually
+                     // but categories list might need re-render if a category becomes empty
+                     renderCategoryList(); // Re-render categories list to potentially show empty state
                 }
-                populateMenuGrid();
-                saveCategories();
+                populateMenuGrid(); // Refresh main menu
+
+                updateLanguageUI(); // Ensure UI is consistent after potential translation key removal
 
                 console.log(`Product ${productId} removed.`);
                 showCustomAlert(getText('remove_product_success').replace('{name}', productName));
             }
-            // No specific onCancel action needed other than hiding the modal
         );
-        // --- End Custom Confirm ---
     }
 
 
@@ -1377,15 +1527,19 @@ document.addEventListener('DOMContentLoaded', () => {
          baseMenuData[productIndex].image = imageUrl;
          baseMenuData[productIndex].category = newCategory; // Update category key
 
+         saveProducts(); // *** SAVE PRODUCTS ***
+
          // Update translations
          if (translations[originalNameKey]) {
              translations[originalNameKey].en = nameEn;
              translations[originalNameKey].ar = nameAr;
-         } else { translations[originalNameKey] = { en: nameEn, ar: nameAr }; }
+         } else { console.warn(`Translation key ${originalNameKey} not found during edit save.`); translations[originalNameKey] = { en: nameEn, ar: nameAr }; }
          if (translations[originalDescKey]) {
              translations[originalDescKey].en = descriptionEn;
              translations[originalDescKey].ar = descriptionAr;
-         } else { translations[originalDescKey] = { en: descriptionEn, ar: descriptionAr }; }
+         } else { console.warn(`Translation key ${originalDescKey} not found during edit save.`); translations[originalDescKey] = { en: descriptionEn, ar: descriptionAr }; }
+         saveTranslations(); // *** SAVE TRANSLATIONS ***
+
 
          // Handle category change in the 'categories' array
          if (originalCategory !== newCategory) {
@@ -1396,7 +1550,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  const oldIdIndex = categories[oldCatIndex].productIds.indexOf(productId);
                  if (oldIdIndex > -1) { categories[oldCatIndex].productIds.splice(oldIdIndex, 1); }
              } else { console.warn(`Original category ${originalCategory} not found in categories array.`); }
-             // Add to new category's productIds
+             // Add to new category's productIds (add to the end for simplicity)
              const newCatIndex = categories.findIndex(c => c.key === newCategory);
              if (newCatIndex > -1) {
                  if (!categories[newCatIndex].productIds.includes(productId)) { // Avoid duplicates if somehow possible
@@ -1405,13 +1559,35 @@ document.addEventListener('DOMContentLoaded', () => {
              } else {
                 console.warn(`New category ${newCategory} not found in categories array. This shouldn't happen if dropdown is correct.`);
              }
+             saveCategories(); // *** SAVE CATEGORIES (order changed) ***
          }
 
          console.log(`Product ${productId} updated.`);
          hideEditProductModal();
-         renderProductGridForCategory(currentMgmtCategory); // Refresh grid if viewing this category
-         populateMenuGrid(); // Refresh main menu
-         saveCategories(); // Save category structure changes
+
+         // Refresh views that might show this product or category
+         if (currentMgmtView === 'products' && (currentMgmtCategory === originalCategory || currentMgmtCategory === newCategory)) {
+              // If we changed category *while viewing the old one*, render the old one again (now with item removed)
+              // If we changed category *while viewing the new one*, render the new one again (now with item added/moved)
+              // Simplest is to just re-render based on the *new* category if we were in product view, or re-render categories if that's the view.
+              // Let's check if the current view is *either* the original or new category's product view.
+              if (currentMgmtCategory === newCategory) {
+                   renderProductGridForCategory(newCategory); // Render the new category's grid
+              } else if (currentMgmtCategory === originalCategory) {
+                   renderProductGridForCategory(originalCategory); // Render the old category's grid (item is gone)
+              } else {
+                   // User is in a different category view, no product grid update needed
+              }
+         } else if (currentScreen?.id === 'screen-9' && currentMgmtView === 'categories') {
+              // If viewing categories, the category names might have changed (though we only allow name edit via category modal now)
+              // But the list order didn't change here. No re-render needed for categories view.
+         }
+
+
+         populateMenuGrid(); // Refresh main menu (screen 3)
+         updateProductCategoryDropdowns(); // Refresh category dropdowns in modals/forms
+         updateLanguageUI(); // Refresh UI for updated translation keys
+
          showCustomAlert(getText('edit_product_success').replace('{name}', nameEn));
     }
 
@@ -1422,17 +1598,31 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!selectElement) return;
             const currentVal = selectElement.value; // Preserve selection if possible
             selectElement.innerHTML = ''; // Clear existing options
+
+            // Add a default "Select Category" option if needed, though likely not for edit
+            // const defaultOption = document.createElement('option');
+            // defaultOption.value = '';
+            // defaultOption.textContent = 'Select Category...'; // Add translation key if desired
+            // defaultOption.disabled = true; // Make it unselectable
+            // defaultOption.selected = true; // Make it the default selected option if currentVal is empty
+            // selectElement.appendChild(defaultOption);
+
             categories.forEach(cat => {
                 const option = document.createElement('option');
                 option.value = cat.key;
                 option.textContent = getText(cat.name_key) || cat.key; // Set text based on current language
                 selectElement.appendChild(option);
             });
+
             // Try to restore previous selection
-            if (categories.some(c => c.key === currentVal)) {
+            if (currentVal && categories.some(c => c.key === currentVal)) {
                 selectElement.value = currentVal;
             } else if (categories.length > 0) {
-                 selectElement.value = categories[0].key; // Default to first if previous invalid
+                 selectElement.value = categories[0].key; // Default to first if previous invalid or no previous
+            } else {
+                // No categories available
+                selectElement.innerHTML = '<option value="">No categories</option>'; // Add a placeholder
+                selectElement.disabled = true; // Disable if no categories
             }
         });
     }
@@ -1518,7 +1708,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updatePasscodeModalLanguage() { if(passcodeModalTitle) passcodeModalTitle.textContent = getText('discovery_passcode_modal_title'); if(passcodeModalInput) passcodeModalInput.placeholder = getText('discovery_passcode_prompt'); if(passcodeModalError) passcodeModalError.textContent = getText('discovery_passcode_incorrect_message'); if(passcodeModalOk) passcodeModalOk.textContent = getText('ok_button'); if(passcodeModalCancel) passcodeModalCancel.textContent = getText('cancel_button'); }
     function showPasscodeModal() { if (!passcodeModalOverlay) return; updatePasscodeModalLanguage(); if(passcodeModalInput) passcodeModalInput.value = ''; if(passcodeModalError) passcodeModalError.style.display = 'none'; requestAnimationFrame(() => { passcodeModalOverlay.classList.add('visible'); if(passcodeModalInput) passcodeModalInput.focus(); }); }
     function hidePasscodeModal() { if (!passcodeModalOverlay) return; passcodeModalOverlay.classList.remove('visible'); }
-    function handlePasscodeSubmit() { const enteredPasscode = passcodeModalInput?.value; if (enteredPasscode === DISCOVERY_PASSCODE) { isDiscoveryModeActivated = true; localStorage.setItem('discoveryModeActivated', isDiscoveryModeActivated); updateDiscoveryToggleVisualState(); updateDiscoverButtonVisibility(); hidePasscodeModal(); } else { if (passcodeModalError) passcodeModalError.style.display = 'block'; if (passcodeModalInput) passcodeModalInput.value = ''; console.warn("Incorrect passcode"); } }
+    function handlePasscodeSubmit() { const enteredPasscode = passcodeModalInput?.value; if (enteredPasscode === DISCOVERY_PASSCODE) { isDiscoveryModeActivated = true; localStorage.setItem(LS_KEYS.DISCOVERY_MODE, isDiscoveryModeActivated); updateDiscoveryToggleVisualState(); updateDiscoverButtonVisibility(); hidePasscodeModal(); } else { if (passcodeModalError) passcodeModalError.style.display = 'block'; if (passcodeModalInput) passcodeModalInput.value = ''; console.warn("Incorrect passcode"); } }
     // --- End Passcode Modal Functions ---
 
     // --- START: Custom Confirmation Modal Functions ---
@@ -1567,6 +1757,187 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // --- END: Custom Confirmation Modal Functions ---
 
+    // --- START: Import/Export Functions ---
+
+    // Helper to filter out only the dynamically added translations
+    function getDynamicTranslations() {
+        const dynamic = {};
+        // Pattern for admin-added keys: start with 'item_name_', 'item_desc_', or 'sort_'
+        // followed by 'prod-' or 'category-' and then a hash/timestamp.
+        // This assumes default keys don't match this pattern.
+        const dynamicKeyPattern = /^(item_name_|item_desc_|sort_)(prod-|category-).+-[\d]+$/;
+
+        // Include translations for dynamically created items and categories
+         for (const key in translations) {
+             if (translations.hasOwnProperty(key)) {
+                 // Check if the key is associated with a product or category managed in baseMenuData/categories
+                 const isProductKey = baseMenuData.some(p => p.name_key === key || p.description_key === key);
+                 const isCategoryKey = categories.some(c => c.name_key === key);
+
+                 // Also, check if the key matches the dynamic pattern for sanity/future proofing
+                 const isDynamicallyNamed = dynamicKeyPattern.test(key);
+
+                 if (isProductKey || isCategoryKey || isDynamicallyNamed) {
+                      // Double-check it's not one of the original hardcoded ones
+                      // This requires having a list of original keys or a more robust check
+                      // For simplicity in simulation, we'll rely on the dynamic pattern for *export*
+                     if (isDynamicallyNamed) {
+                         dynamic[key] = translations[key];
+                     }
+                 }
+             }
+         }
+
+         // Re-evaluate the dynamic key pattern logic. A simpler way for this specific app
+         // is to export ALL keys that are *not* present in the original hardcoded translations list.
+         // However, since we defined 'translations' as `let` and merged on load,
+         // a better approach is to rely on the pattern OR mark dynamic keys explicitly.
+         // For this simulation, let's refine the pattern approach slightly or assume any key matching the pattern is dynamic.
+
+        for (const key in translations) {
+            if (translations.hasOwnProperty(key)) {
+                 // A more robust pattern might look for keys generated by handleAddCategory or handleAddNewProduct
+                 // Based on the code, new category names are 'sort_' + key, new item names are 'item_name_' + id, descriptions 'item_desc_' + id
+                 // The IDs/Keys include '-Timestamp'. Let's refine the pattern to match this.
+                 const generatedKeyPattern = /^(sort_|item_name_|item_desc_).+-[\d]+$/;
+                 if (generatedKeyPattern.test(key)) {
+                     dynamic[key] = translations[key];
+                 }
+            }
+        }
+
+
+        return dynamic;
+    }
+
+    // Export Function
+    function exportConfig() {
+        const config = {
+            appIdentifier: "EVACanteenConfig",
+            version: "1.0", // Update version if structure changes in the future
+            timestamp: new Date().toISOString(),
+            data: {
+                products: baseMenuData,
+                categories: categories, // Export the category order and content
+                orders: allOrders,
+                translations: getDynamicTranslations() // Export only dynamic translations
+            }
+        };
+
+        const jsonString = JSON.stringify(config, null, 2);
+        const blob = new Blob([jsonString], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `canteen_config_${new Date().toISOString().slice(0, 10)}.json`; // Filename with date
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        console.log("Configuration exported.");
+        // Optional: Show a quick confirmation alert
+         showCustomAlert(getText('export_config_success_alert') || "Configuration exported successfully!", 'checkout_success_title'); // Needs translation key
+    }
+
+    // Import Function
+    function importConfig(file) {
+        if (!file) {
+            showCustomAlert(getText('import_config_no_file') || "No file selected for import.", 'Error'); // Needs translation key
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const config = JSON.parse(event.target.result);
+
+                // --- Validation ---
+                if (config.appIdentifier !== "EVACanteenConfig" || config.version !== "1.0") {
+                    showCustomAlert(getText('import_config_invalid_file') || "Invalid config file or version mismatch.", 'Error'); // Needs translation key
+                    console.error("Invalid config file:", config);
+                    return;
+                }
+                 // Basic validation for array/object types within data
+                 if (
+                     !config.data ||
+                     !Array.isArray(config.data.products) ||
+                     !Array.isArray(config.data.categories) ||
+                     !Array.isArray(config.data.orders) ||
+                     typeof config.data.translations !== 'object' ||
+                     config.data.translations === null
+                 ) {
+                    showCustomAlert(getText('import_config_invalid_structure') || "Invalid data structure in config file.", 'Error'); // Needs translation key
+                    console.error("Invalid imported data structure:", config.data);
+                    return;
+                 }
+                // Add more specific validation if needed, e.g., check required keys in products/categories/orders
+
+                // --- Apply Imported Data ---
+                // Important: This replaces current data!
+                baseMenuData = config.data.products;
+                categories = config.data.categories;
+                allOrders = config.data.orders.map(order => ({ // Ensure timestamps are Date objects
+                    ...order,
+                    timestamp: new Date(order.timestamp)
+                }));
+
+                // Merge imported dynamic translations into the existing translations
+                // This overwrites any conflicting dynamic keys but keeps original hardcoded ones.
+                translations = { ...translations, ...config.data.translations };
+
+
+                // --- Save to localStorage ---
+                saveProducts();
+                saveCategories();
+                saveOrders();
+                saveTranslations(); // Save the merged translations
+
+
+                // --- Refresh UI ---
+                // Need to re-sync categories with products after import
+                // This is crucial if products/categories were changed/added in the imported file
+                syncCategoriesWithBaseData(); // Ensure categories list aligns with imported products
+                saveCategories(); // Save categories after sync
+
+
+                // Re-render UI elements that depend on this data
+                populateMenuGrid(); // Refresh menu on screen 3
+                populateSortButtons(); // Refresh sort buttons
+                updateProductCategoryDropdowns(); // Refresh dropdowns in modals/forms
+                renderOrderLog(); // Refresh order log on screen 5
+                clearOrderPreview(); // Clear preview to avoid showing old data
+
+                // Re-render the current management view if active
+                if (currentScreen?.id === 'screen-9') {
+                    // Determine which view was active and re-render it
+                    showScreen9View(currentMgmtView, currentMgmtCategory);
+                }
+
+                updateLanguageUI(); // Full UI refresh
+
+                console.log("Configuration imported successfully.");
+                showCustomAlert(getText('import_config_success_alert') || "Configuration imported successfully!", 'checkout_success_title'); // Needs translation key
+
+            } catch (e) {
+                console.error("Error parsing or importing config file:", e);
+                showCustomAlert(getText('import_config_process_error') || "Error processing config file.", 'Error'); // Needs translation key
+            }
+        };
+
+        reader.onerror = () => {
+            console.error("Error reading file.");
+            showCustomAlert(getText('import_config_read_error') || "Error reading file.", 'Error'); // Needs translation key
+        };
+
+        reader.readAsText(file); // Read the file content as text
+    }
+
+    // --- END: Import/Export Functions ---
+
+
     // --- Event Listeners ---
     // General Navigation
     navigationElements.forEach(e => {
@@ -1580,7 +1951,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gotoAdminLoginButton?.addEventListener('click', () => showScreen('screen-6'));
     registerSubmitButton?.addEventListener('click', () => { const e = registerEmailInput.value.trim(), p = registerPasswordInput.value, c = registerPasswordConfirmInput.value, a = registerPhotoPicker?.querySelector('.profile-pic.active'); if(!registerErrorMsg) return; registerErrorMsg.style.display = 'none'; if (!e || !p || !c) { registerErrorMsg.textContent = getText('register_error_fields'); registerErrorMsg.style.display = 'block'; return; } if (p !== c) { registerErrorMsg.textContent = getText('register_error_match'); registerErrorMsg.style.display = 'block'; return; } if (!a) { registerErrorMsg.textContent = getText('register_error_photo'); registerErrorMsg.style.display = 'block'; return; } currentUser = { email: e, profilePic: a.src }; registerEmailInput.value = ''; registerPasswordInput.value = ''; registerPasswordConfirmInput.value = ''; updateUserInfoUI(); showScreen('screen-3'); });
     registerPhotoPicker?.addEventListener('click', e => { if (e.target.classList.contains('profile-pic')) { registerPhotoPicker.querySelectorAll('.profile-pic').forEach(p => p.classList.remove('active')); e.target.classList.add('active'); } });
-    logoutButton?.addEventListener('click', () => { currentUser = null; cart = []; selectedPaymentMethod = 'cash'; updateCartUI(); updateUserInfoUI(); if(paymentMethodsContainer) paymentMethodsContainer.querySelectorAll('.payment-button').forEach(b => b.classList.toggle('active', b.dataset.method === 'cash')); if (menuSortButtonsContainer) { const d = categories[0]?.key || 'sweet'; menuSortButtonsContainer.querySelectorAll('.sort-button').forEach(b => b.classList.toggle('active', b.dataset.category === d)); populateMenuGrid(); } isDiscoveryModeActivated = false; localStorage.removeItem('discoveryModeActivated'); updateDiscoverButtonVisibility(); updateDiscoveryToggleVisualState(); showScreen('screen-1'); });
+    logoutButton?.addEventListener('click', () => { currentUser = null; cart = []; selectedPaymentMethod = 'cash'; updateCartUI(); updateUserInfoUI(); if (menuSortButtonsContainer) { const d = categories[0]?.key || 'sweet'; menuSortButtonsContainer.querySelectorAll('.sort-button').forEach(b => b.classList.toggle('active', b.dataset.category === d)); populateMenuGrid(); } isDiscoveryModeActivated = false; localStorage.setItem(LS_KEYS.DISCOVERY_MODE, isDiscoveryModeActivated); updateDiscoveryToggleVisualState(); showScreen('screen-1'); }); // Save discovery state on logout
     menuGrid?.addEventListener('click', e => { const m = e.target.closest('.menu-item'), p = e.target.closest('.price-button'); if (m) { const id = m.dataset.id; if (p) { addToCart(id); p.style.transition = 'transform 0.1s ease-out, background-color 0.1s ease-out'; p.style.backgroundColor = 'var(--active-green)'; p.style.transform = 'scale(1.1)'; setTimeout(() => { p.style.backgroundColor = ''; p.style.transform = ''; setTimeout(() => p.style.transition = '', 150); }, 150); } else { showItemPreview(id); } } });
     menuSortButtonsContainer?.addEventListener('click', e => { if (e.target.classList.contains('sort-button')) { const b = e.target; if (b.classList.contains('active')) return; menuSortButtonsContainer.querySelectorAll('.sort-button').forEach(btn => btn.classList.remove('active')); b.classList.add('active'); applyFilter(document.getElementById('screen-3'), true); } });
     paymentMethodsContainer?.addEventListener('click', e => { const b = e.target.closest('.payment-button'); if (b && !b.classList.contains('active')) { selectedPaymentMethod = b.dataset.method; paymentMethodsContainer.querySelectorAll('.payment-button').forEach(btn => btn.classList.remove('active')); b.classList.add('active'); } });
@@ -1604,9 +1975,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (settingsBtn) { settingsBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleSettingsPanel(); }); }
     if (currentLanguageDisplay) { currentLanguageDisplay.addEventListener('click', (e) => { e.stopPropagation(); toggleSettingsDropdown(languageGroup); }); currentLanguageDisplay.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSettingsDropdown(languageGroup); } }); }
     if (currentThemeDisplay) { currentThemeDisplay.addEventListener('click', (e) => { e.stopPropagation(); toggleSettingsDropdown(themeGroup); }); currentThemeDisplay.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSettingsDropdown(themeGroup); } }); }
-    if (languageOptions) { languageOptions.addEventListener('click', (e) => { const o = e.target.closest('.option-item[data-lang]'); if (o && !o.classList.contains('active')) { const n = o.dataset.lang; appContainer.classList.add('language-switching'); setTimeout(() => { currentLanguage = n; localStorage.setItem('appLanguage', currentLanguage); updateLanguageUI(); closeAllSettingsDropdowns(); requestAnimationFrame(() => { appContainer.classList.remove('language-switching'); }); }, parseFloat(getComputedStyle(appContainer).getPropertyValue('--lang-change-speed') || '0.3') * 1000); } else if (o) { closeAllSettingsDropdowns(); } }); }
+    if (languageOptions) { languageOptions.addEventListener('click', (e) => { const o = e.target.closest('.option-item[data-lang]'); if (o && !o.classList.contains('active')) { const n = o.dataset.lang; appContainer.classList.add('language-switching'); setTimeout(() => { currentLanguage = n; localStorage.setItem(LS_KEYS.LANGUAGE, currentLanguage); updateLanguageUI(); closeAllSettingsDropdowns(); requestAnimationFrame(() => { appContainer.classList.remove('language-switching'); }); }, parseFloat(getComputedStyle(appContainer).getPropertyValue('--lang-change-speed') || '0.3') * 1000); } else if (o) { closeAllSettingsDropdowns(); } }); }
     if (themeOptions) { themeOptions.addEventListener('click', (e) => { const o = e.target.closest('.option-item[data-theme]'); if (o && !o.classList.contains('active')) { const n = o.dataset.theme; applyTheme(n); updateThemeDisplay(); closeAllSettingsDropdowns(); } else if (o) { closeAllSettingsDropdowns(); } }); }
-    if (discoveryModeToggle) { const toggleAction = () => { if (isDiscoveryModeActivated) { isDiscoveryModeActivated = false; localStorage.setItem('discoveryModeActivated', isDiscoveryModeActivated); updateDiscoveryToggleVisualState(); updateDiscoverButtonVisibility(); } else { showPasscodeModal(); } }; discoveryModeToggle.addEventListener('click', toggleAction); discoveryModeToggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAction(); } }); }
+    if (discoveryModeToggle) { const toggleAction = () => { if (isDiscoveryModeActivated) { isDiscoveryModeActivated = false; localStorage.setItem(LS_KEYS.DISCOVERY_MODE, isDiscoveryModeActivated); updateDiscoveryToggleVisualState(); updateDiscoverButtonVisibility(); } else { showPasscodeModal(); } }; discoveryModeToggle.addEventListener('click', toggleAction); discoveryModeToggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAction(); } }); }
     // --- End Settings Panel Event Listeners ---
 
     // --- Custom Alert Event Listeners ---
@@ -1617,7 +1988,7 @@ document.addEventListener('DOMContentLoaded', () => {
     passcodeModalCancel?.addEventListener('click', hidePasscodeModal);
     passcodeModalOverlay?.addEventListener('click', (e) => { if (e.target === passcodeModalOverlay) { hidePasscodeModal(); } });
     passcodeModalInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') { handlePasscodeSubmit(); } });
-    // --- End Passcode Modal Event Listeners ---
+    // --- End Passcode Modal Functions ---
 
      // --- Custom Confirm Modal Event Listeners ---
     customConfirmOkBtn?.addEventListener('click', () => {
@@ -1693,6 +2064,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Edit/Remove Product buttons -> Handled by listeners added in renderProductGridForCategory
         }
+
+        // --- Import/Export Button Clicks (Assuming they are within screen 9's screen-content) ---
+         if (e.target.id === 'export-config-button' || e.target.closest('#export-config-button')) {
+             e.stopPropagation();
+             exportConfig();
+         } else if (e.target.id === 'import-config-button' || e.target.closest('#import-config-button')) {
+              e.stopPropagation();
+              const fileInput = document.getElementById('import-file-input');
+              if (fileInput) {
+                  // Trigger the hidden file input click
+                  fileInput.click();
+              }
+         }
+     });
+
+     // Listener for the hidden file input change event
+     document.getElementById('import-file-input')?.addEventListener('change', (event) => {
+         const file = event.target.files?.[0];
+         if (file) {
+             importConfig(file);
+         }
+         // Clear the file input value so the same file can be selected again
+         if (event.target) {
+            event.target.value = '';
+         }
      });
      // --- END: Product Management Listeners ---
 
@@ -1713,12 +2109,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Initialization ---
-    initializeCategories(); // Load/build categories, THEN populate buttons/dropdowns
-    applyTheme(currentTheme);
-    updateLanguageUI(); // Update UI based on loaded language and data
+    // 1. Define initial/default data structures (done at the top as let variables)
+
+    // 2. Load data from localStorage
+    loadTranslations(); // Load saved translations first
+    loadProducts(); // Load saved products (may replace default baseMenuData)
+    loadOrders(); // Load saved orders
+
+    // 3. Initialize Categories (order and product assignment) - must happen AFTER products are loaded
+    initializeCategories(); // Load/build categories order and sync with current baseMenuData
+
+    // 4. Apply settings based on loaded state and update UI
+    applyTheme(currentTheme); // Apply theme based on loaded state
+    updateLanguageUI(); // Update UI based on loaded language and data (calls many render/update functions)
     showScreen('screen-1'); // Show initial screen
     updateCartUI(); // Initial cart render (might validate empty cart)
     updateUserInfoUI();
     updateDiscoverButtonVisibility();
     updateDiscoveryToggleVisualState();
-});
+
+    // 5. Event listeners are added after DOMContentLoaded
+
+}); // End DOMContentLoaded

@@ -309,6 +309,20 @@
                      </div><!-- END add-product-form-container -->
                  </div><!-- END product-view-container -->
 
+                <!-- START: Import/Export Section (ADDED) -->
+                <div class="import-export-section" style="margin-top: 25px; padding-top: 20px; border-top: var(--border-thickness) dashed var(--border-color); text-align: center;">
+                    <h4 data-lang-key="config_management_title">Configuration Management</h4> <!-- Needs new translation key -->
+                    <button class="button small-button" id="export-config-button" style="background-color: #007bff; border-color: #0062cc; color: white; margin-right: 10px;">
+                        <i class="fas fa-download"></i> <span data-lang-key="export_config_button">Export Config</span> <!-- Needs new translation key -->
+                    </button>
+                    <button class="button small-button" id="import-config-button" style="background-color: #17a2b8; border-color: #138496; color: white;">
+                        <i class="fas fa-upload"></i> <span data-lang-key="import_config_button">Import Config</span> <!-- Needs new translation key -->
+                    </button>
+                    <!-- Hidden file input -->
+                    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+                </div>
+                <!-- END: Import/Export Section -->
+
             </div> <!-- END screen-content -->
         </div> <!-- END screen-9 -->
         <!-- END: Screen 9: Product Management -->
