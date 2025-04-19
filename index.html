@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"> <!-- Default language set here -->
 <head>
@@ -168,6 +169,22 @@
                          <div class="order-status-controls" id="order-status-controls"></div>
                      </div>
                 </div> <!-- END order-management-layout -->
+
+                <!-- START: Config Management Section -->
+                <div class="config-management-section">
+                    <h4 data-lang-key="config_management_title">Configuration Management</h4>
+                    <div class="config-buttons">
+                         <button class="button small-button" id="export-config-button">
+                            <i class="fas fa-download"></i> <span data-lang-key="export_config_button">Export Config</span>
+                         </button>
+                         <input type="file" id="import-config-input" accept=".json" style="display: none;">
+                         <button class="button small-button" id="import-config-button">
+                            <i class="fas fa-upload"></i> <span data-lang-key="import_config_button">Import Config</span>
+                         </button>
+                    </div>
+                    <p id="import-config-error" class="error-message" data-lang-key="import_config_error_generic"></p>
+                </div>
+                <!-- END: Config Management Section -->
 
             </div> <!-- END screen-content -->
         </div> <!-- END screen-5 -->
