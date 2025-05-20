@@ -198,22 +198,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Data & Translations ---
     // Define initial/default data structures (use 'let' as they can be replaced by loaded data)
     let baseMenuData = [
-        {id: 'coffee', price: 30, image: 'https://media.elwatannews.com/media/img/mediaarc/large/20237496061663046251.jpg', category: 'sweet', quantity: 999, name_key: 'item_name_coffee', description_key: 'item_desc_coffee'},
-        {id: 'pizza', price: 70, image: 'https://www.foodandwine.com/thmb/4qg95tjf0mgdHqez5OLLYc0PNT4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/classic-cheese-pizza-FT-RECIPE0422-31a2c938fc2546c9a07b7011658cfd05.jpg', category: 'lunch', quantity: 999, name_key: 'item_name_pizza', description_key: 'item_desc_pizza'},
-        {id: 'cookies', price: 20, image: 'https://interpretationfordream.com/wp-content/uploads/2024/09/069873874340983.webp', category: 'sweet', quantity: 999, name_key: 'item_name_cookies', description_key: 'item_desc_cookies'},
-        {id: 'fries', price: 35, image: 'https://images.themodernproper.com/production/posts/2022/Homemade-French-Fries_8.jpg?w=1200&q=82&auto=format&fit=crop&dm=1662474181&s=687036746e03f50b6204c1390acdb537', category: 'snacks', quantity: 999, name_key: 'item_name_fries', description_key: 'item_desc_fries'},
-        {id: 'burger', price: 60, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScReRWtq7d-yl2aIG7jOJs5FUrxeJpi-DyfZ8OycsNa_taC8mePeUW6-JE&s=10', category: 'lunch', quantity: 999, name_key: 'item_name_burger', description_key: 'item_desc_burger'},
-        {id: 'soda', price: 15, image: 'https://jx.sa/8860-large_default/soda-star-water-300-ml-x-24.jpg', category: 'snacks', quantity: 999, name_key: 'item_name_soda', description_key: 'item_desc_soda'},
-        {id: 'salad', price: 45, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5sqfCpGLeoxFBPGxFxzmygHlKJgDnU-SJHEx9hVIyhnrpGmldu20OirA&s=10', category: 'lunch', quantity: 999, name_key: 'item_name_salad', description_key: 'item_desc_salad'},
-        {id: 'cake', price: 40, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvFIIgqKfBgFotly6OrxXqxBGO_jLh-DIINS_e-_o4gaKlk3I9tvobZaKk&s=10', category: 'sweet', quantity: 999, name_key: 'item_name_cake', description_key: 'item_desc_cake'},
-        {id: 'croissant', price: 25, image: 'https://static01.nyt.com/images/2021/04/07/dining/06croissantsrex1/merlin_184841898_ccc8fb62-ee41-44e8-9ddf-b95b198b88db-articleLarge.jpg', category: 'sweet', quantity: 999, name_key: 'item_name_croissant', description_key: 'item_desc_croissant'},
-        {id: 'pasta', price: 55, image: 'https://images.services.kitchenstories.io/eT6sd87C6s0sOmsM8S2IDw96_Xs=/1080x0/filters:quality(85)/images.kitchenstories.io/wagtailOriginalImages/R131-final-photo-3-sg.jpg', category: 'lunch', quantity: 999, name_key: 'item_name_pasta', description_key: 'item_desc_pasta'},
-        {id: 'chips', price: 10, image: 'https://preppykitchen.com/wp-content/uploads/2024/05/Homemade-Potato-Chips-Recipe-Card.jpg', category: 'snacks', quantity: 999, name_key: 'item_name_chips', description_key: 'item_desc_chips'},
-        {id: 'juice', price: 20, image: 'https://images-prod.healthline.com/hlcmsresource/images/AN_images/orange-juice-1296x728-feature.jpg', category: 'sweet', quantity: 999, name_key: 'item_name_juice', description_key: 'item_desc_juice'},
-        {id: 'sandwich', price: 50, image: 'https://www.dukeshill.co.uk/cdn/shop/articles/20240725081844-chicken-20bacon-20club-20sandwich-20main-20landscape.jpg?v=1724401314', category: 'lunch', quantity: 999, name_key: 'item_name_sandwich', description_key: 'item_desc_sandwich'},
-        {id: 'muffin', price: 22, image: 'https://www.giallozafferano.com/images/269-26998/Chocolate-Chip-Muffins_1200x800.jpg', category: 'sweet', quantity: 999, name_key: 'item_name_muffin', description_key: 'item_desc_muffin'},
-        {id: 'onionrings', price: 30, image: 'https://i0.wp.com/www.angsarap.net/wp-content/uploads/2015/03/Onion-Rings-Wide.jpg', category: 'snacks', quantity: 999, name_key: 'item_name_onionrings', description_key: 'item_desc_onionrings'},
-        {id: 'soup', price: 35, image: 'https://i.postimg.cc/HxCYPzWN/Soup.jpg', category: 'lunch', quantity: 999, name_key: 'item_name_soup', description_key: 'item_desc_soup'}
+        {id: 'coffee', price: 30, image: 'https://i.postimg.cc/T1sCP7Zf/coffee.webp', category: 'sweet', quantity: 999, name_key: 'item_name_coffee', description_key: 'item_desc_coffee'},
+        {id: 'pizza', price: 70, image: 'https://i.postimg.cc/RZWQFLRZ/pizza.webp', category: 'lunch', quantity: 999, name_key: 'item_name_pizza', description_key: 'item_desc_pizza'},
+        {id: 'cookies', price: 20, image: 'https://i.postimg.cc/PJJSTsVS/cookies.webp', category: 'sweet', quantity: 999, name_key: 'item_name_cookies', description_key: 'item_desc_cookies'},
+        {id: 'fries', price: 35, image: 'https://i.postimg.cc/Qx4Jhycz/french-fries.webp', category: 'snacks', quantity: 999, name_key: 'item_name_fries', description_key: 'item_desc_fries'},
+        {id: 'burger', price: 60, image: 'https://i.postimg.cc/DZ2Cpbrk/burger.webp', category: 'lunch', quantity: 999, name_key: 'item_name_burger', description_key: 'item_desc_burger'},
+        {id: 'soda', price: 15, image: 'https://i.postimg.cc/d1tBjcFJ/soda.webp', category: 'snacks', quantity: 999, name_key: 'item_name_soda', description_key: 'item_desc_soda'},
+        {id: 'salad', price: 45, image: 'https://i.postimg.cc/FKxpSs2P/salad.webp', category: 'lunch', quantity: 999, name_key: 'item_name_salad', description_key: 'item_desc_salad'},
+        {id: 'cake', price: 40, image: 'https://i.postimg.cc/k4fT0XsV/cake-slice.webp', category: 'sweet', quantity: 999, name_key: 'item_name_cake', description_key: 'item_desc_cake'},
+        {id: 'croissant', price: 25, image: 'https://i.postimg.cc/8kXywcs9/croissant.webp', category: 'sweet', quantity: 999, name_key: 'item_name_croissant', description_key: 'item_desc_croissant'},
+        {id: 'pasta', price: 55, image: 'https://i.postimg.cc/52D5FQ7q/pasta.webp', category: 'lunch', quantity: 999, name_key: 'item_name_pasta', description_key: 'item_desc_pasta'},
+        {id: 'chips', price: 10, image: 'https://i.postimg.cc/ZnRtvQnQ/potato-chips.webp', category: 'snacks', quantity: 999, name_key: 'item_name_chips', description_key: 'item_desc_chips'},
+        {id: 'juice', price: 20, image: 'https://i.postimg.cc/kGLvCVb5/orange-juice.webp', category: 'sweet', quantity: 999, name_key: 'item_name_juice', description_key: 'item_desc_juice'},
+        {id: 'sandwich', price: 50, image: 'https://i.postimg.cc/XJHg21Nd/club-sandwich.webp', category: 'lunch', quantity: 999, name_key: 'item_name_sandwich', description_key: 'item_desc_sandwich'},
+        {id: 'muffin', price: 22, image: 'https://i.postimg.cc/jdWM1T75/muffin.webp', category: 'sweet', quantity: 999, name_key: 'item_name_muffin', description_key: 'item_desc_muffin'},
+        {id: 'onionrings', price: 30, image: 'https://i.postimg.cc/MKh92L7Y/onion-rings.webp', category: 'snacks', quantity: 999, name_key: 'item_name_onionrings', description_key: 'item_desc_onionrings'},
+        {id: 'soup', price: 35, image: 'https://i.postimg.cc/tJsN8d7f/soup.webp', category: 'lunch', quantity: 999, name_key: 'item_name_soup', description_key: 'item_desc_soup'}
     ];
     const mealSuggestions = [
         { id: 'sugg-1', name_key: 'suggestion_burger_combo_name', description_key: 'suggestion_burger_combo_desc', itemIds: ['burger', 'fries', 'soda'] },
